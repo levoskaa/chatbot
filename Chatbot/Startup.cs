@@ -5,6 +5,7 @@
 
 using Chatbot.Bots;
 using Chatbot.Dialogs;
+using Chatbot.Recognizers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Bot.Builder;
@@ -33,8 +34,10 @@ namespace Chatbot
       // Create the Conversation state. (Used by the Dialog system itself.)
       services.AddSingleton<ConversationState>();
 
-      // Register LUIS recognizer
+      // Register LUIS recognizers
       services.AddSingleton<FlightBookingRecognizer>();
+      services.AddSingleton<SimpleStatementRecognizer>();
+      services.AddSingleton<ComplexStatementRecognizer>();
 
       // Register the BookingDialog.
       services.AddSingleton<BookingDialog>();

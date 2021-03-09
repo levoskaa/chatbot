@@ -15,13 +15,13 @@ namespace Chatbot
 
     public FlightBookingRecognizer(IConfiguration configuration)
     {
-      var luisIsConfigured = !string.IsNullOrEmpty(configuration["LuisAppId"]) && !string.IsNullOrEmpty(configuration["LuisAPIKey"]) && !string.IsNullOrEmpty(configuration["LuisAPIHostName"]);
+      var luisIsConfigured = !string.IsNullOrEmpty(configuration["Luis:Simple:AppId"]) && !string.IsNullOrEmpty(configuration["Luis:APIKey"]) && !string.IsNullOrEmpty(configuration["Luis:APIHostName"]);
       if (luisIsConfigured)
       {
         var luisApplication = new LuisApplication(
-            configuration["LuisAppId"],
-            configuration["LuisAPIKey"],
-            "https://" + configuration["LuisAPIHostName"]);
+            configuration["Luis:Simple:AppId"],
+            configuration["Luis:APIKey"],
+            "https://" + configuration["Luis:APIHostName"]);
         // Set the recognizer options depending on which endpoint version you want to use.
         // More details can be found in https://docs.microsoft.com/en-gb/azure/cognitive-services/luis/luis-migration-api-v3
         var recognizerOptions = new LuisRecognizerOptionsV3(luisApplication)

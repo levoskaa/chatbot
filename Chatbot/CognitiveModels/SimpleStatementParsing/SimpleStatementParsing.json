@@ -1,0 +1,3218 @@
+{
+  "luis_schema_version": "7.0.0",
+  "intents": [
+    {
+      "name": "finishedstatement",
+      "features": []
+    },
+    {
+      "name": "list",
+      "features": []
+    },
+    {
+      "name": "None",
+      "features": []
+    },
+    {
+      "name": "searchsubject",
+      "features": []
+    },
+    {
+      "name": "simplestatement",
+      "features": []
+    }
+  ],
+  "entities": [
+    {
+      "name": "around",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "between",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "bigger",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "negate",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "obj",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "smaller",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "subject",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "value",
+      "children": [
+        {
+          "name": "date",
+          "children": [],
+          "features": [
+            {
+              "modelName": "datetimeV2",
+              "isRequired": true
+            }
+          ]
+        },
+        {
+          "name": "personName",
+          "children": [],
+          "features": [
+            {
+              "modelName": "personName",
+              "isRequired": true
+            }
+          ]
+        },
+        {
+          "name": "geography",
+          "children": [],
+          "features": [
+            {
+              "modelName": "geographyV2",
+              "isRequired": true
+            }
+          ]
+        },
+        {
+          "name": "number",
+          "children": [],
+          "features": [
+            {
+              "modelName": "number",
+              "isRequired": true
+            }
+          ]
+        },
+        {
+          "name": "text",
+          "children": [],
+          "features": []
+        }
+      ],
+      "roles": [],
+      "features": [
+        {
+          "modelName": "datetimeV2",
+          "isRequired": false
+        },
+        {
+          "modelName": "personName",
+          "isRequired": false
+        },
+        {
+          "modelName": "geographyV2",
+          "isRequired": false
+        },
+        {
+          "modelName": "number",
+          "isRequired": false
+        }
+      ]
+    }
+  ],
+  "hierarchicals": [],
+  "composites": [],
+  "closedLists": [],
+  "prebuiltEntities": [
+    {
+      "name": "datetimeV2",
+      "roles": []
+    },
+    {
+      "name": "geographyV2",
+      "roles": []
+    },
+    {
+      "name": "number",
+      "roles": []
+    },
+    {
+      "name": "personName",
+      "roles": []
+    }
+  ],
+  "utterances": [
+    {
+      "text": "a bus",
+      "intent": "searchsubject",
+      "entities": [
+        {
+          "entity": "subject",
+          "startPos": 2,
+          "endPos": 4,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "a car",
+      "intent": "searchsubject",
+      "entities": [
+        {
+          "entity": "subject",
+          "startPos": 2,
+          "endPos": 4,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "a person",
+      "intent": "searchsubject",
+      "entities": [
+        {
+          "entity": "subject",
+          "startPos": 2,
+          "endPos": 7,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "a shirt",
+      "intent": "searchsubject",
+      "entities": [
+        {
+          "entity": "subject",
+          "startPos": 2,
+          "endPos": 6,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "a song",
+      "intent": "searchsubject",
+      "entities": [
+        {
+          "entity": "subject",
+          "startPos": 2,
+          "endPos": 5,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "a tree",
+      "intent": "searchsubject",
+      "entities": [
+        {
+          "entity": "subject",
+          "startPos": 2,
+          "endPos": 5,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "finished",
+      "intent": "finishedstatement",
+      "entities": []
+    },
+    {
+      "text": "give me the query",
+      "intent": "list",
+      "entities": []
+    },
+    {
+      "text": "give me the sentences",
+      "intent": "list",
+      "entities": []
+    },
+    {
+      "text": "i am finished",
+      "intent": "finishedstatement",
+      "entities": []
+    },
+    {
+      "text": "i am looking for a house",
+      "intent": "searchsubject",
+      "entities": [
+        {
+          "entity": "subject",
+          "startPos": 19,
+          "endPos": 23,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i am looking for a train",
+      "intent": "searchsubject",
+      "entities": [
+        {
+          "entity": "subject",
+          "startPos": 19,
+          "endPos": 23,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i am looking for a tube",
+      "intent": "searchsubject",
+      "entities": [
+        {
+          "entity": "subject",
+          "startPos": 19,
+          "endPos": 22,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i want to see the query details",
+      "intent": "list",
+      "entities": []
+    },
+    {
+      "text": "i'm finished",
+      "intent": "finishedstatement",
+      "entities": []
+    },
+    {
+      "text": "i'm looking for a car",
+      "intent": "searchsubject",
+      "entities": [
+        {
+          "entity": "subject",
+          "startPos": 18,
+          "endPos": 20,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "list",
+      "intent": "list",
+      "entities": []
+    },
+    {
+      "text": "list the qery",
+      "intent": "list",
+      "entities": []
+    },
+    {
+      "text": "list the sentences",
+      "intent": "list",
+      "entities": []
+    },
+    {
+      "text": "my birthday is four weeks from now",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 3,
+          "endPos": 10,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 15,
+          "endPos": 33,
+          "children": [
+            {
+              "entity": "date",
+              "startPos": 15,
+              "endPos": 33,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "my birthday was 3 weeks ago",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 3,
+          "endPos": 10,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 16,
+          "endPos": 26,
+          "children": [
+            {
+              "entity": "date",
+              "startPos": 16,
+              "endPos": 26,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "show me the query",
+      "intent": "list",
+      "entities": []
+    },
+    {
+      "text": "show me the senteces",
+      "intent": "list",
+      "entities": []
+    },
+    {
+      "text": "that is all",
+      "intent": "finishedstatement",
+      "entities": []
+    },
+    {
+      "text": "that's all",
+      "intent": "finishedstatement",
+      "entities": []
+    },
+    {
+      "text": "the address is \"1151 budapest kis str. 5\"",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 10,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 16,
+          "endPos": 39,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 16,
+              "endPos": 39,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the address is \"2230 gyomro klapka str 18\"",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 10,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 16,
+          "endPos": 40,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 16,
+              "endPos": 40,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the age is 54",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 6,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 11,
+          "endPos": 12,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 11,
+              "endPos": 12,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the author is not william shakespeare",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 9,
+          "children": []
+        },
+        {
+          "entity": "negate",
+          "startPos": 14,
+          "endPos": 16,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 18,
+          "endPos": 36,
+          "children": [
+            {
+              "entity": "personName",
+              "startPos": 18,
+              "endPos": 36,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the author is william shakespeare",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 9,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 14,
+          "endPos": 32,
+          "children": [
+            {
+              "entity": "personName",
+              "startPos": 14,
+              "endPos": 32,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the best year is before 1999.12.31",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 12,
+          "children": []
+        },
+        {
+          "entity": "smaller",
+          "startPos": 17,
+          "endPos": 22,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 24,
+          "endPos": 33,
+          "children": [
+            {
+              "entity": "date",
+              "startPos": 24,
+              "endPos": 33,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the birthday is 1999.01.10",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 11,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 16,
+          "endPos": 25,
+          "children": [
+            {
+              "entity": "date",
+              "startPos": 16,
+              "endPos": 25,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the birthday is before 2020.05.10",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 11,
+          "children": []
+        },
+        {
+          "entity": "smaller",
+          "startPos": 16,
+          "endPos": 21,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 23,
+          "endPos": 32,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "the boy is grown up",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 6,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 11,
+          "endPos": 18,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 11,
+              "endPos": 18,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the brand is citroen",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 8,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 13,
+          "endPos": 19,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 13,
+              "endPos": 19,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the caloriecount is 400",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 15,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 20,
+          "endPos": 22,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 20,
+              "endPos": 22,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the car isn't fast",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 6,
+          "children": []
+        },
+        {
+          "entity": "negate",
+          "startPos": 11,
+          "endPos": 12,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 14,
+          "endPos": 17,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 14,
+              "endPos": 17,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the color is black",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 8,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 13,
+          "endPos": 17,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 13,
+              "endPos": 17,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the colour is not red",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 9,
+          "children": []
+        },
+        {
+          "entity": "negate",
+          "startPos": 14,
+          "endPos": 16,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 18,
+          "endPos": 20,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 18,
+              "endPos": 20,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the colour isn't blue",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 9,
+          "children": []
+        },
+        {
+          "entity": "negate",
+          "startPos": 14,
+          "endPos": 15,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 17,
+          "endPos": 20,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 17,
+              "endPos": 20,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the country is germany",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 10,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 15,
+          "endPos": 21,
+          "children": [
+            {
+              "entity": "geography",
+              "startPos": 15,
+              "endPos": 21,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the date is around 2020.01.01",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 7,
+          "children": []
+        },
+        {
+          "entity": "around",
+          "startPos": 12,
+          "endPos": 17,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 19,
+          "endPos": 28,
+          "children": [
+            {
+              "entity": "date",
+              "startPos": 19,
+              "endPos": 28,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the date is before 2020.09.10",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 7,
+          "children": []
+        },
+        {
+          "entity": "smaller",
+          "startPos": 12,
+          "endPos": 17,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 19,
+          "endPos": 28,
+          "children": [
+            {
+              "entity": "date",
+              "startPos": 19,
+              "endPos": 28,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the date is between 2020.01.10 and 2020.05.30",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 7,
+          "children": []
+        },
+        {
+          "entity": "between",
+          "startPos": 12,
+          "endPos": 18,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 20,
+          "endPos": 44,
+          "children": [
+            {
+              "entity": "date",
+              "startPos": 20,
+              "endPos": 29,
+              "children": []
+            },
+            {
+              "entity": "date",
+              "startPos": 35,
+              "endPos": 44,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the date range is between 2000.01.01 and 2005.01.01",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 13,
+          "children": []
+        },
+        {
+          "entity": "between",
+          "startPos": 18,
+          "endPos": 24,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 26,
+          "endPos": 50,
+          "children": [
+            {
+              "entity": "date",
+              "startPos": 26,
+              "endPos": 35,
+              "children": []
+            },
+            {
+              "entity": "date",
+              "startPos": 41,
+              "endPos": 50,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the deadline is before 2015.06.31",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 11,
+          "children": []
+        },
+        {
+          "entity": "smaller",
+          "startPos": 16,
+          "endPos": 21,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 23,
+          "endPos": 32,
+          "children": [
+            {
+              "entity": "date",
+              "startPos": 23,
+              "endPos": 32,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the deadline is next month",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 11,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 16,
+          "endPos": 25,
+          "children": [
+            {
+              "entity": "date",
+              "startPos": 16,
+              "endPos": 25,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the diameter > 360",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 11,
+          "children": []
+        },
+        {
+          "entity": "bigger",
+          "startPos": 13,
+          "endPos": 13,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 15,
+          "endPos": 17,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 15,
+              "endPos": 17,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the diameter is 360",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 11,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 16,
+          "endPos": 18,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 16,
+              "endPos": 18,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the diameter is between 350 and 420",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 11,
+          "children": []
+        },
+        {
+          "entity": "between",
+          "startPos": 16,
+          "endPos": 22,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 24,
+          "endPos": 34,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 24,
+              "endPos": 26,
+              "children": []
+            },
+            {
+              "entity": "number",
+              "startPos": 32,
+              "endPos": 34,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the diameter is greater than 20",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 11,
+          "children": []
+        },
+        {
+          "entity": "bigger",
+          "startPos": 16,
+          "endPos": 27,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 29,
+          "endPos": 30,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 29,
+              "endPos": 30,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the diameter is hamlet",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 11,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 16,
+          "endPos": 21,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 16,
+              "endPos": 21,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the diameter is not 200",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 11,
+          "children": []
+        },
+        {
+          "entity": "negate",
+          "startPos": 16,
+          "endPos": 18,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 20,
+          "endPos": 22,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 20,
+              "endPos": 22,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the duration < 59",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 11,
+          "children": []
+        },
+        {
+          "entity": "smaller",
+          "startPos": 13,
+          "endPos": 13,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 15,
+          "endPos": 16,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 15,
+              "endPos": 16,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the first day is after 2020.09.01",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 12,
+          "children": []
+        },
+        {
+          "entity": "bigger",
+          "startPos": 17,
+          "endPos": 21,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 23,
+          "endPos": 32,
+          "children": [
+            {
+              "entity": "date",
+              "startPos": 23,
+              "endPos": 32,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the full name is \"kis peter david\"",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 12,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 18,
+          "endPos": 32,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 18,
+              "endPos": 32,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the game is super mario",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 7,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 12,
+          "endPos": 22,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 12,
+              "endPos": 22,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the graduation is around 2018.08.25",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 13,
+          "children": []
+        },
+        {
+          "entity": "around",
+          "startPos": 18,
+          "endPos": 23,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 25,
+          "endPos": 34,
+          "children": [
+            {
+              "entity": "date",
+              "startPos": 25,
+              "endPos": 34,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the group size > 10",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 13,
+          "children": []
+        },
+        {
+          "entity": "bigger",
+          "startPos": 15,
+          "endPos": 15,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 17,
+          "endPos": 18,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 17,
+              "endPos": 18,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the haircolor is brown",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 12,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 17,
+          "endPos": 21,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 17,
+              "endPos": 21,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the height < 13",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 9,
+          "children": []
+        },
+        {
+          "entity": "smaller",
+          "startPos": 11,
+          "endPos": 11,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 13,
+          "endPos": 14,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 13,
+              "endPos": 14,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the height is around 250",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 9,
+          "children": []
+        },
+        {
+          "entity": "around",
+          "startPos": 14,
+          "endPos": 19,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 21,
+          "endPos": 23,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 21,
+              "endPos": 23,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the height is bigger than 120",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 9,
+          "children": []
+        },
+        {
+          "entity": "bigger",
+          "startPos": 14,
+          "endPos": 24,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 26,
+          "endPos": 28,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 26,
+              "endPos": 28,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the height is not 300",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 9,
+          "children": []
+        },
+        {
+          "entity": "negate",
+          "startPos": 14,
+          "endPos": 16,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 18,
+          "endPos": 20,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 18,
+              "endPos": 20,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the holiday is not next week",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 10,
+          "children": []
+        },
+        {
+          "entity": "negate",
+          "startPos": 15,
+          "endPos": 17,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 19,
+          "endPos": 27,
+          "children": [
+            {
+              "entity": "date",
+              "startPos": 19,
+              "endPos": 27,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the horsepower is 150",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 13,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 18,
+          "endPos": 20,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 18,
+              "endPos": 20,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the house is blue",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 8,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 13,
+          "endPos": 16,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 13,
+              "endPos": 16,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the id is less than 15",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 5,
+          "children": []
+        },
+        {
+          "entity": "smaller",
+          "startPos": 10,
+          "endPos": 18,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 20,
+          "endPos": 21,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 20,
+              "endPos": 21,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the length is less than 76",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 9,
+          "children": []
+        },
+        {
+          "entity": "smaller",
+          "startPos": 14,
+          "endPos": 22,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 24,
+          "endPos": 25,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 24,
+              "endPos": 25,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the length is smaller than 500",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 9,
+          "children": []
+        },
+        {
+          "entity": "smaller",
+          "startPos": 14,
+          "endPos": 25,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 27,
+          "endPos": 29,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 27,
+              "endPos": 29,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the limit < 100",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 8,
+          "children": []
+        },
+        {
+          "entity": "smaller",
+          "startPos": 10,
+          "endPos": 10,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 12,
+          "endPos": 14,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 12,
+              "endPos": 14,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the main character is hermione",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 17,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 22,
+          "endPos": 29,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 22,
+              "endPos": 29,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the main character is tom",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 17,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 22,
+          "endPos": 24,
+          "children": [
+            {
+              "entity": "personName",
+              "startPos": 22,
+              "endPos": 24,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the meeting is tomorrow",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 10,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 15,
+          "endPos": 22,
+          "children": [
+            {
+              "entity": "date",
+              "startPos": 15,
+              "endPos": 22,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the mobile is bright red",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 9,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 14,
+          "endPos": 23,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 14,
+              "endPos": 23,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the mouse isn't big",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 8,
+          "children": []
+        },
+        {
+          "entity": "negate",
+          "startPos": 13,
+          "endPos": 14,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 16,
+          "endPos": 18,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 16,
+              "endPos": 18,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the moving is after 2013.03.21",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 9,
+          "children": []
+        },
+        {
+          "entity": "bigger",
+          "startPos": 14,
+          "endPos": 18,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 20,
+          "endPos": 29,
+          "children": [
+            {
+              "entity": "date",
+              "startPos": 20,
+              "endPos": 29,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the moving is around next monday",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 9,
+          "children": []
+        },
+        {
+          "entity": "around",
+          "startPos": 14,
+          "endPos": 19,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 21,
+          "endPos": 31,
+          "children": [
+            {
+              "entity": "date",
+              "startPos": 21,
+              "endPos": 31,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the number < 500",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 9,
+          "children": []
+        },
+        {
+          "entity": "smaller",
+          "startPos": 11,
+          "endPos": 11,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 13,
+          "endPos": 15,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 13,
+              "endPos": 15,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the number is around 100",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 9,
+          "children": []
+        },
+        {
+          "entity": "around",
+          "startPos": 14,
+          "endPos": 19,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 21,
+          "endPos": 23,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 21,
+              "endPos": 23,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the number is between 15 and 10",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 9,
+          "children": []
+        },
+        {
+          "entity": "between",
+          "startPos": 14,
+          "endPos": 20,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 22,
+          "endPos": 30,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 22,
+              "endPos": 23,
+              "children": []
+            },
+            {
+              "entity": "number",
+              "startPos": 29,
+              "endPos": 30,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the number is bigger than 10",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 9,
+          "children": []
+        },
+        {
+          "entity": "bigger",
+          "startPos": 14,
+          "endPos": 24,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 26,
+          "endPos": 27,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 26,
+              "endPos": 27,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the number is smaller than 50",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 9,
+          "children": []
+        },
+        {
+          "entity": "smaller",
+          "startPos": 14,
+          "endPos": 25,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 27,
+          "endPos": 28,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 27,
+              "endPos": 28,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the object type is book",
+      "intent": "searchsubject",
+      "entities": [
+        {
+          "entity": "subject",
+          "startPos": 19,
+          "endPos": 22,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "the object type is car",
+      "intent": "searchsubject",
+      "entities": [
+        {
+          "entity": "subject",
+          "startPos": 19,
+          "endPos": 21,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "the object type is country",
+      "intent": "searchsubject",
+      "entities": [
+        {
+          "entity": "subject",
+          "startPos": 19,
+          "endPos": 25,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "the object type is movie",
+      "intent": "searchsubject",
+      "entities": [
+        {
+          "entity": "subject",
+          "startPos": 19,
+          "endPos": 23,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "the page count is 580",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 13,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 18,
+          "endPos": 20,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 18,
+              "endPos": 20,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the page number is between 300 and 400",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 14,
+          "children": []
+        },
+        {
+          "entity": "between",
+          "startPos": 19,
+          "endPos": 25,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 27,
+          "endPos": 37,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 27,
+              "endPos": 29,
+              "children": []
+            },
+            {
+              "entity": "number",
+              "startPos": 35,
+              "endPos": 37,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the personcount is more than 200",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 14,
+          "children": []
+        },
+        {
+          "entity": "bigger",
+          "startPos": 19,
+          "endPos": 27,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 29,
+          "endPos": 31,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 29,
+              "endPos": 31,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the plant is not green",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 8,
+          "children": []
+        },
+        {
+          "entity": "negate",
+          "startPos": 13,
+          "endPos": 15,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 17,
+          "endPos": 21,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 17,
+              "endPos": 21,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the player is noob",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 9,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 14,
+          "endPos": 17,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 14,
+              "endPos": 17,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the price is 1000 usd",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 8,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 13,
+          "endPos": 20,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 13,
+              "endPos": 20,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the price is 500",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 8,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 13,
+          "endPos": 15,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 13,
+              "endPos": 15,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the publisher is mozaik",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 12,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 17,
+          "endPos": 22,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 17,
+              "endPos": 22,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the race is after 2013.02.10",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 7,
+          "children": []
+        },
+        {
+          "entity": "bigger",
+          "startPos": 12,
+          "endPos": 16,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 18,
+          "endPos": 27,
+          "children": [
+            {
+              "entity": "date",
+              "startPos": 18,
+              "endPos": 27,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the range is not 500 meters",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 8,
+          "children": []
+        },
+        {
+          "entity": "negate",
+          "startPos": 13,
+          "endPos": 15,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 17,
+          "endPos": 26,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 17,
+              "endPos": 19,
+              "children": []
+            },
+            {
+              "entity": "text",
+              "startPos": 21,
+              "endPos": 26,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the release date is between 1965.01.01 and 2000.01.01",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 15,
+          "children": []
+        },
+        {
+          "entity": "between",
+          "startPos": 20,
+          "endPos": 26,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 28,
+          "endPos": 52,
+          "children": [
+            {
+              "entity": "date",
+              "startPos": 28,
+              "endPos": 37,
+              "children": []
+            },
+            {
+              "entity": "date",
+              "startPos": 43,
+              "endPos": 52,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the release year is between 2000 and 2005",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 15,
+          "children": []
+        },
+        {
+          "entity": "between",
+          "startPos": 20,
+          "endPos": 26,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 28,
+          "endPos": 40,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 28,
+              "endPos": 31,
+              "children": []
+            },
+            {
+              "entity": "number",
+              "startPos": 37,
+              "endPos": 40,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the requested value is 100",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 18,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 23,
+          "endPos": 25,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 23,
+              "endPos": 25,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the result > 50",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 9,
+          "children": []
+        },
+        {
+          "entity": "bigger",
+          "startPos": 11,
+          "endPos": 11,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 13,
+          "endPos": 14,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 13,
+              "endPos": 14,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the room is 506",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 7,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 12,
+          "endPos": 14,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 12,
+              "endPos": 14,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the salary > 1000",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 9,
+          "children": []
+        },
+        {
+          "entity": "bigger",
+          "startPos": 11,
+          "endPos": 11,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 13,
+          "endPos": 16,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 13,
+              "endPos": 16,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the scholarship is between 2017.09.01 and 2021.02.01",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 14,
+          "children": []
+        },
+        {
+          "entity": "between",
+          "startPos": 19,
+          "endPos": 25,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 27,
+          "endPos": 51,
+          "children": [
+            {
+              "entity": "date",
+              "startPos": 27,
+              "endPos": 36,
+              "children": []
+            },
+            {
+              "entity": "date",
+              "startPos": 42,
+              "endPos": 51,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the searched product is food",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 19,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 24,
+          "endPos": 27,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 24,
+              "endPos": 27,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the side character is ron",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 17,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 22,
+          "endPos": 24,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 22,
+              "endPos": 24,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the singer is shakira",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 9,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 14,
+          "endPos": 20,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 14,
+              "endPos": 20,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the start is after 2020.09.13",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 8,
+          "children": []
+        },
+        {
+          "entity": "bigger",
+          "startPos": 13,
+          "endPos": 17,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 19,
+          "endPos": 28,
+          "children": [
+            {
+              "entity": "date",
+              "startPos": 19,
+              "endPos": 28,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the text is \"this is a very very long text to test my brand new luis moddel\"",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 7,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 13,
+          "endPos": 74,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 13,
+              "endPos": 74,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the textvalue is samplevalue",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 12,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 17,
+          "endPos": 27,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 17,
+              "endPos": 27,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the time is after 2000.01.01",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 7,
+          "children": []
+        },
+        {
+          "entity": "bigger",
+          "startPos": 12,
+          "endPos": 16,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 18,
+          "endPos": 27,
+          "children": [
+            {
+              "entity": "date",
+              "startPos": 18,
+              "endPos": 27,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the title is \"he\"",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 8,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 14,
+          "endPos": 15,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 14,
+              "endPos": 15,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the title is \"hitchhiker's guide to the galaxy\"",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 8,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 14,
+          "endPos": 45,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 14,
+              "endPos": 45,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the title is \"it\"",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 8,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 14,
+          "endPos": 15,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 14,
+              "endPos": 15,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the title is \"the children of blood and bone\"",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 8,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 14,
+          "endPos": 43,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 14,
+              "endPos": 43,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the title is \"the children of green knowe\"",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 8,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 14,
+          "endPos": 40,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 14,
+              "endPos": 40,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the title is \"the children of the corn\"",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 8,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 14,
+          "endPos": 37,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 14,
+              "endPos": 37,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the title is harry potter",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 8,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 13,
+          "endPos": 24,
+          "children": [
+            {
+              "entity": "personName",
+              "startPos": 13,
+              "endPos": 24,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the title is not \"the title\"",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 8,
+          "children": []
+        },
+        {
+          "entity": "negate",
+          "startPos": 13,
+          "endPos": 15,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 18,
+          "endPos": 26,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 18,
+              "endPos": 26,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the title is titanic",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 8,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 13,
+          "endPos": 19,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 13,
+              "endPos": 19,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the type is real estate",
+      "intent": "searchsubject",
+      "entities": [
+        {
+          "entity": "subject",
+          "startPos": 12,
+          "endPos": 22,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "the type is vehicle",
+      "intent": "searchsubject",
+      "entities": [
+        {
+          "entity": "subject",
+          "startPos": 12,
+          "endPos": 18,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "the value > 10",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 8,
+          "children": []
+        },
+        {
+          "entity": "bigger",
+          "startPos": 10,
+          "endPos": 10,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 12,
+          "endPos": 13,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 12,
+              "endPos": 13,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the value is less than 999",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 8,
+          "children": []
+        },
+        {
+          "entity": "smaller",
+          "startPos": 13,
+          "endPos": 21,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 23,
+          "endPos": 25,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 23,
+              "endPos": 25,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the weight is 500 kg",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 9,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 14,
+          "endPos": 19,
+          "children": [
+            {
+              "entity": "text",
+              "startPos": 14,
+              "endPos": 19,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the width is greater than 59",
+      "intent": "simplestatement",
+      "entities": [
+        {
+          "entity": "obj",
+          "startPos": 4,
+          "endPos": 8,
+          "children": []
+        },
+        {
+          "entity": "bigger",
+          "startPos": 13,
+          "endPos": 24,
+          "children": []
+        },
+        {
+          "entity": "value",
+          "startPos": 26,
+          "endPos": 27,
+          "children": [
+            {
+              "entity": "number",
+              "startPos": 26,
+              "endPos": 27,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "what are the sentences so far?",
+      "intent": "list",
+      "entities": []
+    }
+  ],
+  "versionId": "0.2",
+  "name": "onlab-simple-chatbot",
+  "desc": "",
+  "culture": "en-us",
+  "tokenizerVersion": "1.0.0",
+  "patternAnyEntities": [],
+  "regex_entities": [],
+  "phraselists": [],
+  "regex_features": [],
+  "patterns": [],
+  "settings": []
+}

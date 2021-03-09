@@ -1,0 +1,4311 @@
+{
+  "luis_schema_version": "7.0.0",
+  "intents": [
+    {
+      "name": "Delete",
+      "features": []
+    },
+    {
+      "name": "Done",
+      "features": []
+    },
+    {
+      "name": "Edit",
+      "features": []
+    },
+    {
+      "name": "Exit",
+      "features": []
+    },
+    {
+      "name": "Help",
+      "features": []
+    },
+    {
+      "name": "None",
+      "features": []
+    },
+    {
+      "name": "ObjectType",
+      "features": []
+    },
+    {
+      "name": "Statement",
+      "features": []
+    }
+  ],
+  "entities": [
+    {
+      "name": "clause",
+      "children": [
+        {
+          "name": "subject",
+          "children": [],
+          "features": [
+            {
+              "modelName": "objecttype",
+              "isRequired": false
+            }
+          ]
+        },
+        {
+          "name": "property",
+          "children": [],
+          "features": []
+        },
+        {
+          "name": "value",
+          "children": [
+            {
+              "name": "date",
+              "children": [],
+              "features": [
+                {
+                  "modelName": "datetimeV2",
+                  "isRequired": true
+                }
+              ]
+            },
+            {
+              "name": "personName",
+              "children": [],
+              "features": [
+                {
+                  "modelName": "personName",
+                  "isRequired": true
+                }
+              ]
+            },
+            {
+              "name": "geography",
+              "children": [],
+              "features": [
+                {
+                  "modelName": "geographyV2",
+                  "isRequired": true
+                }
+              ]
+            },
+            {
+              "name": "number",
+              "children": [],
+              "features": [
+                {
+                  "modelName": "number",
+                  "isRequired": true
+                }
+              ]
+            },
+            {
+              "name": "text",
+              "children": [],
+              "features": []
+            }
+          ],
+          "features": []
+        },
+        {
+          "name": "smaller",
+          "children": [],
+          "features": []
+        },
+        {
+          "name": "bigger",
+          "children": [],
+          "features": []
+        },
+        {
+          "name": "negated",
+          "children": [],
+          "features": []
+        },
+        {
+          "name": "between",
+          "children": [],
+          "features": []
+        },
+        {
+          "name": "around",
+          "children": [],
+          "features": []
+        }
+      ],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "objecttype",
+      "children": [],
+      "roles": [],
+      "features": []
+    }
+  ],
+  "hierarchicals": [],
+  "composites": [],
+  "closedLists": [],
+  "prebuiltEntities": [
+    {
+      "name": "datetimeV2",
+      "roles": []
+    },
+    {
+      "name": "geographyV2",
+      "roles": []
+    },
+    {
+      "name": "number",
+      "roles": []
+    },
+    {
+      "name": "personName",
+      "roles": []
+    }
+  ],
+  "utterances": [
+    {
+      "text": "?",
+      "intent": "Help",
+      "entities": []
+    },
+    {
+      "text": "a book",
+      "intent": "ObjectType",
+      "entities": [
+        {
+          "entity": "objecttype",
+          "startPos": 2,
+          "endPos": 5,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "a city",
+      "intent": "ObjectType",
+      "entities": [
+        {
+          "entity": "objecttype",
+          "startPos": 2,
+          "endPos": 5,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "a film",
+      "intent": "ObjectType",
+      "entities": [
+        {
+          "entity": "objecttype",
+          "startPos": 2,
+          "endPos": 5,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "an animal",
+      "intent": "ObjectType",
+      "entities": [
+        {
+          "entity": "objecttype",
+          "startPos": 3,
+          "endPos": 8,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "celebrity",
+      "intent": "ObjectType",
+      "entities": [
+        {
+          "entity": "objecttype",
+          "startPos": 0,
+          "endPos": 8,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "change a previous statement",
+      "intent": "Edit",
+      "entities": []
+    },
+    {
+      "text": "completed",
+      "intent": "Done",
+      "entities": []
+    },
+    {
+      "text": "country",
+      "intent": "ObjectType",
+      "entities": [
+        {
+          "entity": "objecttype",
+          "startPos": 0,
+          "endPos": 6,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "delete",
+      "intent": "Delete",
+      "entities": []
+    },
+    {
+      "text": "delete a previous statement",
+      "intent": "Delete",
+      "entities": []
+    },
+    {
+      "text": "delete statement",
+      "intent": "Delete",
+      "entities": []
+    },
+    {
+      "text": "delete the query",
+      "intent": "Exit",
+      "entities": []
+    },
+    {
+      "text": "done",
+      "intent": "Done",
+      "entities": []
+    },
+    {
+      "text": "edit",
+      "intent": "Edit",
+      "entities": []
+    },
+    {
+      "text": "edit a previous statement",
+      "intent": "Edit",
+      "entities": []
+    },
+    {
+      "text": "edit the query",
+      "intent": "Edit",
+      "entities": []
+    },
+    {
+      "text": "edit the statements",
+      "intent": "Edit",
+      "entities": []
+    },
+    {
+      "text": "end",
+      "intent": "Done",
+      "entities": []
+    },
+    {
+      "text": "execute",
+      "intent": "Done",
+      "entities": []
+    },
+    {
+      "text": "execute the query",
+      "intent": "Done",
+      "entities": []
+    },
+    {
+      "text": "exit",
+      "intent": "Exit",
+      "entities": []
+    },
+    {
+      "text": "exit the querybuilding",
+      "intent": "Exit",
+      "entities": []
+    },
+    {
+      "text": "finish",
+      "intent": "Done",
+      "entities": []
+    },
+    {
+      "text": "finished",
+      "intent": "Done",
+      "entities": []
+    },
+    {
+      "text": "finished with the query",
+      "intent": "Done",
+      "entities": []
+    },
+    {
+      "text": "give me some tips",
+      "intent": "Help",
+      "entities": []
+    },
+    {
+      "text": "he was born after \"1950\"",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 23,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 1,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 7,
+              "endPos": 10,
+              "children": []
+            },
+            {
+              "entity": "bigger",
+              "startPos": 12,
+              "endPos": 16,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 19,
+              "endPos": 22,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 19,
+                  "endPos": 22,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "he was born in 2000",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 18,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 1,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 7,
+              "endPos": 13,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 15,
+              "endPos": 18,
+              "children": [
+                {
+                  "entity": "date",
+                  "startPos": 15,
+                  "endPos": 18,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "help",
+      "intent": "Help",
+      "entities": []
+    },
+    {
+      "text": "help me",
+      "intent": "Help",
+      "entities": []
+    },
+    {
+      "text": "her hair is red",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 14,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 2,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 7,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 12,
+              "endPos": 14,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 12,
+                  "endPos": 14,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "her height is 170",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 16,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 2,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 9,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 14,
+              "endPos": 16,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 14,
+                  "endPos": 16,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "her salary is 5000",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 17,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 2,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 9,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 14,
+              "endPos": 17,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 14,
+                  "endPos": 17,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "his birth date if between 1970.01.01 and 1980.01.01",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 50,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 2,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 13,
+              "children": []
+            },
+            {
+              "entity": "between",
+              "startPos": 18,
+              "endPos": 24,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 26,
+              "endPos": 50,
+              "children": [
+                {
+                  "entity": "date",
+                  "startPos": 26,
+                  "endPos": 35,
+                  "children": []
+                },
+                {
+                  "entity": "date",
+                  "startPos": 41,
+                  "endPos": 50,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "his favorite restaurant is mcdonald's",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 36,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 2,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 22,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 27,
+              "endPos": 36,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 27,
+                  "endPos": 36,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "his name is peter",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 16,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 2,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 7,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 12,
+              "endPos": 16,
+              "children": [
+                {
+                  "entity": "personName",
+                  "startPos": 12,
+                  "endPos": 16,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "his weight is around 80",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 22,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 2,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 9,
+              "children": []
+            },
+            {
+              "entity": "around",
+              "startPos": 14,
+              "endPos": 19,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 21,
+              "endPos": 22,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 21,
+                  "endPos": 22,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "i am done",
+      "intent": "Done",
+      "entities": []
+    },
+    {
+      "text": "i am finished",
+      "intent": "Done",
+      "entities": []
+    },
+    {
+      "text": "i am looking for a book",
+      "intent": "ObjectType",
+      "entities": [
+        {
+          "entity": "objecttype",
+          "startPos": 19,
+          "endPos": 22,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i am searching for a road",
+      "intent": "ObjectType",
+      "entities": [
+        {
+          "entity": "objecttype",
+          "startPos": 21,
+          "endPos": 24,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i need help",
+      "intent": "Help",
+      "entities": []
+    },
+    {
+      "text": "i want a country",
+      "intent": "ObjectType",
+      "entities": [
+        {
+          "entity": "objecttype",
+          "startPos": 9,
+          "endPos": 15,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i want help",
+      "intent": "Help",
+      "entities": []
+    },
+    {
+      "text": "i want to delete a statement",
+      "intent": "Delete",
+      "entities": []
+    },
+    {
+      "text": "i want to delete the whole query",
+      "intent": "Exit",
+      "entities": []
+    },
+    {
+      "text": "i want to edit",
+      "intent": "Edit",
+      "entities": []
+    },
+    {
+      "text": "i want to edit the query",
+      "intent": "Edit",
+      "entities": []
+    },
+    {
+      "text": "i want to edit the statements",
+      "intent": "Edit",
+      "entities": []
+    },
+    {
+      "text": "i want to find a house",
+      "intent": "ObjectType",
+      "entities": [
+        {
+          "entity": "objecttype",
+          "startPos": 17,
+          "endPos": 21,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i want to quit",
+      "intent": "Exit",
+      "entities": []
+    },
+    {
+      "text": "i would like to edit the query",
+      "intent": "Edit",
+      "entities": []
+    },
+    {
+      "text": "i would like to edit the statements",
+      "intent": "Edit",
+      "entities": []
+    },
+    {
+      "text": "i would like to exit the query building",
+      "intent": "Exit",
+      "entities": []
+    },
+    {
+      "text": "i would like to find a car",
+      "intent": "ObjectType",
+      "entities": [
+        {
+          "entity": "objecttype",
+          "startPos": 23,
+          "endPos": 25,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i would like to remove a previous statement",
+      "intent": "Delete",
+      "entities": []
+    },
+    {
+      "text": "it is blue",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 9,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 1,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 3,
+              "endPos": 4,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 6,
+              "endPos": 9,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 6,
+                  "endPos": 9,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "it was destroyed after 1500",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 26,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 1,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 7,
+              "endPos": 15,
+              "children": []
+            },
+            {
+              "entity": "bigger",
+              "startPos": 17,
+              "endPos": 21,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 23,
+              "endPos": 26,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 23,
+                  "endPos": 26,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "it was directed by \"michael bay\"",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 31,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 1,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 7,
+              "endPos": 17,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 20,
+              "endPos": 30,
+              "children": [
+                {
+                  "entity": "personName",
+                  "startPos": 20,
+                  "endPos": 30,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "it was published in 2004",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 23,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 1,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 7,
+              "endPos": 18,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 20,
+              "endPos": 23,
+              "children": [
+                {
+                  "entity": "date",
+                  "startPos": 20,
+                  "endPos": 23,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "it was released in 1997",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 22,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 1,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 7,
+              "endPos": 17,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 19,
+              "endPos": 22,
+              "children": [
+                {
+                  "entity": "date",
+                  "startPos": 19,
+                  "endPos": 22,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "its author is \"george r.r. martin\"",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 33,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 2,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 9,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 15,
+              "endPos": 32,
+              "children": [
+                {
+                  "entity": "personName",
+                  "startPos": 15,
+                  "endPos": 32,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "it's author is \"j.r.r tolkien\"",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 29,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 1,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 5,
+              "endPos": 10,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 16,
+              "endPos": 28,
+              "children": [
+                {
+                  "entity": "personName",
+                  "startPos": 16,
+                  "endPos": 28,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "it's author was born before 2000",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 31,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 1,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 5,
+              "endPos": 10,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 16,
+              "endPos": 19,
+              "children": []
+            },
+            {
+              "entity": "smaller",
+              "startPos": 21,
+              "endPos": 26,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 28,
+              "endPos": 31,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 28,
+                  "endPos": 31,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "its diameter > 50",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 16,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 2,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 11,
+              "children": []
+            },
+            {
+              "entity": "bigger",
+              "startPos": 13,
+              "endPos": 13,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 15,
+              "endPos": 16,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 15,
+                  "endPos": 16,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "its diameter is between 350 and 420",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 34,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 2,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 11,
+              "children": []
+            },
+            {
+              "entity": "between",
+              "startPos": 16,
+              "endPos": 22,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 24,
+              "endPos": 34,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 24,
+                  "endPos": 26,
+                  "children": []
+                },
+                {
+                  "entity": "number",
+                  "startPos": 32,
+                  "endPos": 34,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "its duration > 2",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 15,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 2,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 11,
+              "children": []
+            },
+            {
+              "entity": "bigger",
+              "startPos": 13,
+              "endPos": 13,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 15,
+              "endPos": 15,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 15,
+                  "endPos": 15,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "its group size > 10",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 18,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 2,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 13,
+              "children": []
+            },
+            {
+              "entity": "bigger",
+              "startPos": 15,
+              "endPos": 15,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 17,
+              "endPos": 18,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 17,
+                  "endPos": 18,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "it's isbn is 0439785960",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 22,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 1,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 5,
+              "endPos": 8,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 13,
+              "endPos": 22,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 13,
+                  "endPos": 22,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "it's language is english",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 23,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 1,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 5,
+              "endPos": 12,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 17,
+              "endPos": 23,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 17,
+                  "endPos": 23,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "its length < 30",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 14,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 2,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 9,
+              "children": []
+            },
+            {
+              "entity": "smaller",
+              "startPos": 11,
+              "endPos": 11,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 13,
+              "endPos": 14,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 13,
+                  "endPos": 14,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "its manufacturer is \"casio\"",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 26,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 2,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 15,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 21,
+              "endPos": 25,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 21,
+                  "endPos": 25,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "its page count is around 500",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 27,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 2,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 13,
+              "children": []
+            },
+            {
+              "entity": "around",
+              "startPos": 18,
+              "endPos": 23,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 25,
+              "endPos": 27,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 25,
+                  "endPos": 27,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "it's rating is 5",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 15,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 1,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 5,
+              "endPos": 10,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 15,
+              "endPos": 15,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 15,
+                  "endPos": 15,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "its release date is between 1965.01.01 and 2000.01.01",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 52,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 2,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 15,
+              "children": []
+            },
+            {
+              "entity": "between",
+              "startPos": 20,
+              "endPos": 26,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 28,
+              "endPos": 52,
+              "children": [
+                {
+                  "entity": "date",
+                  "startPos": 28,
+                  "endPos": 37,
+                  "children": []
+                },
+                {
+                  "entity": "date",
+                  "startPos": 43,
+                  "endPos": 52,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "its release year is before 2000.10.10",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 36,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 2,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 15,
+              "children": []
+            },
+            {
+              "entity": "smaller",
+              "startPos": 20,
+              "endPos": 25,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 27,
+              "endPos": 36,
+              "children": [
+                {
+                  "entity": "date",
+                  "startPos": 27,
+                  "endPos": 36,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "its title is \"star wars the empire strikes back\"",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 47,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 2,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 8,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 14,
+              "endPos": 46,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 14,
+                  "endPos": 46,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "it's title is harry potter",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 25,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 1,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 5,
+              "endPos": 9,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 14,
+              "endPos": 25,
+              "children": [
+                {
+                  "entity": "personName",
+                  "startPos": 14,
+                  "endPos": 25,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "it's title is lord of the rings",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 30,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 1,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 5,
+              "endPos": 9,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 14,
+              "endPos": 30,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 14,
+                  "endPos": 30,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "its type is not drama",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 20,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 2,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 7,
+              "children": []
+            },
+            {
+              "entity": "negated",
+              "startPos": 12,
+              "endPos": 14,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 16,
+              "endPos": 20,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 16,
+                  "endPos": 20,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "modify the query",
+      "intent": "Edit",
+      "entities": []
+    },
+    {
+      "text": "movie",
+      "intent": "ObjectType",
+      "entities": [
+        {
+          "entity": "objecttype",
+          "startPos": 0,
+          "endPos": 4,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "quit",
+      "intent": "Exit",
+      "entities": []
+    },
+    {
+      "text": "quit everything",
+      "intent": "Exit",
+      "entities": []
+    },
+    {
+      "text": "remove",
+      "intent": "Delete",
+      "entities": []
+    },
+    {
+      "text": "remove a statement",
+      "intent": "Delete",
+      "entities": []
+    },
+    {
+      "text": "remove statement",
+      "intent": "Delete",
+      "entities": []
+    },
+    {
+      "text": "she was elected before \"2000\"",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 28,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 0,
+              "endPos": 2,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 8,
+              "endPos": 14,
+              "children": []
+            },
+            {
+              "entity": "smaller",
+              "startPos": 16,
+              "endPos": 21,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 24,
+              "endPos": 27,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 24,
+                  "endPos": 27,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "show help",
+      "intent": "Help",
+      "entities": []
+    },
+    {
+      "text": "show me tips",
+      "intent": "Help",
+      "entities": []
+    },
+    {
+      "text": "start over",
+      "intent": "Exit",
+      "entities": []
+    },
+    {
+      "text": "the author is not \"william shakespeare\"",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 38,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 9,
+              "children": []
+            },
+            {
+              "entity": "negated",
+              "startPos": 14,
+              "endPos": 16,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 19,
+              "endPos": 37,
+              "children": [
+                {
+                  "entity": "personName",
+                  "startPos": 19,
+                  "endPos": 37,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the author of the book is j.r.r. tolkien",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 39,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 9,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 18,
+              "endPos": 21,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 26,
+              "endPos": 39,
+              "children": [
+                {
+                  "entity": "personName",
+                  "startPos": 26,
+                  "endPos": 39,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the book is written by william shakespeare",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 41,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 7,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 12,
+              "endPos": 21,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 23,
+              "endPos": 41,
+              "children": [
+                {
+                  "entity": "personName",
+                  "startPos": 23,
+                  "endPos": 41,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the book's main character is romeo",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 33,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 7,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 11,
+              "endPos": 24,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 29,
+              "endPos": 33,
+              "children": [
+                {
+                  "entity": "personName",
+                  "startPos": 29,
+                  "endPos": 33,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the book's page count is 1000",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 28,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 7,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 11,
+              "endPos": 20,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 25,
+              "endPos": 28,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 25,
+                  "endPos": 28,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the book's publisher is scholastic inc.",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 38,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 7,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 11,
+              "endPos": 19,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 24,
+              "endPos": 38,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 24,
+                  "endPos": 38,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the book's rating is 10",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 22,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 7,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 11,
+              "endPos": 16,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 21,
+              "endPos": 22,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 21,
+                  "endPos": 22,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the car was manufactured by ferrari",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 34,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 6,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 12,
+              "endPos": 26,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 28,
+              "endPos": 34,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 28,
+                  "endPos": 34,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the car's horsepower is smaller than 300",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 39,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 6,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 10,
+              "endPos": 19,
+              "children": []
+            },
+            {
+              "entity": "smaller",
+              "startPos": 24,
+              "endPos": 30,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 37,
+              "endPos": 39,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 37,
+                  "endPos": 39,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the car's weight is 300",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 22,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 6,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 10,
+              "endPos": 15,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 20,
+              "endPos": 22,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 20,
+                  "endPos": 22,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the country of the movie is not hungary",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 38,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 10,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 19,
+              "endPos": 23,
+              "children": []
+            },
+            {
+              "entity": "negated",
+              "startPos": 28,
+              "endPos": 30,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 32,
+              "endPos": 38,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 32,
+                  "endPos": 38,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the deer was killed by the hunter",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 32,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 7,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 13,
+              "endPos": 21,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 27,
+              "endPos": 32,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 27,
+                  "endPos": 32,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the director of the film is michael bay",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 38,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 11,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 20,
+              "endPos": 23,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 28,
+              "endPos": 38,
+              "children": [
+                {
+                  "entity": "personName",
+                  "startPos": 28,
+                  "endPos": 38,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the end of the day was before 1600",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 33,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 6,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 15,
+              "endPos": 17,
+              "children": []
+            },
+            {
+              "entity": "smaller",
+              "startPos": 23,
+              "endPos": 28,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 30,
+              "endPos": 33,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 30,
+                  "endPos": 33,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the film was released in 2005",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 28,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 7,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 13,
+              "endPos": 23,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 25,
+              "endPos": 28,
+              "children": [
+                {
+                  "entity": "date",
+                  "startPos": 25,
+                  "endPos": 28,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the film's title is james bond",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 29,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 7,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 11,
+              "endPos": 15,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 20,
+              "endPos": 29,
+              "children": [
+                {
+                  "entity": "personName",
+                  "startPos": 20,
+                  "endPos": 29,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the horsepower of the car > 100",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 30,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 13,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 22,
+              "endPos": 24,
+              "children": []
+            },
+            {
+              "entity": "bigger",
+              "startPos": 26,
+              "endPos": 26,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 28,
+              "endPos": 30,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 28,
+                  "endPos": 30,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the horsepower of the car is around 150",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 38,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 13,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 22,
+              "endPos": 24,
+              "children": []
+            },
+            {
+              "entity": "around",
+              "startPos": 29,
+              "endPos": 34,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 36,
+              "endPos": 38,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 36,
+                  "endPos": 38,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the isbn of the book is 0439785960",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 33,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 7,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 16,
+              "endPos": 19,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 24,
+              "endPos": 33,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 24,
+                  "endPos": 33,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the language of the book is english",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 34,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 11,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 20,
+              "endPos": 23,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 28,
+              "endPos": 34,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 28,
+                  "endPos": 34,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the language of the book is german",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 33,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 11,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 20,
+              "endPos": 23,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 28,
+              "endPos": 33,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 28,
+                  "endPos": 33,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the length of the film is around 2",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 33,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 9,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 18,
+              "endPos": 21,
+              "children": []
+            },
+            {
+              "entity": "around",
+              "startPos": 26,
+              "endPos": 31,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 33,
+              "endPos": 33,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 33,
+                  "endPos": 33,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the length of the road is 1000 metres",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 29,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 9,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 18,
+              "endPos": 21,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 26,
+              "endPos": 29,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 26,
+                  "endPos": 29,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the length of the road is bigger than 2000",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 41,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 9,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 18,
+              "endPos": 21,
+              "children": []
+            },
+            {
+              "entity": "bigger",
+              "startPos": 26,
+              "endPos": 31,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 38,
+              "endPos": 41,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 38,
+                  "endPos": 41,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the main character is played by alan marriot",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 43,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 17,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 22,
+              "endPos": 30,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 32,
+              "endPos": 43,
+              "children": [
+                {
+                  "entity": "personName",
+                  "startPos": 32,
+                  "endPos": 43,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the main character of the book is luke",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 37,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 17,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 26,
+              "endPos": 29,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 34,
+              "endPos": 37,
+              "children": [
+                {
+                  "entity": "personName",
+                  "startPos": 34,
+                  "endPos": 37,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the main character of the film is \"james bond\"",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 45,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 17,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 26,
+              "endPos": 29,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 35,
+              "endPos": 44,
+              "children": [
+                {
+                  "entity": "personName",
+                  "startPos": 35,
+                  "endPos": 44,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the man was killed by the suspect",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 32,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 6,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 12,
+              "endPos": 20,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 26,
+              "endPos": 32,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 26,
+                  "endPos": 32,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the manufacturer of the car is renault",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 37,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 15,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 24,
+              "endPos": 26,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 31,
+              "endPos": 37,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 31,
+                  "endPos": 37,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the maximum speed of the car is 300",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 34,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 16,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 25,
+              "endPos": 27,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 32,
+              "endPos": 34,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 32,
+                  "endPos": 34,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the movie's director is not michael bay",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 38,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 8,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 12,
+              "endPos": 19,
+              "children": []
+            },
+            {
+              "entity": "negated",
+              "startPos": 24,
+              "endPos": 26,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 28,
+              "endPos": 38,
+              "children": [
+                {
+                  "entity": "personName",
+                  "startPos": 28,
+                  "endPos": 38,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the page count of the book < 300",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 31,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 13,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 22,
+              "endPos": 25,
+              "children": []
+            },
+            {
+              "entity": "smaller",
+              "startPos": 27,
+              "endPos": 27,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 29,
+              "endPos": 31,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 29,
+                  "endPos": 31,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the page count of the book is 652",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 32,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 13,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 22,
+              "endPos": 25,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 30,
+              "endPos": 32,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 30,
+                  "endPos": 32,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the page number of the book is between 300 and 400",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 49,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 14,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 23,
+              "endPos": 26,
+              "children": []
+            },
+            {
+              "entity": "between",
+              "startPos": 31,
+              "endPos": 37,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 39,
+              "endPos": 49,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 39,
+                  "endPos": 41,
+                  "children": []
+                },
+                {
+                  "entity": "number",
+                  "startPos": 47,
+                  "endPos": 49,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the price of the product is \"40100\"",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 34,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 8,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 17,
+              "endPos": 23,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 29,
+              "endPos": 33,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 29,
+                  "endPos": 33,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the producer of the film is joe",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 30,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 11,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 20,
+              "endPos": 23,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 28,
+              "endPos": 30,
+              "children": [
+                {
+                  "entity": "personName",
+                  "startPos": 28,
+                  "endPos": 30,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the publication date of the book is after 1970.12.30",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 51,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 19,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 28,
+              "endPos": 31,
+              "children": []
+            },
+            {
+              "entity": "bigger",
+              "startPos": 36,
+              "endPos": 40,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 42,
+              "endPos": 51,
+              "children": [
+                {
+                  "entity": "date",
+                  "startPos": 42,
+                  "endPos": 51,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the publication date of the book is between 2000.10.10 and 2001.12.10",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 68,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 19,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 28,
+              "endPos": 31,
+              "children": []
+            },
+            {
+              "entity": "between",
+              "startPos": 36,
+              "endPos": 42,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 44,
+              "endPos": 68,
+              "children": [
+                {
+                  "entity": "date",
+                  "startPos": 44,
+                  "endPos": 53,
+                  "children": []
+                },
+                {
+                  "entity": "date",
+                  "startPos": 59,
+                  "endPos": 68,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the publisher of the book is scholastic inc.",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 43,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 12,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 21,
+              "endPos": 24,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 29,
+              "endPos": 43,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 29,
+                  "endPos": 43,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the release date of the film is \"2001\"",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 37,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 15,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 24,
+              "endPos": 27,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 33,
+              "endPos": 36,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 33,
+                  "endPos": 36,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the release date of the film was after 1997",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 42,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 15,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 24,
+              "endPos": 27,
+              "children": []
+            },
+            {
+              "entity": "bigger",
+              "startPos": 33,
+              "endPos": 37,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 39,
+              "endPos": 42,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 39,
+                  "endPos": 42,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the release year of the film is between 2000 and 2005",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 52,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 15,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 24,
+              "endPos": 27,
+              "children": []
+            },
+            {
+              "entity": "between",
+              "startPos": 32,
+              "endPos": 38,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 40,
+              "endPos": 52,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 40,
+                  "endPos": 43,
+                  "children": []
+                },
+                {
+                  "entity": "number",
+                  "startPos": 49,
+                  "endPos": 52,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the releaseyear of the film is not 2002",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 38,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 14,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 23,
+              "endPos": 26,
+              "children": []
+            },
+            {
+              "entity": "negated",
+              "startPos": 31,
+              "endPos": 33,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 35,
+              "endPos": 38,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 35,
+                  "endPos": 38,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the road's length is \"3000\"",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 26,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 7,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 11,
+              "endPos": 16,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 22,
+              "endPos": 25,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 22,
+                  "endPos": 25,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the road's length is bigger than 10",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 34,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 7,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 11,
+              "endPos": 16,
+              "children": []
+            },
+            {
+              "entity": "bigger",
+              "startPos": 21,
+              "endPos": 26,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 33,
+              "endPos": 34,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 33,
+                  "endPos": 34,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the road's speed limit is 50",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 27,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 7,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 11,
+              "endPos": 21,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 26,
+              "endPos": 27,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 26,
+                  "endPos": 27,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the scholarship of the student is between 2017.09.01 and 2021.02.01",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 66,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 14,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 23,
+              "endPos": 29,
+              "children": []
+            },
+            {
+              "entity": "between",
+              "startPos": 34,
+              "endPos": 40,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 42,
+              "endPos": 66,
+              "children": [
+                {
+                  "entity": "date",
+                  "startPos": 42,
+                  "endPos": 51,
+                  "children": []
+                },
+                {
+                  "entity": "date",
+                  "startPos": 57,
+                  "endPos": 66,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the size of the car < 300",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 24,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 7,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 16,
+              "endPos": 18,
+              "children": []
+            },
+            {
+              "entity": "smaller",
+              "startPos": 20,
+              "endPos": 20,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 22,
+              "endPos": 24,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 22,
+                  "endPos": 24,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the start of the exam was before 1000",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 36,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 8,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 17,
+              "endPos": 20,
+              "children": []
+            },
+            {
+              "entity": "smaller",
+              "startPos": 26,
+              "endPos": 31,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 33,
+              "endPos": 36,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 33,
+                  "endPos": 36,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the start of the meeting was after 1500",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 38,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 8,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 17,
+              "endPos": 23,
+              "children": []
+            },
+            {
+              "entity": "bigger",
+              "startPos": 29,
+              "endPos": 33,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 35,
+              "endPos": 38,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 35,
+                  "endPos": 38,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the story takes place in italy",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 29,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 8,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 10,
+              "endPos": 20,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 25,
+              "endPos": 29,
+              "children": [
+                {
+                  "entity": "geography",
+                  "startPos": 25,
+                  "endPos": 29,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the title of the book is \"romeo and juliet\"",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 42,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 8,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 17,
+              "endPos": 20,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 26,
+              "endPos": 41,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 26,
+                  "endPos": 41,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the title of the book is hamlet",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 30,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 8,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 17,
+              "endPos": 20,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 25,
+              "endPos": 30,
+              "children": [
+                {
+                  "entity": "personName",
+                  "startPos": 25,
+                  "endPos": 30,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the title of the film is \"harry potter and the chamber of secrets\"",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 65,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 8,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 17,
+              "endPos": 20,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 26,
+              "endPos": 64,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 26,
+                  "endPos": 64,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the title of the film is star wars",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 28,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 8,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 17,
+              "endPos": 20,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 25,
+              "endPos": 28,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 25,
+                  "endPos": 28,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the value of the property is \"this\"",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 34,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 8,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 17,
+              "endPos": 24,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 30,
+              "endPos": 33,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 30,
+                  "endPos": 33,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the value of x is 13",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 19,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 8,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 13,
+              "endPos": 13,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 18,
+              "endPos": 19,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 18,
+                  "endPos": 19,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the weight of the car is bigger than 120",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 39,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 9,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 18,
+              "endPos": 20,
+              "children": []
+            },
+            {
+              "entity": "bigger",
+              "startPos": 25,
+              "endPos": 30,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 37,
+              "endPos": 39,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 37,
+                  "endPos": 39,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "versionId": "0.2",
+  "name": "onlab-complex-chatbot",
+  "desc": "Luis Model for CoreBot",
+  "culture": "en-us",
+  "tokenizerVersion": "1.0.0",
+  "patternAnyEntities": [],
+  "regex_entities": [],
+  "phraselists": [],
+  "regex_features": [],
+  "patterns": [],
+  "settings": []
+}

@@ -10,6 +10,9 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.AI.Luis;
+using static Chatbot.CognitiveModels.SimpleModel._Entities;
+using System.Linq;
+
 namespace Chatbot.CognitiveModels
 {
     public partial class SimpleModel: IRecognizerConvert
@@ -59,13 +62,18 @@ namespace Chatbot.CognitiveModels
             }
             public class ValueClass
             {
-                public string[] date;
+                public DateTimeSpec[] date;
                 public string[] personName;
                 public string[] geography;
                 public double[] number;
                 public string[] text;
                 [JsonProperty("$instance")]
                 public _InstanceValue _instance;
+
+                public bool isEmpty()
+                {
+                    return date == null && personName == null && geography == null && number == null && text == null;
+                }
             }
             public ValueClass[] value;
 
@@ -132,6 +140,78 @@ namespace Chatbot.CognitiveModels
                 }
             }
             return (maxIntent, max);
+        }
+        public (string Subject, string Property, bool Negated, bool Bigger, bool Smaller, string[] Values, bool MultipleValues, bool DateValues) FirstEntities
+        {
+            get
+            {
+                ValueClass firstValue = Entities.value?.FirstOrDefault();
+                string subject = Entities.subject?.FirstOrDefault();
+                string property = Entities.obj?.FirstOrDefault();
+                bool negated = Entities.negate?.FirstOrDefault() != null;
+                bool bigger = Entities.bigger?.FirstOrDefault() != null;
+                bool smaller = Entities.smaller?.FirstOrDefault() != null;
+                bool multipleValues = false;
+                bool dateValues = false;
+                string[] values = { firstValue?.date?.FirstOrDefault()?.Expressions?.FirstOrDefault() ?? firstValue?.geography?.FirstOrDefault()?.ToString() ?? firstValue?.number?.FirstOrDefault().ToString() ?? firstValue?.personName?.FirstOrDefault() ?? firstValue?.text?.FirstOrDefault() };
+
+                if (firstValue != null && (firstValue?.date != null || Entities?.datetime != null && firstValue.isEmpty()))
+                    dateValues = true;
+
+                if (Entities?.around?.FirstOrDefault() != null)
+                {
+                    List<string> vals = new List<string>();
+
+                    if (dateValues)
+                    {
+                        var dateString = firstValue.date?.FirstOrDefault()?.Expressions?.FirstOrDefault() ??
+                                          Entities?.datetime?.FirstOrDefault()?.Expressions?.FirstOrDefault();
+
+                        if (!DateTime.TryParse(dateString, out DateTime date))
+                            throw new Exception("Can't convert the given string to DateTime!");
+
+                        vals.Add(date.AddYears(-1).ToShortDateString());
+                        vals.Add(date.AddYears(1).ToShortDateString());
+                    }
+                    else
+                    {
+                        vals.Add((firstValue?.number?.First() * 0.8).ToString());
+                        vals.Add((firstValue?.number?.First() * 1.2).ToString());
+                    }
+
+                    values = vals.ToArray();
+                    multipleValues = true;
+                }
+                else if (Entities?.between?.FirstOrDefault() != null || dateValues)
+                {
+                    List<string> vals = new List<string>();
+
+                    if (dateValues)
+                    {
+                        var dateStrings = firstValue?.date?.FirstOrDefault()?.Expressions ?? Entities?.datetime?.FirstOrDefault()?.Expressions.FirstOrDefault().Split(",");
+
+                        if (dateStrings.Count > 1)
+                        {
+                            vals.Add(dateStrings.First().Remove(0, 1));
+                            vals.Add(dateStrings[1]);
+                        }
+                        else
+                            vals.Add(dateStrings.First());
+                    }
+                    else
+                    {
+                        vals.Add((firstValue?.number?.First()).ToString());
+                        vals.Add((firstValue?.number?.Last()).ToString());
+                    }
+
+                    if (vals.Count > 1)
+                        multipleValues = true;
+
+                    values = vals.ToArray();
+                }
+
+                return (subject, property, negated, bigger, smaller, values, multipleValues, dateValues);
+            }
         }
     }
 }

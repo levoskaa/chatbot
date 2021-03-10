@@ -5,6 +5,7 @@
 
 using Chatbot.CognitiveModels;
 using Chatbot.Recognizers;
+using ChatBot.StatementModels;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
@@ -21,17 +22,21 @@ namespace Chatbot.Dialogs
     public class MainDialog : ComponentDialog
     {
         private readonly ComplexStatementRecognizer complexRecognizer;
+        private readonly SimpleStatementRecognizer simpleRecognizer;
         protected readonly ILogger Logger;
+        private bool restarted = false;
+        private Query query = new Query();
 
         // Dependency injection uses this constructor to instantiate MainDialog
-        public MainDialog(ComplexStatementRecognizer complexRecognizer, BookingDialog bookingDialog, ILogger<MainDialog> logger)
+        public MainDialog(ComplexStatementRecognizer complexRecognizer, SimpleStatementRecognizer simpleRecognizer, ComplexParsingDialog complexDialog, ILogger<MainDialog> logger)
             : base(nameof(MainDialog))
         {
             this.complexRecognizer = complexRecognizer;
+            this.simpleRecognizer = simpleRecognizer;
             Logger = logger;
 
             AddDialog(new TextPrompt(nameof(TextPrompt)));
-            AddDialog(bookingDialog);
+            AddDialog(complexDialog);
             AddDialog(new WaterfallDialog(nameof(WaterfallDialog), new WaterfallStep[]
             {
                 IntroStepAsync,
@@ -41,6 +46,103 @@ namespace Chatbot.Dialogs
 
             // The initial child Dialog to run.
             InitialDialogId = nameof(WaterfallDialog);
+        }
+        protected (string msg, Statement stmnt) StatementHandler(ComplexModel complexLuisResult, SimpleModel simpleLuisResult, Query query)
+        {
+            string addedStatementMessageText = "";
+
+            string objectType = complexLuisResult.FirstEntities.Subject;
+            string property = complexLuisResult.FirstEntities.Property;
+            string[] value = complexLuisResult.FirstEntities.Values;
+            string text = complexLuisResult.Text;
+            bool negated = complexLuisResult.FirstEntities.Negated || simpleLuisResult.FirstEntities.Negated;
+            bool bigger = complexLuisResult.FirstEntities.Bigger || simpleLuisResult.FirstEntities.Bigger;
+            bool smaller = complexLuisResult.FirstEntities.Smaller || simpleLuisResult.FirstEntities.Smaller;
+            bool multipleValues = complexLuisResult.FirstEntities.MultipleValues || simpleLuisResult.FirstEntities.MultipleValues;
+            bool dateValues = complexLuisResult.FirstEntities.DateValues || simpleLuisResult.FirstEntities.DateValues;
+
+            if (string.IsNullOrEmpty(property) || string.IsNullOrEmpty(value.FirstOrDefault()))
+            {
+                property = simpleLuisResult.FirstEntities.Property;
+                value = simpleLuisResult.FirstEntities.Values;
+                negated = simpleLuisResult.FirstEntities.Negated;
+                bigger = simpleLuisResult.FirstEntities.Bigger;
+                smaller = simpleLuisResult.FirstEntities.Smaller;
+                multipleValues = simpleLuisResult.FirstEntities.MultipleValues;
+                dateValues = simpleLuisResult.FirstEntities.DateValues;
+                text = simpleLuisResult.Text;
+                objectType = null;
+            }
+
+            if (!string.IsNullOrEmpty(property) && string.IsNullOrEmpty(value.FirstOrDefault()))
+            {
+                string nullValueErrorMessage = "I didn't understand the value, please give me the whole sentence again, but try putting the value between quotation marks!";
+                restarted = true;
+                return (nullValueErrorMessage, null);
+            }
+
+            if (string.IsNullOrEmpty(property))
+            {
+                string propertyError = "I didn't understand the property, please enter another constraint!";
+                restarted = true;
+                return (propertyError, null);
+            }
+
+            string optionalNegate = negated ? "not " : "";
+            string optionalSmallerBigger = smaller ? "smaller than " : (bigger ? "bigger than " : "");
+            string optionalBetween = multipleValues ? "between " : "";
+            string optionalSecondValue = multipleValues ? " and " + value.LastOrDefault() : "";
+
+            if (string.IsNullOrEmpty(query.ObjectType))
+            {
+                if (string.IsNullOrEmpty(objectType))
+                {
+                    var promptMessage = "The type of the object was not specified, please enter another constraint containing it!";
+                    restarted = true;
+                    return (promptMessage, null);
+                }
+                else if (objectType.Equals("he") || objectType.Equals("she") || objectType.Equals("his") || objectType.Equals("her") || objectType.Equals("its") || objectType.Equals("it"))
+                {
+                    var unknownTypeMessageText = $"I don't know what you are referring to by \"{objectType}\", please enter another contstraint containing the type of the object you are looking for!";
+                    restarted = true;
+                    return (unknownTypeMessageText, null);
+                }
+                else
+                {
+                    query.ObjectType = objectType;
+                    addedStatementMessageText = $"A {query.ObjectType}, got it!" + Environment.NewLine +
+                                                $"Recognised constraint: {property} - {optionalNegate}{optionalSmallerBigger}{optionalBetween}{value.FirstOrDefault()}{optionalSecondValue}." + Environment.NewLine +
+                                                $"You can give me more sentences, with additional constraints.";
+                }
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(objectType) && !objectType.Equals(query.ObjectType) && !(objectType.Equals("he") || objectType.Equals("she") || objectType.Equals("his") || objectType.Equals("her") || objectType.Equals("its") || objectType.Equals("it")))
+                {
+                    var promptMessage = $"You already specified the object type: \"{query.ObjectType}\", please enter another constraint and refer to the object by the given type!";
+                    restarted = true;
+                    return (promptMessage, null);
+                }
+                else
+                {
+                    addedStatementMessageText = $"Recognised constraint: {property} - {optionalNegate}{optionalSmallerBigger}{optionalBetween}{value.FirstOrDefault()}{optionalSecondValue}." + Environment.NewLine +
+                                                $"You can continue adding constraints, or try executing the query!";
+                }
+            }
+
+            Statement stmnt = new Statement
+            {
+                Property = property,
+                Value = value,
+                Text = text,
+                Bigger = bigger,
+                Smaller = smaller,
+                Negated = negated,
+                MultipleValues = multipleValues,
+                DateValues = dateValues
+            };
+
+            return (addedStatementMessageText, stmnt);
         }
 
         private async Task<DialogTurnResult> IntroStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
@@ -68,34 +170,47 @@ namespace Chatbot.Dialogs
             }
 
             // Call LUIS and gather any potential booking details. (Note the TurnContext has the response to the prompt.)
-            var luisResult = await complexRecognizer.RecognizeAsync<FlightBooking>(stepContext.Context, cancellationToken);
-            switch (luisResult.TopIntent().intent)
+            var complexResult = await complexRecognizer.RecognizeAsync<ComplexModel>(stepContext.Context, cancellationToken);
+            var simpleResult = await simpleRecognizer.RecognizeAsync<SimpleModel>(stepContext.Context, cancellationToken);
+            switch (complexResult.TopIntent().intent)
             {
-                case FlightBooking.Intent.BookFlight:
-                    await ShowWarningForUnsupportedCities(stepContext.Context, luisResult, cancellationToken);
+                case ComplexModel.Intent.Statement:
+                    (string msg, Statement stmnt) = StatementHandler(complexResult, simpleResult, query);
 
-                    // Initialize BookingDetails with any entities we may have found in the response.
-                    var bookingDetails = new BookingDetails()
+                    if (stmnt != null)
                     {
-                        // Get destination and origin from the composite entities arrays.
-                        Destination = luisResult.ToEntities.Airport,
-                        Origin = luisResult.FromEntities.Airport,
-                        TravelDate = luisResult.TravelDate,
-                    };
+                        query.AddStatement(stmnt);
+                    }
 
-                    // Run the BookingDialog giving it whatever details we have from the LUIS call, it will fill out the remainder.
-                    return await stepContext.BeginDialogAsync(nameof(BookingDialog), bookingDetails, cancellationToken);
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, msg, cancellationToken);
 
-                case FlightBooking.Intent.GetWeather:
-                    // We haven't implemented the GetWeatherDialog so we just display a TODO message.
-                    var getWeatherMessageText = "TODO: get weather flow here";
-                    var getWeatherMessage = MessageFactory.Text(getWeatherMessageText, getWeatherMessageText, InputHints.IgnoringInput);
-                    await stepContext.Context.SendActivityAsync(getWeatherMessage, cancellationToken);
-                    break;
+                case ComplexModel.Intent.ObjectType:
+                    string onlyObjectType = complexResult.FirstEntities.ObjectType;
+
+                    if (string.IsNullOrEmpty(query.ObjectType))
+                    {
+                        if (string.IsNullOrEmpty(onlyObjectType))
+                        {
+                            var promptMessage = "The type of the object was not specified, please enter another constraint containing it!";
+                            return await stepContext.ReplaceDialogAsync(InitialDialogId, promptMessage, cancellationToken);
+                        }
+
+                        query.ObjectType = onlyObjectType;
+                        var typeMessage = $"A {query.ObjectType}, got it!" + Environment.NewLine +
+                                          $"Now give me sentences with the details!" + Environment.NewLine +
+                                          $"You can give me more than one sentence and when you are finished, just say so.";
+                        return await stepContext.ReplaceDialogAsync(InitialDialogId, typeMessage, cancellationToken);
+                    }
+                    else
+                    {
+                        var promptMessage = $"You already specified the object type: \"{query.ObjectType}\", please enter another constraint and refer to the object by the given type!";
+                        return await stepContext.ReplaceDialogAsync(InitialDialogId, promptMessage, cancellationToken);
+                    }
+
 
                 default:
                     // Catch all for unhandled intents
-                    var didntUnderstandMessageText = $"Sorry, I didn't get that. Please try asking in a different way (intent was {luisResult.TopIntent().intent})";
+                    var didntUnderstandMessageText = $"Sorry, I didn't get that. Please try asking in a different way (intent was {complexResult.TopIntent().intent})";
                     var didntUnderstandMessage = MessageFactory.Text(didntUnderstandMessageText, didntUnderstandMessageText, InputHints.IgnoringInput);
                     await stepContext.Context.SendActivityAsync(didntUnderstandMessage, cancellationToken);
                     break;

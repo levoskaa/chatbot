@@ -15,59 +15,57 @@ using Microsoft.Extensions.Hosting;
 
 namespace Chatbot
 {
-  public class Startup
-  {
-    // This method gets called by the runtime. Use this method to add services to the container.
-    public void ConfigureServices(IServiceCollection services)
+    public class Startup
     {
-      services.AddControllers().AddNewtonsoftJson();
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddControllers().AddNewtonsoftJson();
 
-      // Create the Bot Framework Adapter with error handling enabled.
-      services.AddSingleton<IBotFrameworkHttpAdapter, AdapterWithErrorHandler>();
+            // Create the Bot Framework Adapter with error handling enabled.
+            services.AddSingleton<IBotFrameworkHttpAdapter, AdapterWithErrorHandler>();
 
-      // Create the storage we'll be using for User and Conversation state. (Memory is great for testing purposes.)
-      services.AddSingleton<IStorage, MemoryStorage>();
+            // Create the storage we'll be using for User and Conversation state. (Memory is great for testing purposes.)
+            services.AddSingleton<IStorage, MemoryStorage>();
 
-      // Create the User state. (Used in this bot's Dialog implementation.)
-      services.AddSingleton<UserState>();
+            // Create the User state. (Used in this bot's Dialog implementation.)
+            services.AddSingleton<UserState>();
 
-      // Create the Conversation state. (Used by the Dialog system itself.)
-      services.AddSingleton<ConversationState>();
+            // Create the Conversation state. (Used by the Dialog system itself.)
+            services.AddSingleton<ConversationState>();
 
-      // Register LUIS recognizers
-      services.AddSingleton<FlightBookingRecognizer>();
-      services.AddSingleton<SimpleStatementRecognizer>();
-      services.AddSingleton<ComplexStatementRecognizer>();
+            // Register LUIS recognizers
+            services.AddSingleton<SimpleStatementRecognizer>();
+            services.AddSingleton<ComplexStatementRecognizer>();
 
-      // Register the BookingDialog.
-      services.AddSingleton<BookingDialog>();
+            // Register dialogs
+            services.AddSingleton<SimpleParsingDialog>();
+            services.AddSingleton<ComplexParsingDialog>();
+            services.AddSingleton<MainDialog>();
 
-      // The MainDialog that will be run by the bot.
-      services.AddSingleton<MainDialog>();
+            // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
+            services.AddTransient<IBot, DialogAndWelcomeBot<MainDialog>>();
+        }
 
-      // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
-      services.AddTransient<IBot, DialogAndWelcomeBot<MainDialog>>();
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseDefaultFiles()
+                .UseStaticFiles()
+                .UseWebSockets()
+                .UseRouting()
+                .UseAuthorization()
+                .UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllers();
+                });
+
+            // app.UseHttpsRedirection();
+        }
     }
-
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-    {
-      if (env.IsDevelopment())
-      {
-        app.UseDeveloperExceptionPage();
-      }
-
-      app.UseDefaultFiles()
-          .UseStaticFiles()
-          .UseWebSockets()
-          .UseRouting()
-          .UseAuthorization()
-          .UseEndpoints(endpoints =>
-          {
-            endpoints.MapControllers();
-          });
-
-      // app.UseHttpsRedirection();
-    }
-  }
 }

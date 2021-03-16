@@ -1,12 +1,12 @@
 ﻿using AdaptiveCards;
 using Chatbot.CognitiveModels;
+using Chatbot.Extensions;
 using Chatbot.Recognizers;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +17,10 @@ namespace Chatbot.Dialogs
 {
     public class ComplexParsingDialog : CancelAndHelpDialog
     {
+        protected readonly ILogger logger;
         private readonly ComplexStatementRecognizer complexRecognizer;
         private readonly SimpleStatementRecognizer simpleRecognizer;
-        protected readonly ILogger logger;
+        private string currentIntent;
 
         public ComplexParsingDialog(ComplexStatementRecognizer complexRecognizer, SimpleStatementRecognizer simpleRecognizer, ILogger<ComplexParsingDialog> logger)
             : base(nameof(ComplexParsingDialog))
@@ -34,6 +35,7 @@ namespace Chatbot.Dialogs
             {
                 PromptStepAsync,
                 ActStepAsync,
+                ProcessDonePromptAsync
             }));
 
             // The initial child Dialog to run.
@@ -42,7 +44,7 @@ namespace Chatbot.Dialogs
 
         private async Task<DialogTurnResult> PromptStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var messageText = stepContext.Options?.ToString() ?? "What do you want to do?";
+            var messageText = stepContext.Options?.ToString() ?? "What are you looking for?";
             var promptMessage = MessageFactory.Text(messageText, messageText, InputHints.ExpectingInput);
             return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
         }
@@ -51,6 +53,7 @@ namespace Chatbot.Dialogs
         {
             var complexResult = await complexRecognizer.RecognizeAsync<ComplexModel>(stepContext.Context, cancellationToken);
             var topIntent = complexResult.TopIntent().intent;
+            currentIntent = topIntent.ToString();
 
             switch (topIntent)
             {
@@ -64,33 +67,11 @@ namespace Chatbot.Dialogs
                     var choices = new List<Choice>
                     {
                       new Choice("Show result"),
-                      new Choice("Modify query")
+                      new Choice("Return to editing query")
                     };
 
-                    var actions = choices.Select(choice => new AdaptiveSubmitAction
-                    {
-                        Title = choice.Value,
-                        Data = choice.Value
-                    }).ToList<AdaptiveAction>();
-
-                    var card = new AdaptiveCard(new AdaptiveSchemaVersion(1, 0))
-                    {
-                        Body = new List<AdaptiveElement>()
-                        {
-                            new AdaptiveTextBlock
-                            {
-                                Text = "What do you want to do?",
-                                Wrap = true,
-                            },
-                        },
-                        Actions = actions
-                    };
-
-                    Activity cardActivity = (Activity)MessageFactory.Attachment(new Attachment
-                    {
-                        ContentType = AdaptiveCard.ContentType,
-                        Content = JObject.FromObject(card),
-                    });
+                    var card = CreateChoiceCard(choices);
+                    var cardActivity = (Activity)card.CreateActivity();
 
                     return await stepContext.PromptAsync(nameof(ChoicePrompt), new PromptOptions
                     {
@@ -107,7 +88,7 @@ namespace Chatbot.Dialogs
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, "Edit intent recognized", cancellationToken);
 
                 case ComplexModel.Intent.Exit:
-                    return await stepContext.ReplaceDialogAsync(InitialDialogId, "Exit intent recognized", cancellationToken);
+                    return await stepContext.EndDialogAsync(null, cancellationToken);
 
                 case ComplexModel.Intent.Help:
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, "Help intent recognized", cancellationToken);
@@ -116,6 +97,51 @@ namespace Chatbot.Dialogs
                     var noIntentMessage = "Sorry, I could not understand that.";
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, noIntentMessage, cancellationToken);
             }
+        }
+
+        private async Task<DialogTurnResult> ProcessDonePromptAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        {
+            if (!currentIntent.Equals("Done"))
+            {
+                return await stepContext.NextAsync(null, cancellationToken);
+            }
+
+            var choiceResult = (stepContext.Result as FoundChoice).Value;
+            switch (choiceResult)
+            {
+                case "Return to editing query":
+                    var continueEditingMessageText = "You can continue editing your query.";
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, continueEditingMessageText, cancellationToken);
+
+                case "Show result":
+                    return await stepContext.EndDialogAsync(new { query = "Dummy query" });
+
+                default:
+                    var defaultExitMessage = "Something went wrong, clearing query and starting over. You have to specify the object type again!";
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, defaultExitMessage, cancellationToken);
+            }
+        }
+
+        private AdaptiveCard CreateChoiceCard(List<Choice> choices, string message = "What do you want to do?")
+        {
+            var actions = choices.Select(choice => new AdaptiveSubmitAction
+            {
+                Title = choice.Value,
+                Data = choice.Value
+            }).ToList<AdaptiveAction>();
+
+            return new AdaptiveCard(new AdaptiveSchemaVersion(1, 0))
+            {
+                Body = new List<AdaptiveElement>()
+                {
+                    new AdaptiveTextBlock
+                        {
+                            Text = message,
+                            Wrap = true,
+                        },
+                },
+                Actions = actions
+            };
         }
     }
 }

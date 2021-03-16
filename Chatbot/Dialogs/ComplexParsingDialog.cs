@@ -17,14 +17,12 @@ namespace Chatbot.Dialogs
     {
         protected readonly ILogger logger;
         private readonly ComplexStatementRecognizer complexRecognizer;
-        private readonly SimpleStatementRecognizer simpleRecognizer;
         private string currentIntent;
 
-        public ComplexParsingDialog(ComplexStatementRecognizer complexRecognizer, SimpleStatementRecognizer simpleRecognizer, ILogger<ComplexParsingDialog> logger)
+        public ComplexParsingDialog(ComplexStatementRecognizer complexRecognizer, ILogger<ComplexParsingDialog> logger)
             : base(nameof(ComplexParsingDialog))
         {
             this.complexRecognizer = complexRecognizer;
-            this.simpleRecognizer = simpleRecognizer;
             this.logger = logger;
 
             AddDialog(new TextPrompt(nameof(TextPrompt)));
@@ -107,7 +105,7 @@ namespace Chatbot.Dialogs
         {
             if (!currentIntent.Equals("Done"))
             {
-                return await stepContext.NextAsync(null, cancellationToken);
+                return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
             }
 
             string messageText;

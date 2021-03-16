@@ -2,6 +2,7 @@
 using Chatbot.CognitiveModels;
 using Chatbot.Extensions;
 using Chatbot.Recognizers;
+using Chatbot.Utility;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
@@ -70,7 +71,7 @@ namespace Chatbot.Dialogs
                       new Choice("Return to editing query")
                     };
 
-                    var card = CreateChoiceCard(choices);
+                    var card = DialogHelper.CreateChoiceCard(choices);
                     var cardActivity = (Activity)card.CreateActivity();
 
                     return await stepContext.PromptAsync(nameof(ChoicePrompt), new PromptOptions
@@ -120,28 +121,6 @@ namespace Chatbot.Dialogs
                     var defaultExitMessage = "Something went wrong, clearing query and starting over. You have to specify the object type again!";
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, defaultExitMessage, cancellationToken);
             }
-        }
-
-        private AdaptiveCard CreateChoiceCard(List<Choice> choices, string message = "What do you want to do?")
-        {
-            var actions = choices.Select(choice => new AdaptiveSubmitAction
-            {
-                Title = choice.Value,
-                Data = choice.Value
-            }).ToList<AdaptiveAction>();
-
-            return new AdaptiveCard(new AdaptiveSchemaVersion(1, 0))
-            {
-                Body = new List<AdaptiveElement>()
-                {
-                    new AdaptiveTextBlock
-                        {
-                            Text = message,
-                            Wrap = true,
-                        },
-                },
-                Actions = actions
-            };
         }
     }
 }

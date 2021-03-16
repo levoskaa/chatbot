@@ -1,5 +1,4 @@
-﻿using AdaptiveCards;
-using Chatbot.CognitiveModels;
+﻿using Chatbot.CognitiveModels;
 using Chatbot.Extensions;
 using Chatbot.Recognizers;
 using Chatbot.Utility;
@@ -8,9 +7,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -52,6 +49,7 @@ namespace Chatbot.Dialogs
 
         private async Task<DialogTurnResult> ActStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
+            string messageText;
             var complexResult = await complexRecognizer.RecognizeAsync<ComplexModel>(stepContext.Context, cancellationToken);
             var topIntent = complexResult.TopIntent().intent;
             currentIntent = topIntent.ToString();
@@ -59,10 +57,12 @@ namespace Chatbot.Dialogs
             switch (topIntent)
             {
                 case ComplexModel.Intent.Statement:
-                    return await stepContext.ReplaceDialogAsync(InitialDialogId, "Statement intent recognized", cancellationToken);
+                    messageText = "Statement intent recognized";
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, messageText, cancellationToken);
 
                 case ComplexModel.Intent.ObjectType:
-                    return await stepContext.ReplaceDialogAsync(InitialDialogId, "Object type intent recognized", cancellationToken);
+                    messageText = "Object type intent recognized";
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, messageText, cancellationToken);
 
                 case ComplexModel.Intent.Done:
                     var choices = new List<Choice>
@@ -83,20 +83,23 @@ namespace Chatbot.Dialogs
                     }, cancellationToken);
 
                 case ComplexModel.Intent.Delete:
-                    return await stepContext.ReplaceDialogAsync(InitialDialogId, "Delete intent recognized", cancellationToken);
+                    messageText = "Delete intent recognized";
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, messageText, cancellationToken);
 
                 case ComplexModel.Intent.Edit:
-                    return await stepContext.ReplaceDialogAsync(InitialDialogId, "Edit intent recognized", cancellationToken);
+                    messageText = "Edit intent recognized";
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, messageText, cancellationToken);
 
                 case ComplexModel.Intent.Exit:
                     return await stepContext.EndDialogAsync(null, cancellationToken);
 
                 case ComplexModel.Intent.Help:
-                    return await stepContext.ReplaceDialogAsync(InitialDialogId, "Help intent recognized", cancellationToken);
+                    messageText = "Help intent recognized";
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, messageText, cancellationToken);
 
                 default:
-                    var noIntentMessage = "Sorry, I could not understand that.";
-                    return await stepContext.ReplaceDialogAsync(InitialDialogId, noIntentMessage, cancellationToken);
+                    messageText = "Sorry, I could not understand that.";
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, messageText, cancellationToken);
             }
         }
 
@@ -107,19 +110,20 @@ namespace Chatbot.Dialogs
                 return await stepContext.NextAsync(null, cancellationToken);
             }
 
+            string messageText;
             var choiceResult = (stepContext.Result as FoundChoice).Value;
             switch (choiceResult)
             {
                 case "Return to editing query":
-                    var continueEditingMessageText = "You can continue editing your query.";
-                    return await stepContext.ReplaceDialogAsync(InitialDialogId, continueEditingMessageText, cancellationToken);
+                    messageText = "You can continue editing your query.";
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, messageText, cancellationToken);
 
                 case "Show result":
                     return await stepContext.EndDialogAsync(new { query = "Dummy query" });
 
                 default:
-                    var defaultExitMessage = "Something went wrong, clearing query and starting over. You have to specify the object type again!";
-                    return await stepContext.ReplaceDialogAsync(InitialDialogId, defaultExitMessage, cancellationToken);
+                    messageText = "Something went wrong, clearing query and starting over. You have to specify the object type again!";
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, messageText, cancellationToken);
             }
         }
     }

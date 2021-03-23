@@ -19,24 +19,25 @@ namespace Chatbot.Dialogs
 {
     public class MainDialog : ComponentDialog
     {
-        protected readonly ILogger Logger;
+        protected readonly ILogger logger;
         private CognitiveModel modelBeingUsed = CognitiveModel.Complex;
 
         // Dependency injection uses this constructor to instantiate MainDialog
         public MainDialog(ComplexParsingDialog complexDialog, SimpleParsingDialog simpleDialog, ILogger<MainDialog> logger)
             : base(nameof(MainDialog))
         {
-            Logger = logger;
+            this.logger = logger;
 
-            AddDialog(new ChoicePrompt(nameof(ChoicePrompt)));
-            AddDialog(complexDialog);
-            AddDialog(simpleDialog);
-            AddDialog(new WaterfallDialog(nameof(WaterfallDialog), new WaterfallStep[]
+            var waterfallSteps = new WaterfallStep[]
             {
                 QueryParsingStepAsync,
                 ShowResultStepAsync,
                 FinalStepAsync
-            }));
+            };
+            AddDialog(new WaterfallDialog(nameof(WaterfallDialog), waterfallSteps));
+            AddDialog(new ChoicePrompt(nameof(ChoicePrompt)));
+            AddDialog(complexDialog);
+            AddDialog(simpleDialog);
 
             // The initial child Dialog to run.
             InitialDialogId = nameof(WaterfallDialog);

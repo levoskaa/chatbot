@@ -21,13 +21,14 @@ namespace Chatbot.Dialogs
         {
             this.complexRecognizer = complexRecognizer;
 
-            AddDialog(new ChoicePrompt(nameof(ChoicePrompt)));
-            AddDialog(new WaterfallDialog(nameof(WaterfallDialog), new WaterfallStep[]
+            var waterfallSteps = new WaterfallStep[]
             {
                 PromptStepAsync,
                 ActStepAsync,
                 ProcessDonePromptAsync
-            }));
+            };
+            AddDialog(new WaterfallDialog(nameof(WaterfallDialog), waterfallSteps));
+            AddDialog(new ChoicePrompt(nameof(ChoicePrompt)));
 
             // The initial child Dialog to run.
             InitialDialogId = nameof(WaterfallDialog);

@@ -20,6 +20,7 @@ namespace Chatbot.Dialogs
     public class MainDialog : ComponentDialog
     {
         protected readonly ILogger Logger;
+        private CognitiveModel modelBeingUsed = CognitiveModel.Complex;
 
         // Dependency injection uses this constructor to instantiate MainDialog
         public MainDialog(ComplexParsingDialog complexDialog, SimpleParsingDialog simpleDialog, ILogger<MainDialog> logger)
@@ -31,11 +32,11 @@ namespace Chatbot.Dialogs
             AddDialog(complexDialog);
             AddDialog(simpleDialog);
             AddDialog(new WaterfallDialog(nameof(WaterfallDialog), new WaterfallStep[]
-             {
+            {
                 QueryParsingStepAsync,
                 ShowResultStepAsync,
                 FinalStepAsync
-             }));
+            }));
 
             // The initial child Dialog to run.
             InitialDialogId = nameof(WaterfallDialog);
@@ -43,12 +44,8 @@ namespace Chatbot.Dialogs
 
         private async Task<DialogTurnResult> QueryParsingStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var options = stepContext.Options as MainDialogOptions
-                ?? new MainDialogOptions
-                {
-                    SwitchToStrict = false
-                };
-            if (options.SwitchToStrict)
+            var options = stepContext.Options as MainDialogOptions ?? new MainDialogOptions();
+            if (modelBeingUsed == CognitiveModel.Simple)
             {
                 return await stepContext.BeginDialogAsync(nameof(SimpleParsingDialog), options.Message, cancellationToken);
             }
@@ -62,7 +59,8 @@ namespace Chatbot.Dialogs
         {
             string messageText;
             Activity message;
-            // If the child dialog ("ComplexParsingDialog") was cancelled or something went wrong, the Result here will be null.
+            // If the child dialog ("ComplexParsingDialog" or "SimpleParsingDialog") was cancelled or something went wrong,
+            // the Result here will be null.
             if (stepContext.Result != null /*is BookingDetails result*/)
             {
                 // Now we have all the constraints, we can execute the query.
@@ -73,9 +71,16 @@ namespace Chatbot.Dialogs
                 var choices = new List<Choice>
                 {
                     new Choice("Yes, create new query"),
-                    new Choice("No, modify query"),
-                    new Choice("No, switch to stricter chatbot")
+                    new Choice("No, modify query")
                 };
+                if (modelBeingUsed == CognitiveModel.Simple)
+                {
+                    choices.Add(new Choice("Switch to complex chatbot"));
+                }
+                else
+                {
+                    choices.Add(new Choice("Switch to stricter chatbot"));
+                }
 
                 var card = DialogHelper.CreateChoiceCard(choices, "Are you satisfied with the result?");
                 var cardActivity = (Activity)card.CreateActivity();
@@ -109,9 +114,13 @@ namespace Chatbot.Dialogs
                     options.Message = "You can continue editing your query.";
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, options, cancellationToken);
 
-                case "No, switch to stricter chatbot":
-                    options.SwitchToStrict = true;
-                    return await stepContext.ReplaceDialogAsync(InitialDialogId, options, cancellationToken);
+                case "Switch to stricter chatbot":
+                    modelBeingUsed = CognitiveModel.Simple;
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
+
+                case "Switch to complex chatbot":
+                    modelBeingUsed = CognitiveModel.Complex;
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
 
                 default:
                     options.Message = "Something went wrong, clearing query and starting over. You have to specify the object type again!";

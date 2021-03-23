@@ -20,10 +20,10 @@ namespace Chatbot.Utility
                 Body = new List<AdaptiveElement>()
                 {
                     new AdaptiveTextBlock
-                        {
-                            Text = message,
-                            Wrap = true,
-                        },
+                    {
+                        Text = message,
+                        Wrap = true,
+                    },
                 },
                 Actions = actions
             };

@@ -2,7 +2,6 @@
 using Chatbot.Extensions;
 using Chatbot.Recognizers;
 using Chatbot.Utility;
-using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Schema;
@@ -13,19 +12,15 @@ using System.Threading.Tasks;
 
 namespace Chatbot.Dialogs
 {
-    public class ComplexParsingDialog : CancelAndHelpDialog
+    public class ComplexParsingDialog : ParsingDialogBase
     {
-        protected readonly ILogger logger;
         private readonly ComplexStatementRecognizer complexRecognizer;
-        private string currentIntent;
 
         public ComplexParsingDialog(ComplexStatementRecognizer complexRecognizer, ILogger<ComplexParsingDialog> logger)
-            : base(nameof(ComplexParsingDialog))
+            : base(nameof(ComplexParsingDialog), logger)
         {
             this.complexRecognizer = complexRecognizer;
-            this.logger = logger;
 
-            AddDialog(new TextPrompt(nameof(TextPrompt)));
             AddDialog(new ChoicePrompt(nameof(ChoicePrompt)));
             AddDialog(new WaterfallDialog(nameof(WaterfallDialog), new WaterfallStep[]
             {
@@ -36,13 +31,6 @@ namespace Chatbot.Dialogs
 
             // The initial child Dialog to run.
             InitialDialogId = nameof(WaterfallDialog);
-        }
-
-        private async Task<DialogTurnResult> PromptStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
-        {
-            var messageText = stepContext.Options?.ToString() ?? "What are you looking for?";
-            var promptMessage = MessageFactory.Text(messageText, messageText, InputHints.ExpectingInput);
-            return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
         }
 
         private async Task<DialogTurnResult> ActStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)

@@ -1,5 +1,6 @@
 ﻿using Chatbot.CognitiveModels;
 using Chatbot.Extensions;
+using Chatbot.Interfaces;
 using Chatbot.Recognizers;
 using Chatbot.Utility;
 using Microsoft.Bot.Builder;
@@ -16,12 +17,14 @@ namespace Chatbot.Dialogs
     public class SimpleParsingDialog : ParsingDialogBase
     {
         private readonly SimpleStatementRecognizer simpleRecognizer;
+        private readonly ISimpleQueryHandler queryHandler;
         private bool objectTypeKnown = false;
 
-        public SimpleParsingDialog(SimpleStatementRecognizer simpleRecognizer, ILogger<SimpleParsingDialog> logger)
+        public SimpleParsingDialog(SimpleStatementRecognizer simpleRecognizer, ILogger<SimpleParsingDialog> logger, ISimpleQueryHandler queryHandler)
             : base(nameof(SimpleParsingDialog), logger)
         {
             this.simpleRecognizer = simpleRecognizer;
+            this.queryHandler = queryHandler;
 
             var waterfallSteps = new WaterfallStep[]
             {

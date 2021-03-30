@@ -41,9 +41,9 @@ namespace Chatbot
             services.AddSingleton<ComplexStatementRecognizer>();
 
             // Register dialogs
-            services.AddSingleton<SimpleParsingDialog>();
-            services.AddSingleton<ComplexParsingDialog>();
-            services.AddSingleton<MainDialog>();
+            services.AddScoped<SimpleParsingDialog>();
+            services.AddScoped<ComplexParsingDialog>();
+            services.AddScoped<MainDialog>();
 
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
             services.AddTransient<IBot, DialogAndWelcomeBot<MainDialog>>();

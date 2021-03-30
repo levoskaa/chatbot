@@ -1,5 +1,6 @@
 ﻿using Chatbot.CognitiveModels;
 using Chatbot.Extensions;
+using Chatbot.Interfaces;
 using Chatbot.Recognizers;
 using Chatbot.Utility;
 using Microsoft.Bot.Builder.Dialogs;
@@ -15,11 +16,13 @@ namespace Chatbot.Dialogs
     public class ComplexParsingDialog : ParsingDialogBase
     {
         private readonly ComplexStatementRecognizer complexRecognizer;
+        private readonly IComplexQueryHandler queryHandler;
 
-        public ComplexParsingDialog(ComplexStatementRecognizer complexRecognizer, ILogger<ComplexParsingDialog> logger)
+        public ComplexParsingDialog(ComplexStatementRecognizer complexRecognizer, ILogger<ComplexParsingDialog> logger, IComplexQueryHandler queryHandler)
             : base(nameof(ComplexParsingDialog), logger)
         {
             this.complexRecognizer = complexRecognizer;
+            this.queryHandler = queryHandler;
 
             var waterfallSteps = new WaterfallStep[]
             {

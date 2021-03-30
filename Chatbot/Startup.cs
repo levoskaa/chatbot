@@ -5,7 +5,9 @@
 
 using Chatbot.Bots;
 using Chatbot.Dialogs;
+using Chatbot.Interfaces;
 using Chatbot.Recognizers;
+using Chatbot.Utility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Bot.Builder;
@@ -45,6 +47,10 @@ namespace Chatbot
 
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
             services.AddTransient<IBot, DialogAndWelcomeBot<MainDialog>>();
+
+            // Register QueryHandlers
+            services.AddScoped<ISimpleQueryHandler, SimpleQueryHandler>();
+            services.AddScoped<IComplexQueryHandler, ComplexQueryHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

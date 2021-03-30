@@ -1,12 +1,14 @@
 ﻿using Chatbot.CognitiveModels;
 using Chatbot.Interfaces;
-using System.Collections.Generic;
 
 namespace Chatbot.Utility
 {
-    public class SimpleQueryHandler : ISimpleQueryHandler
+    public class SimpleQueryHandler : QueryHandlerBase, ISimpleQueryHandler
     {
-        public List<string> Constraints => throw new System.NotImplementedException();
+        public void AddObjectType(SimpleModel luisResult)
+        {
+            throw new System.NotImplementedException();
+        }
 
         public void AddConstraint(SimpleModel luisResult)
         {

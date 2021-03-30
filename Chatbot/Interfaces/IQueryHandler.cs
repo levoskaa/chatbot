@@ -4,6 +4,6 @@ namespace Chatbot.Interfaces
 {
     public interface IQueryHandler
     {
-        List<string> Constraints { get; }
+        IReadOnlyList<string> Constraints { get; }
     }
 }

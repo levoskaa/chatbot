@@ -41,16 +41,16 @@ namespace Chatbot
             services.AddSingleton<ComplexStatementRecognizer>();
 
             // Register dialogs
-            services.AddScoped<SimpleParsingDialog>();
-            services.AddScoped<ComplexParsingDialog>();
-            services.AddScoped<MainDialog>();
+            services.AddSingleton<SimpleParsingDialog>();
+            services.AddSingleton<ComplexParsingDialog>();
+            services.AddSingleton<MainDialog>();
 
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
             services.AddTransient<IBot, DialogAndWelcomeBot<MainDialog>>();
 
             // Register QueryHandlers
-            services.AddScoped<ISimpleQueryHandler, SimpleQueryHandler>();
-            services.AddScoped<IComplexQueryHandler, ComplexQueryHandler>();
+            services.AddSingleton<ISimpleQueryHandler, SimpleQueryHandler>();
+            services.AddSingleton<IComplexQueryHandler, ComplexQueryHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

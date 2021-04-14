@@ -4,7 +4,7 @@ namespace Chatbot.Interfaces
 {
     public interface ISimpleQueryHandler : IQueryHandler
     {
-        void AddObjectType(SimpleModel luisResult);
+        string AddObjectType(SimpleModel luisResult);
 
         void AddConstraint(SimpleModel luisResult);
     }

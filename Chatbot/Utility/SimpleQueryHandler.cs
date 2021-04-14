@@ -5,9 +5,14 @@ namespace Chatbot.Utility
 {
     public class SimpleQueryHandler : QueryHandlerBase, ISimpleQueryHandler
     {
-        public void AddObjectType(SimpleModel luisResult)
+        public string AddObjectType(SimpleModel luisResult)
         {
-            throw new System.NotImplementedException();
+            var objectType = luisResult.Entities.subject[0];
+            // TODO: handle table name synonyms
+            // TODO: handle plural/singular forms
+            // TODO: handle letter casing
+            query.From(objectType);
+            return objectType;
         }
 
         public void AddConstraint(SimpleModel luisResult)

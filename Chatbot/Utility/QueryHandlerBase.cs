@@ -8,6 +8,8 @@ namespace Chatbot.Utility
     {
         protected List<string> constraints = new List<string>();
         public IReadOnlyList<string> Constraints => constraints.AsReadOnly();
+
+        // TODO: Singleton osztály, query-t/constraint-eket nem szabad ebben tárolni
         protected Query query = new Query();
     }
 }

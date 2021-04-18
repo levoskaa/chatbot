@@ -59,7 +59,7 @@ namespace Chatbot.Dialogs
             switch (topIntent)
             {
                 case SimpleModel.Intent.searchsubject:
-                    var recognizedObjectType = queryHandler.AddObjectType(simpleResult);
+                    var recognizedObjectType = await queryHandler.AddObjectTypeAsync(simpleResult, stepContext.Context);
                     messageText = $"You are looking for a(n) {recognizedObjectType}";
                     await SendTextMessage(messageText, stepContext, cancellationToken);
                     conversationData.ObjectTypeKnown = true;
@@ -86,8 +86,10 @@ namespace Chatbot.Dialogs
             switch (topIntent)
             {
                 case SimpleModel.Intent.simplestatement:
-                    messageText = "Simple: Statement intent recognized";
-                    return await stepContext.ReplaceDialogAsync(InitialDialogId, messageText, cancellationToken);
+                    var recognizedStatement = await queryHandler.AddStatementAsync(simpleResult, stepContext.Context);
+                    messageText = $"New statement: {recognizedStatement}";
+                    await SendTextMessage(messageText, stepContext, cancellationToken);
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
 
                 case SimpleModel.Intent.finishedstatement:
                     var choices = new List<Choice>

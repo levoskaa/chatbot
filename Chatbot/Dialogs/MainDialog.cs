@@ -11,6 +11,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Logging;
+using SqlKata.Execution;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,12 +21,14 @@ namespace Chatbot.Dialogs
     public class MainDialog : ComponentDialog
     {
         protected readonly ILogger logger;
+        private readonly QueryFactory db;
         private readonly IStatePropertyAccessor<ConversationData> conversationStateAccessors;
 
         // Dependency injection uses this constructor to instantiate MainDialog
-        public MainDialog(ComplexParsingDialog complexDialog, SimpleParsingDialog simpleDialog, ConversationState conversationState, ILogger<MainDialog> logger)
+        public MainDialog(ComplexParsingDialog complexDialog, SimpleParsingDialog simpleDialog, ConversationState conversationState, QueryFactory db, ILogger<MainDialog> logger)
             : base(nameof(MainDialog))
         {
+            this.db = db;
             this.logger = logger;
             conversationStateAccessors = conversationState.CreateProperty<ConversationData>(nameof(ConversationData));
 
@@ -69,6 +72,7 @@ namespace Chatbot.Dialogs
             if (stepContext.Result != null /*is BookingDetails result*/)
             {
                 // Now we have all the constraints, we can execute the query.
+                // var result = db.FromQuery(query);
                 messageText = "Here are the results of your query...";
                 message = MessageFactory.Text(messageText, messageText, InputHints.IgnoringInput);
                 await stepContext.Context.SendActivityAsync(message, cancellationToken);

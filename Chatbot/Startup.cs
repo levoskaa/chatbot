@@ -64,7 +64,7 @@ namespace Chatbot
             services.AddSingleton<IComplexQueryHandler, ComplexQueryHandler>();
 
             // Add SqlKata Execution
-            services.AddScoped(factory =>
+            services.AddSingleton(factory =>
             {
                 var connection = new SqlConnection(Configuration.GetConnectionString("ApplicationDatabase"));
                 var compiler = new SqlServerCompiler();

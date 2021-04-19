@@ -1,11 +1,13 @@
 ﻿using Chatbot.CognitiveModels;
+using Microsoft.Bot.Builder;
+using System.Threading.Tasks;
 
 namespace Chatbot.Interfaces
 {
     public interface ISimpleQueryHandler : IQueryHandler
     {
-        string AddObjectType(SimpleModel luisResult);
+        Task<string> AddObjectTypeAsync(SimpleModel luisResult, ITurnContext context);
 
-        void AddConstraint(SimpleModel luisResult);
+        Task<string> AddStatementAsync(SimpleModel luisResult, ITurnContext context);
     }
 }

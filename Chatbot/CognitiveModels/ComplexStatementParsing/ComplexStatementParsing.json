@@ -31,7 +31,12 @@
     },
     {
       "name": "Statement",
-      "features": []
+      "features": [
+        {
+          "modelName": "clause",
+          "isRequired": false
+        }
+      ]
     }
   ],
   "entities": [
@@ -100,6 +105,16 @@
               "name": "text",
               "children": [],
               "features": []
+            },
+            {
+              "name": "daterange",
+              "children": [],
+              "features": [
+                {
+                  "modelName": "datetimeV2",
+                  "isRequired": true
+                }
+              ]
             }
           ],
           "features": []
@@ -126,6 +141,11 @@
         },
         {
           "name": "around",
+          "children": [],
+          "features": []
+        },
+        {
+          "name": "referral",
           "children": [],
           "features": []
         }
@@ -349,7 +369,7 @@
           "endPos": 23,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 1,
               "children": []
@@ -393,7 +413,7 @@
           "endPos": 18,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 1,
               "children": []
@@ -441,7 +461,7 @@
           "endPos": 14,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
               "children": []
@@ -479,7 +499,7 @@
           "endPos": 16,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
               "children": []
@@ -517,7 +537,7 @@
           "endPos": 17,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
               "children": []
@@ -555,7 +575,7 @@
           "endPos": 50,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
               "children": []
@@ -605,7 +625,7 @@
           "endPos": 36,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
               "children": []
@@ -643,7 +663,7 @@
           "endPos": 16,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
               "children": []
@@ -681,7 +701,7 @@
           "endPos": 22,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
               "children": []
@@ -733,6 +753,50 @@
           "entity": "objecttype",
           "startPos": 19,
           "endPos": 22,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "i am looking for a book with the title \"harry potter\"",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 17,
+          "endPos": 51,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 19,
+              "endPos": 22,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 40,
+              "endPos": 51,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 40,
+                  "endPos": 51,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "entity": "property",
+              "startPos": 33,
+              "endPos": 37,
+              "children": []
+            }
+          ]
+        },
+        {
+          "entity": "clause",
+          "startPos": 52,
+          "endPos": 52,
           "children": []
         }
       ]
@@ -855,7 +919,7 @@
           "endPos": 9,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 1,
               "children": []
@@ -893,7 +957,7 @@
           "endPos": 26,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 1,
               "children": []
@@ -937,7 +1001,7 @@
           "endPos": 31,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 1,
               "children": []
@@ -975,7 +1039,7 @@
           "endPos": 23,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 1,
               "children": []
@@ -1013,7 +1077,7 @@
           "endPos": 22,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 1,
               "children": []
@@ -1042,44 +1106,6 @@
       ]
     },
     {
-      "text": "its author is \"george r.r. martin\"",
-      "intent": "Statement",
-      "entities": [
-        {
-          "entity": "clause",
-          "startPos": 0,
-          "endPos": 33,
-          "children": [
-            {
-              "entity": "subject",
-              "startPos": 0,
-              "endPos": 2,
-              "children": []
-            },
-            {
-              "entity": "property",
-              "startPos": 4,
-              "endPos": 9,
-              "children": []
-            },
-            {
-              "entity": "value",
-              "startPos": 15,
-              "endPos": 32,
-              "children": [
-                {
-                  "entity": "personName",
-                  "startPos": 15,
-                  "endPos": 32,
-                  "children": []
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
       "text": "it's author is \"j.r.r tolkien\"",
       "intent": "Statement",
       "entities": [
@@ -1089,9 +1115,9 @@
           "endPos": 29,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
-              "endPos": 1,
+              "endPos": 3,
               "children": []
             },
             {
@@ -1127,9 +1153,9 @@
           "endPos": 31,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
-              "endPos": 1,
+              "endPos": 3,
               "children": []
             },
             {
@@ -1168,6 +1194,272 @@
       ]
     },
     {
+      "text": "it's isbn is 0439785960",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 22,
+          "children": [
+            {
+              "entity": "referral",
+              "startPos": 0,
+              "endPos": 3,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 5,
+              "endPos": 8,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 13,
+              "endPos": 22,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 13,
+                  "endPos": 22,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "it's language is english",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 23,
+          "children": [
+            {
+              "entity": "referral",
+              "startPos": 0,
+              "endPos": 3,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 5,
+              "endPos": 12,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 17,
+              "endPos": 23,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 17,
+                  "endPos": 23,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "it's rating is 5",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 15,
+          "children": [
+            {
+              "entity": "referral",
+              "startPos": 0,
+              "endPos": 3,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 5,
+              "endPos": 10,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 15,
+              "endPos": 15,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 15,
+                  "endPos": 15,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "it's title is harry potter",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 25,
+          "children": [
+            {
+              "entity": "referral",
+              "startPos": 0,
+              "endPos": 3,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 5,
+              "endPos": 9,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 14,
+              "endPos": 25,
+              "children": [
+                {
+                  "entity": "personName",
+                  "startPos": 14,
+                  "endPos": 25,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "it's title is lord of the rings",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 30,
+          "children": [
+            {
+              "entity": "referral",
+              "startPos": 0,
+              "endPos": 3,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 5,
+              "endPos": 9,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 14,
+              "endPos": 30,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 14,
+                  "endPos": 30,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "its author is \"george r.r. martin\"",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 33,
+          "children": [
+            {
+              "entity": "referral",
+              "startPos": 0,
+              "endPos": 2,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 9,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 15,
+              "endPos": 32,
+              "children": [
+                {
+                  "entity": "personName",
+                  "startPos": 15,
+                  "endPos": 32,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "its cpu is an intel",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 18,
+          "children": [
+            {
+              "entity": "referral",
+              "startPos": 0,
+              "endPos": 2,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 14,
+              "endPos": 18,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 14,
+                  "endPos": 18,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 6,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
       "text": "its diameter > 50",
       "intent": "Statement",
       "entities": [
@@ -1177,7 +1469,7 @@
           "endPos": 16,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
               "children": []
@@ -1221,7 +1513,7 @@
           "endPos": 34,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
               "children": []
@@ -1271,7 +1563,7 @@
           "endPos": 15,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
               "children": []
@@ -1315,7 +1607,7 @@
           "endPos": 18,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
               "children": []
@@ -1350,82 +1642,6 @@
       ]
     },
     {
-      "text": "it's isbn is 0439785960",
-      "intent": "Statement",
-      "entities": [
-        {
-          "entity": "clause",
-          "startPos": 0,
-          "endPos": 22,
-          "children": [
-            {
-              "entity": "subject",
-              "startPos": 0,
-              "endPos": 1,
-              "children": []
-            },
-            {
-              "entity": "property",
-              "startPos": 5,
-              "endPos": 8,
-              "children": []
-            },
-            {
-              "entity": "value",
-              "startPos": 13,
-              "endPos": 22,
-              "children": [
-                {
-                  "entity": "number",
-                  "startPos": 13,
-                  "endPos": 22,
-                  "children": []
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "text": "it's language is english",
-      "intent": "Statement",
-      "entities": [
-        {
-          "entity": "clause",
-          "startPos": 0,
-          "endPos": 23,
-          "children": [
-            {
-              "entity": "subject",
-              "startPos": 0,
-              "endPos": 1,
-              "children": []
-            },
-            {
-              "entity": "property",
-              "startPos": 5,
-              "endPos": 12,
-              "children": []
-            },
-            {
-              "entity": "value",
-              "startPos": 17,
-              "endPos": 23,
-              "children": [
-                {
-                  "entity": "text",
-                  "startPos": 17,
-                  "endPos": 23,
-                  "children": []
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
       "text": "its length < 30",
       "intent": "Statement",
       "entities": [
@@ -1435,7 +1651,7 @@
           "endPos": 14,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
               "children": []
@@ -1479,7 +1695,7 @@
           "endPos": 26,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
               "children": []
@@ -1517,7 +1733,7 @@
           "endPos": 27,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
               "children": []
@@ -1552,44 +1768,6 @@
       ]
     },
     {
-      "text": "it's rating is 5",
-      "intent": "Statement",
-      "entities": [
-        {
-          "entity": "clause",
-          "startPos": 0,
-          "endPos": 15,
-          "children": [
-            {
-              "entity": "subject",
-              "startPos": 0,
-              "endPos": 1,
-              "children": []
-            },
-            {
-              "entity": "property",
-              "startPos": 5,
-              "endPos": 10,
-              "children": []
-            },
-            {
-              "entity": "value",
-              "startPos": 15,
-              "endPos": 15,
-              "children": [
-                {
-                  "entity": "number",
-                  "startPos": 15,
-                  "endPos": 15,
-                  "children": []
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
       "text": "its release date is between 1965.01.01 and 2000.01.01",
       "intent": "Statement",
       "entities": [
@@ -1605,35 +1783,23 @@
               "children": []
             },
             {
-              "entity": "property",
-              "startPos": 4,
-              "endPos": 15,
-              "children": []
-            },
-            {
-              "entity": "between",
-              "startPos": 20,
-              "endPos": 26,
-              "children": []
-            },
-            {
               "entity": "value",
-              "startPos": 28,
+              "startPos": 20,
               "endPos": 52,
               "children": [
                 {
-                  "entity": "date",
-                  "startPos": 28,
-                  "endPos": 37,
-                  "children": []
-                },
-                {
-                  "entity": "date",
-                  "startPos": 43,
+                  "entity": "daterange",
+                  "startPos": 20,
                   "endPos": 52,
                   "children": []
                 }
               ]
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 15,
+              "children": []
             }
           ]
         }
@@ -1693,7 +1859,7 @@
           "endPos": 47,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
               "children": []
@@ -1722,82 +1888,6 @@
       ]
     },
     {
-      "text": "it's title is harry potter",
-      "intent": "Statement",
-      "entities": [
-        {
-          "entity": "clause",
-          "startPos": 0,
-          "endPos": 25,
-          "children": [
-            {
-              "entity": "subject",
-              "startPos": 0,
-              "endPos": 1,
-              "children": []
-            },
-            {
-              "entity": "property",
-              "startPos": 5,
-              "endPos": 9,
-              "children": []
-            },
-            {
-              "entity": "value",
-              "startPos": 14,
-              "endPos": 25,
-              "children": [
-                {
-                  "entity": "personName",
-                  "startPos": 14,
-                  "endPos": 25,
-                  "children": []
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "text": "it's title is lord of the rings",
-      "intent": "Statement",
-      "entities": [
-        {
-          "entity": "clause",
-          "startPos": 0,
-          "endPos": 30,
-          "children": [
-            {
-              "entity": "subject",
-              "startPos": 0,
-              "endPos": 1,
-              "children": []
-            },
-            {
-              "entity": "property",
-              "startPos": 5,
-              "endPos": 9,
-              "children": []
-            },
-            {
-              "entity": "value",
-              "startPos": 14,
-              "endPos": 30,
-              "children": [
-                {
-                  "entity": "text",
-                  "startPos": 14,
-                  "endPos": 30,
-                  "children": []
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
       "text": "its type is not drama",
       "intent": "Statement",
       "entities": [
@@ -1807,7 +1897,7 @@
           "endPos": 20,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
               "children": []
@@ -1893,7 +1983,7 @@
           "endPos": 28,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
               "children": []
@@ -2019,6 +2109,44 @@
       ]
     },
     {
+      "text": "the book is called jumanji",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 25,
+          "children": [
+            {
+              "entity": "value",
+              "startPos": 19,
+              "endPos": 25,
+              "children": [
+                {
+                  "entity": "text",
+                  "startPos": 19,
+                  "endPos": 25,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "entity": "property",
+              "startPos": 12,
+              "endPos": 17,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 7,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
       "text": "the book is written by william shakespeare",
       "intent": "Statement",
       "entities": [
@@ -2051,6 +2179,88 @@
                   "children": []
                 }
               ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the book was released in the year 2000",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 0,
+          "endPos": 37,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 7,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 29,
+              "endPos": 37,
+              "children": [
+                {
+                  "entity": "date",
+                  "startPos": 29,
+                  "endPos": 37,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "entity": "property",
+              "startPos": 13,
+              "endPos": 20,
+              "children": []
+            },
+            {
+              "entity": "around",
+              "startPos": 22,
+              "endPos": 27,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the book was written between 2000 and 2005",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 41,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 13,
+              "endPos": 19,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 21,
+              "endPos": 41,
+              "children": [
+                {
+                  "entity": "daterange",
+                  "startPos": 21,
+                  "endPos": 41,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 7,
+              "children": []
             }
           ]
         }
@@ -2200,6 +2410,44 @@
                   "entity": "number",
                   "startPos": 21,
                   "endPos": 22,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the car was made in the 1990s",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 28,
+          "children": [
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 6,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 12,
+              "endPos": 15,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 20,
+              "endPos": 28,
+              "children": [
+                {
+                  "entity": "date",
+                  "startPos": 20,
+                  "endPos": 28,
                   "children": []
                 }
               ]
@@ -2449,6 +2697,44 @@
       ]
     },
     {
+      "text": "the employee worked here between 2000 and 2005",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 45,
+          "children": [
+            {
+              "entity": "value",
+              "startPos": 25,
+              "endPos": 45,
+              "children": [
+                {
+                  "entity": "daterange",
+                  "startPos": 25,
+                  "endPos": 45,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "entity": "property",
+              "startPos": 13,
+              "endPos": 18,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 11,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
       "text": "the end of the day was before 1600",
       "intent": "Statement",
       "entities": [
@@ -2651,6 +2937,56 @@
                   "children": []
                 }
               ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the hoursepower of the car is between 300 and 1500",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 49,
+          "children": [
+            {
+              "entity": "value",
+              "startPos": 38,
+              "endPos": 49,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 38,
+                  "endPos": 40,
+                  "children": []
+                },
+                {
+                  "entity": "number",
+                  "startPos": 46,
+                  "endPos": 49,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "entity": "between",
+              "startPos": 30,
+              "endPos": 36,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 23,
+              "endPos": 25,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 14,
+              "children": []
             }
           ]
         }
@@ -3125,6 +3461,126 @@
       ]
     },
     {
+      "text": "the movie was produced before 2005",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 33,
+          "children": [
+            {
+              "entity": "value",
+              "startPos": 23,
+              "endPos": 33,
+              "children": [
+                {
+                  "entity": "date",
+                  "startPos": 23,
+                  "endPos": 33,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "entity": "property",
+              "startPos": 14,
+              "endPos": 21,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 8,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the movie was released between 2005 and 2008",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 43,
+          "children": [
+            {
+              "entity": "property",
+              "startPos": 14,
+              "endPos": 21,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 8,
+              "children": []
+            },
+            {
+              "entity": "value",
+              "startPos": 23,
+              "endPos": 43,
+              "children": [
+                {
+                  "entity": "daterange",
+                  "startPos": 23,
+                  "endPos": 43,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the movie was released in the 1980s",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 34,
+          "children": [
+            {
+              "entity": "value",
+              "startPos": 26,
+              "endPos": 34,
+              "children": [
+                {
+                  "entity": "date",
+                  "startPos": 26,
+                  "endPos": 34,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "entity": "subject",
+              "startPos": 4,
+              "endPos": 8,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 14,
+              "endPos": 21,
+              "children": []
+            },
+            {
+              "entity": "around",
+              "startPos": 23,
+              "endPos": 24,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
       "text": "the movie's director is not michael bay",
       "intent": "Statement",
       "entities": [
@@ -3163,6 +3619,56 @@
                   "children": []
                 }
               ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "the number of pages in the book is between 200 and 300",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 53,
+          "children": [
+            {
+              "entity": "value",
+              "startPos": 43,
+              "endPos": 53,
+              "children": [
+                {
+                  "entity": "number",
+                  "startPos": 51,
+                  "endPos": 53,
+                  "children": []
+                },
+                {
+                  "entity": "number",
+                  "startPos": 43,
+                  "endPos": 45,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "entity": "between",
+              "startPos": 35,
+              "endPos": 41,
+              "children": []
+            },
+            {
+              "entity": "subject",
+              "startPos": 27,
+              "endPos": 30,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 18,
+              "children": []
             }
           ]
         }
@@ -3641,6 +4147,44 @@
       ]
     },
     {
+      "text": "the release year of the movie is between 2000 and 2005",
+      "intent": "Statement",
+      "entities": [
+        {
+          "entity": "clause",
+          "startPos": 4,
+          "endPos": 53,
+          "children": [
+            {
+              "entity": "value",
+              "startPos": 33,
+              "endPos": 53,
+              "children": [
+                {
+                  "entity": "daterange",
+                  "startPos": 33,
+                  "endPos": 53,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "entity": "subject",
+              "startPos": 24,
+              "endPos": 28,
+              "children": []
+            },
+            {
+              "entity": "property",
+              "startPos": 4,
+              "endPos": 15,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
       "text": "the releaseyear of the film is not 2002",
       "intent": "Statement",
       "entities": [
@@ -3814,6 +4358,19 @@
           "endPos": 66,
           "children": [
             {
+              "entity": "value",
+              "startPos": 34,
+              "endPos": 66,
+              "children": [
+                {
+                  "entity": "daterange",
+                  "startPos": 34,
+                  "endPos": 66,
+                  "children": []
+                }
+              ]
+            },
+            {
               "entity": "property",
               "startPos": 4,
               "endPos": 14,
@@ -3824,31 +4381,6 @@
               "startPos": 23,
               "endPos": 29,
               "children": []
-            },
-            {
-              "entity": "between",
-              "startPos": 34,
-              "endPos": 40,
-              "children": []
-            },
-            {
-              "entity": "value",
-              "startPos": 42,
-              "endPos": 66,
-              "children": [
-                {
-                  "entity": "date",
-                  "startPos": 42,
-                  "endPos": 51,
-                  "children": []
-                },
-                {
-                  "entity": "date",
-                  "startPos": 57,
-                  "endPos": 66,
-                  "children": []
-                }
-              ]
             }
           ]
         }
@@ -4297,9 +4829,9 @@
       ]
     }
   ],
-  "versionId": "0.2",
-  "name": "onlab-complex-chatbot",
-  "desc": "Luis Model for CoreBot",
+  "versionId": "Complex_Stable",
+  "name": "Chatbot for queries",
+  "desc": "",
   "culture": "en-us",
   "tokenizerVersion": "1.0.0",
   "patternAnyEntities": [],

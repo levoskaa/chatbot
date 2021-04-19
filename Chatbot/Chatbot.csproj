@@ -26,7 +26,6 @@
   <ItemGroup>
     <Folder Include="CognitiveModels\ComplexStatementParsing\" />
     <Folder Include="CognitiveModels\SimpleStatementParsing\" />
-    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>

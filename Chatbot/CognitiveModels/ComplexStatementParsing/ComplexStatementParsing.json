@@ -45,13 +45,7 @@
       "children": [
         {
           "name": "subject",
-          "children": [
-            {
-              "name": "referral",
-              "children": [],
-              "features": []
-            }
-          ],
+          "children": [],
           "features": [
             {
               "modelName": "objecttype",
@@ -147,6 +141,11 @@
         },
         {
           "name": "around",
+          "children": [],
+          "features": []
+        },
+        {
+          "name": "referral",
           "children": [],
           "features": []
         }
@@ -370,17 +369,10 @@
           "endPos": 23,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 1,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 1,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -421,17 +413,10 @@
           "endPos": 18,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 1,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 1,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -476,17 +461,10 @@
           "endPos": 14,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 2,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -521,17 +499,10 @@
           "endPos": 16,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 2,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -566,17 +537,10 @@
           "endPos": 17,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 2,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -611,17 +575,10 @@
           "endPos": 50,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 2,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -668,17 +625,10 @@
           "endPos": 36,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 2,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -713,17 +663,10 @@
           "endPos": 16,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 2,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -758,17 +701,10 @@
           "endPos": 22,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 2,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -983,17 +919,10 @@
           "endPos": 9,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 1,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 1,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -1028,17 +957,10 @@
           "endPos": 26,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 1,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 1,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -1079,17 +1001,10 @@
           "endPos": 31,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 1,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 1,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -1124,17 +1039,10 @@
           "endPos": 23,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 1,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 1,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -1169,17 +1077,10 @@
           "endPos": 22,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 1,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 1,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -1214,17 +1115,10 @@
           "endPos": 29,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
-              "endPos": 1,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 1,
-                  "children": []
-                }
-              ]
+              "endPos": 3,
+              "children": []
             },
             {
               "entity": "property",
@@ -1259,17 +1153,10 @@
           "endPos": 31,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
-              "endPos": 1,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 1,
-                  "children": []
-                }
-              ]
+              "endPos": 3,
+              "children": []
             },
             {
               "entity": "property",
@@ -1316,17 +1203,10 @@
           "endPos": 22,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
-              "endPos": 1,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 1,
-                  "children": []
-                }
-              ]
+              "endPos": 3,
+              "children": []
             },
             {
               "entity": "property",
@@ -1361,17 +1241,10 @@
           "endPos": 23,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
-              "endPos": 1,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 1,
-                  "children": []
-                }
-              ]
+              "endPos": 3,
+              "children": []
             },
             {
               "entity": "property",
@@ -1406,17 +1279,10 @@
           "endPos": 15,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
-              "endPos": 1,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 1,
-                  "children": []
-                }
-              ]
+              "endPos": 3,
+              "children": []
             },
             {
               "entity": "property",
@@ -1451,17 +1317,10 @@
           "endPos": 25,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
-              "endPos": 1,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 1,
-                  "children": []
-                }
-              ]
+              "endPos": 3,
+              "children": []
             },
             {
               "entity": "property",
@@ -1496,17 +1355,10 @@
           "endPos": 30,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
-              "endPos": 1,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 1,
-                  "children": []
-                }
-              ]
+              "endPos": 3,
+              "children": []
             },
             {
               "entity": "property",
@@ -1541,17 +1393,10 @@
           "endPos": 33,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 2,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -1586,6 +1431,12 @@
           "endPos": 18,
           "children": [
             {
+              "entity": "referral",
+              "startPos": 0,
+              "endPos": 2,
+              "children": []
+            },
+            {
               "entity": "value",
               "startPos": 14,
               "endPos": 18,
@@ -1603,19 +1454,6 @@
               "startPos": 4,
               "endPos": 6,
               "children": []
-            },
-            {
-              "entity": "subject",
-              "startPos": 0,
-              "endPos": 2,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 2,
-                  "children": []
-                }
-              ]
             }
           ]
         }
@@ -1631,17 +1469,10 @@
           "endPos": 16,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 2,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -1682,17 +1513,10 @@
           "endPos": 34,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 2,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -1739,17 +1563,10 @@
           "endPos": 15,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 2,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -1790,17 +1607,10 @@
           "endPos": 18,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 2,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -1841,17 +1651,10 @@
           "endPos": 14,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 2,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -1892,17 +1695,10 @@
           "endPos": 26,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 2,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -1937,17 +1733,10 @@
           "endPos": 27,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 2,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -1991,14 +1780,7 @@
               "entity": "subject",
               "startPos": 0,
               "endPos": 2,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 2,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "value",
@@ -2036,14 +1818,7 @@
               "entity": "subject",
               "startPos": 0,
               "endPos": 2,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 2,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -2084,17 +1859,10 @@
           "endPos": 47,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 2,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -2129,17 +1897,10 @@
           "endPos": 20,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 2,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",
@@ -2222,17 +1983,10 @@
           "endPos": 28,
           "children": [
             {
-              "entity": "subject",
+              "entity": "referral",
               "startPos": 0,
               "endPos": 2,
-              "children": [
-                {
-                  "entity": "referral",
-                  "startPos": 0,
-                  "endPos": 2,
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "entity": "property",

@@ -20,18 +20,6 @@ namespace Chatbot.Models
 
 
         // Composites
-        public class _InstanceSubject
-        {
-            public InstanceData[] referral;
-        }
-        public class SubjectClass
-        {
-            public string[] referral;
-            [JsonProperty("$instance")]
-            public _InstanceSubject _instance;
-        }
-        public SubjectClass[] subject;
-
         public class _InstanceValue
         {
             public InstanceData[] date;
@@ -48,9 +36,14 @@ namespace Chatbot.Models
             public GeographyV2[] geography;
             public double[] number;
             public string[] text;
-            public string[] daterange;
+            public DateTimeSpec[] daterange;
             [JsonProperty("$instance")]
             public _InstanceValue _instance;
+
+            public bool isEmpty()
+            {
+                return date == null && personName == null && geography == null && number == null && text == null;
+            }
         }
         public ValueClass[] value;
 
@@ -64,10 +57,11 @@ namespace Chatbot.Models
             public InstanceData[] negated;
             public InstanceData[] between;
             public InstanceData[] around;
+            public InstanceData[] referral;
         }
         public class ClauseClass
         {
-            public SubjectClass[] subject;
+            public string[] subject;
             public string[] property;
             public ValueClass[] value;
             public string[] smaller;
@@ -75,6 +69,7 @@ namespace Chatbot.Models
             public string[] negated;
             public string[] between;
             public string[] around;
+            public string[] referral;
             [JsonProperty("$instance")]
             public _InstanceClause _instance;
         }

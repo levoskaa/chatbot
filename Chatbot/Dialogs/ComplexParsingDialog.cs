@@ -1,6 +1,7 @@
 ﻿using Chatbot.CognitiveModels;
 using Chatbot.Extensions;
 using Chatbot.Interfaces;
+using Chatbot.Models;
 using Chatbot.Recognizers;
 using Chatbot.Utility;
 using Microsoft.Bot.Builder.Dialogs;
@@ -47,7 +48,8 @@ namespace Chatbot.Dialogs
             switch (topIntent)
             {
                 case ComplexModel.Intent.Statement:
-                    messageText = "Statement intent recognized";
+                    (string msg, Statement s) = queryHandler.HandleStatement(complexResult);
+                    messageText = "Statement intent recognized" + "/n" + msg;
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, messageText, cancellationToken);
 
                 case ComplexModel.Intent.ObjectType:

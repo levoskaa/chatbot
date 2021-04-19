@@ -1,4 +1,5 @@
-﻿using Microsoft.Bot.Builder;
+﻿using Chatbot.Models;
+using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Logging;
@@ -9,13 +10,14 @@ namespace Chatbot.Dialogs
 {
     public abstract class ParsingDialogBase : CancelAndHelpDialog
     {
+        protected readonly IStatePropertyAccessor<ConversationData> conversationStateAccessors;
         protected readonly ILogger logger;
-        protected string currentIntent;
 
-        public ParsingDialogBase(string id, ILogger<ParsingDialogBase> logger)
+        public ParsingDialogBase(string id, ConversationState conversationState, ILogger<ParsingDialogBase> logger)
             : base(id)
         {
             this.logger = logger;
+            conversationStateAccessors = conversationState.CreateProperty<ConversationData>(nameof(ConversationData));
 
             AddDialog(new TextPrompt(nameof(TextPrompt)));
         }
@@ -25,6 +27,12 @@ namespace Chatbot.Dialogs
             var messageText = stepContext.Options?.ToString() ?? "What are you looking for?";
             var promptMessage = MessageFactory.Text(messageText, messageText, InputHints.ExpectingInput);
             return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
+        }
+
+        protected async Task SendTextMessage(string messageText, WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        {
+            var message = MessageFactory.Text(messageText, messageText, InputHints.IgnoringInput);
+            await stepContext.Context.SendActivityAsync(message, cancellationToken);
         }
     }
 }

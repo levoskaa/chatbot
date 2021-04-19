@@ -4,6 +4,7 @@ using Chatbot.Interfaces;
 using Chatbot.Models;
 using Chatbot.Recognizers;
 using Chatbot.Utility;
+using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Schema;
@@ -19,8 +20,12 @@ namespace Chatbot.Dialogs
         private readonly ComplexStatementRecognizer complexRecognizer;
         private readonly IComplexQueryHandler queryHandler;
 
-        public ComplexParsingDialog(ComplexStatementRecognizer complexRecognizer, ILogger<ComplexParsingDialog> logger, IComplexQueryHandler queryHandler)
-            : base(nameof(ComplexParsingDialog), logger)
+        public ComplexParsingDialog(
+            ComplexStatementRecognizer complexRecognizer,
+            IComplexQueryHandler queryHandler,
+            ConversationState conversationState,
+            ILogger<ComplexParsingDialog> logger
+            ) : base(nameof(ComplexParsingDialog), conversationState, logger)
         {
             this.complexRecognizer = complexRecognizer;
             this.queryHandler = queryHandler;
@@ -41,9 +46,10 @@ namespace Chatbot.Dialogs
         private async Task<DialogTurnResult> ActStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             string messageText;
+            var conversationData = await conversationStateAccessors.GetAsync(stepContext.Context, () => new ConversationData());
             var complexResult = await complexRecognizer.RecognizeAsync<ComplexModel>(stepContext.Context, cancellationToken);
             var topIntent = complexResult.TopIntent().intent;
-            currentIntent = topIntent.ToString();
+            conversationData.CurrentIntent = topIntent.ToString();
 
             switch (topIntent)
             {
@@ -97,7 +103,8 @@ namespace Chatbot.Dialogs
 
         private async Task<DialogTurnResult> ProcessDonePromptAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            if (!currentIntent.Equals("Done"))
+            var conversationData = await conversationStateAccessors.GetAsync(stepContext.Context, () => new ConversationData());
+            if (!conversationData.CurrentIntent.Equals("Done"))
             {
                 return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
             }

@@ -4,14 +4,24 @@ using Chatbot.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Bot.Builder;
+using System.Threading.Tasks;
 
 namespace Chatbot.Utility
 {
     public class ComplexQueryHandler : QueryHandlerBase, IComplexQueryHandler
     {
-        private static string specifiedObjectType;
+        public ComplexQueryHandler(ConversationState conversationState)
+            : base(conversationState)
+        {
+        }
 
-        public void AddConstraint(ComplexModel luisResult)
+        public Task<string> AddObjectTypeAsync(ComplexModel luisResult, ITurnContext context)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<string> AddStatementAsync(ComplexModel luisResult, ITurnContext context)
         {
             throw new System.NotImplementedException();
         }

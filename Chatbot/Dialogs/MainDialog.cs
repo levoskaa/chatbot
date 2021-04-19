@@ -11,6 +11,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Logging;
+using SqlKata.Execution;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,13 +21,16 @@ namespace Chatbot.Dialogs
     public class MainDialog : ComponentDialog
     {
         protected readonly ILogger logger;
-        private CognitiveModel modelBeingUsed = CognitiveModel.Complex;
+        private readonly QueryFactory db;
+        private readonly IStatePropertyAccessor<ConversationData> conversationStateAccessors;
 
         // Dependency injection uses this constructor to instantiate MainDialog
-        public MainDialog(ComplexParsingDialog complexDialog, SimpleParsingDialog simpleDialog, ILogger<MainDialog> logger)
+        public MainDialog(ComplexParsingDialog complexDialog, SimpleParsingDialog simpleDialog, ConversationState conversationState, QueryFactory db, ILogger<MainDialog> logger)
             : base(nameof(MainDialog))
         {
+            this.db = db;
             this.logger = logger;
+            conversationStateAccessors = conversationState.CreateProperty<ConversationData>(nameof(ConversationData));
 
             var waterfallSteps = new WaterfallStep[]
             {
@@ -46,7 +50,8 @@ namespace Chatbot.Dialogs
         private async Task<DialogTurnResult> QueryParsingStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             var options = stepContext.Options as MainDialogOptions ?? new MainDialogOptions();
-            if (modelBeingUsed == CognitiveModel.Simple)
+            var conversationData = await conversationStateAccessors.GetAsync(stepContext.Context, () => new ConversationData());
+            if (conversationData.ModelBeingUsed == CognitiveModel.Simple)
             {
                 return await stepContext.BeginDialogAsync(nameof(SimpleParsingDialog), options.Message, cancellationToken);
             }
@@ -60,11 +65,14 @@ namespace Chatbot.Dialogs
         {
             string messageText;
             Activity message;
+            var conversationData = await conversationStateAccessors.GetAsync(stepContext.Context, () => new ConversationData());
+
             // If the child dialog ("ComplexParsingDialog" or "SimpleParsingDialog") was cancelled or something went wrong,
             // the Result here will be null.
             if (stepContext.Result != null /*is BookingDetails result*/)
             {
                 // Now we have all the constraints, we can execute the query.
+                // var result = db.FromQuery(query);
                 messageText = "Here are the results of your query...";
                 message = MessageFactory.Text(messageText, messageText, InputHints.IgnoringInput);
                 await stepContext.Context.SendActivityAsync(message, cancellationToken);
@@ -74,7 +82,7 @@ namespace Chatbot.Dialogs
                     new Choice("Yes, create new query"),
                     new Choice("No, modify query")
                 };
-                if (modelBeingUsed == CognitiveModel.Simple)
+                if (conversationData.ModelBeingUsed == CognitiveModel.Simple)
                 {
                     choices.Add(new Choice("Switch to complex chatbot"));
                 }
@@ -103,7 +111,8 @@ namespace Chatbot.Dialogs
 
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            MainDialogOptions options = new MainDialogOptions();
+            var conversationData = await conversationStateAccessors.GetAsync(stepContext.Context, () => new ConversationData());
+            var options = new MainDialogOptions();
             var choiceResult = (stepContext.Result as FoundChoice).Value;
             switch (choiceResult)
             {
@@ -116,11 +125,11 @@ namespace Chatbot.Dialogs
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, options, cancellationToken);
 
                 case "Switch to stricter chatbot":
-                    modelBeingUsed = CognitiveModel.Simple;
+                    conversationData.ModelBeingUsed = CognitiveModel.Simple;
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
 
                 case "Switch to complex chatbot":
-                    modelBeingUsed = CognitiveModel.Complex;
+                    conversationData.ModelBeingUsed = CognitiveModel.Complex;
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
 
                 default:

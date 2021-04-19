@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Bot.Builder;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Chatbot.Interfaces
 {
     public interface IQueryHandler
     {
-        IReadOnlyList<string> Constraints { get; }
+        Task<List<string>> GetStatementsAsync(ITurnContext context);
     }
 }

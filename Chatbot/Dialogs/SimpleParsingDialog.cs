@@ -1,6 +1,7 @@
 ﻿using Chatbot.CognitiveModels;
 using Chatbot.Extensions;
 using Chatbot.Interfaces;
+using Chatbot.Models;
 using Chatbot.Recognizers;
 using Chatbot.Utility;
 using Microsoft.Bot.Builder;
@@ -18,10 +19,13 @@ namespace Chatbot.Dialogs
     {
         private readonly SimpleStatementRecognizer simpleRecognizer;
         private readonly ISimpleQueryHandler queryHandler;
-        private bool objectTypeKnown = false;
 
-        public SimpleParsingDialog(SimpleStatementRecognizer simpleRecognizer, ILogger<SimpleParsingDialog> logger, ISimpleQueryHandler queryHandler)
-            : base(nameof(SimpleParsingDialog), logger)
+        public SimpleParsingDialog(
+            SimpleStatementRecognizer simpleRecognizer,
+            ISimpleQueryHandler queryHandler,
+            ConversationState conversationState,
+            ILogger<SimpleParsingDialog> logger
+            ) : base(nameof(SimpleParsingDialog), conversationState, logger)
         {
             this.simpleRecognizer = simpleRecognizer;
             this.queryHandler = queryHandler;
@@ -42,26 +46,31 @@ namespace Chatbot.Dialogs
 
         private async Task<DialogTurnResult> ObjectTypeStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            if (objectTypeKnown)
+            var conversationData = await conversationStateAccessors.GetAsync(stepContext.Context, () => new ConversationData());
+            if (conversationData.ObjectTypeKnown)
             {
                 return await stepContext.NextAsync(stepContext.Context, cancellationToken);
             }
 
+            string messageText;
             var simpleResult = await simpleRecognizer.RecognizeAsync<SimpleModel>(stepContext.Context, cancellationToken);
             var topIntent = simpleResult.TopIntent().intent;
 
             switch (topIntent)
             {
                 case SimpleModel.Intent.searchsubject:
-                    objectTypeKnown = true;
-                    var promptMessage = MessageFactory.Text("Now tell me the the details using sentences in \"something is something\" form (e.g. the author is William Shakespeare)." +
-                                                      " You can give me multiple sentences and when you are finished, just tell me (e.g. I am finished).", InputHints.ExpectingInput);
-                    return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
+                    var recognizedObjectType = await queryHandler.AddObjectTypeAsync(simpleResult, stepContext.Context);
+                    messageText = $"You are looking for a(n) {recognizedObjectType}";
+                    await SendTextMessage(messageText, stepContext, cancellationToken);
+                    conversationData.ObjectTypeKnown = true;
+                    messageText = "Now tell me the the details using sentences in \"something is something\" form (e.g. the author is William Shakespeare)."
+                        + " You can give me multiple sentences and when you are finished, just tell me (e.g. I am finished).";
+                    var message = MessageFactory.Text(messageText, InputHints.ExpectingInput);
+                    return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = message }, cancellationToken);
 
                 default:
-                    var messageText = "Sorry, I could not understand that.";
-                    var message = MessageFactory.Text(messageText, messageText, InputHints.IgnoringInput);
-                    await stepContext.Context.SendActivityAsync(message, cancellationToken);
+                    messageText = "Sorry, I could not understand that.";
+                    await SendTextMessage(messageText, stepContext, cancellationToken);
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
             }
         }
@@ -69,15 +78,18 @@ namespace Chatbot.Dialogs
         private async Task<DialogTurnResult> ActStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             string messageText;
+            var conversationData = await conversationStateAccessors.GetAsync(stepContext.Context, () => new ConversationData());
             var simpleResult = await simpleRecognizer.RecognizeAsync<SimpleModel>(stepContext.Context, cancellationToken);
             var topIntent = simpleResult.TopIntent().intent;
-            currentIntent = topIntent.ToString();
+            conversationData.CurrentIntent = topIntent.ToString();
 
             switch (topIntent)
             {
                 case SimpleModel.Intent.simplestatement:
-                    messageText = "Simple: Statement intent recognized";
-                    return await stepContext.ReplaceDialogAsync(InitialDialogId, messageText, cancellationToken);
+                    var recognizedStatement = await queryHandler.AddStatementAsync(simpleResult, stepContext.Context);
+                    messageText = $"New statement: {recognizedStatement}";
+                    await SendTextMessage(messageText, stepContext, cancellationToken);
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
 
                 case SimpleModel.Intent.finishedstatement:
                     var choices = new List<Choice>
@@ -111,7 +123,8 @@ namespace Chatbot.Dialogs
 
         private async Task<DialogTurnResult> ProcessDonePromptAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            if (!currentIntent.Equals("finishedstatement"))
+            var conversationData = await conversationStateAccessors.GetAsync(stepContext.Context, () => new ConversationData());
+            if (!conversationData.CurrentIntent.Equals("finishedstatement"))
             {
                 return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
             }
@@ -125,7 +138,7 @@ namespace Chatbot.Dialogs
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, messageText, cancellationToken);
 
                 case "Show result":
-                    objectTypeKnown = false;
+                    conversationData.ObjectTypeKnown = false;
                     return await stepContext.EndDialogAsync(new { query = "Dummy query" });
 
                 default:

@@ -12,13 +12,24 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SqlKata.Compilers;
+using SqlKata.Execution;
+using System.Data.SqlClient;
 
 namespace Chatbot
 {
     public class Startup
     {
+        private IConfiguration Configuration { get; }
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -41,16 +52,24 @@ namespace Chatbot
             services.AddSingleton<ComplexStatementRecognizer>();
 
             // Register dialogs
-            services.AddScoped<SimpleParsingDialog>();
-            services.AddScoped<ComplexParsingDialog>();
-            services.AddScoped<MainDialog>();
+            services.AddSingleton<SimpleParsingDialog>();
+            services.AddSingleton<ComplexParsingDialog>();
+            services.AddSingleton<MainDialog>();
 
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
             services.AddTransient<IBot, DialogAndWelcomeBot<MainDialog>>();
 
             // Register QueryHandlers
-            services.AddScoped<ISimpleQueryHandler, SimpleQueryHandler>();
-            services.AddScoped<IComplexQueryHandler, ComplexQueryHandler>();
+            services.AddSingleton<ISimpleQueryHandler, SimpleQueryHandler>();
+            services.AddSingleton<IComplexQueryHandler, ComplexQueryHandler>();
+
+            // Add SqlKata Execution
+            services.AddScoped(factory =>
+            {
+                var connection = new SqlConnection(Configuration.GetConnectionString("ApplicationDatabase"));
+                var compiler = new SqlServerCompiler();
+                return new QueryFactory(connection, compiler);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -5,6 +5,7 @@ namespace Chatbot.Models
 {
     public class ConversationData
     {
+        public string SpecifiedObjectType { get; set; }
         public Query Query { get; set; }
         public List<string> Statements { get; set; }
         public bool ObjectTypeKnown { get; set; } = false;

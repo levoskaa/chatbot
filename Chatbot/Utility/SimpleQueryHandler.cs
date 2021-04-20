@@ -38,7 +38,74 @@ namespace Chatbot.Utility
         public async Task<string> AddStatementAsync(SimpleModel luisResult, ITurnContext context)
         {
             // var statement
+            var convertsationData = await conversationStateAccessors.GetAsync(context, () => new ConversationData());
             var statement = ParseLuisResult(luisResult);
+
+            if (statement.MultipleValues)
+            {
+                if (statement.DateValues)
+                {
+                    var values = Array.ConvertAll(statement.Value, item => new DateTime(item));
+                    if (statement.Negated)
+                    {
+                        convertsationData.Query.WhereNotBetween(statement.Property, values.Min(), values.Max());
+                    }
+                    else
+                    {
+                        convertsationData.Query.WhereBetween(statement.Property, values.Min(), values.Max());
+                    }
+                }
+                else
+                {
+                    var values = Array.ConvertAll(statement.Value, item => double.Parse(item));
+                    if (statement.Negated)
+                    {
+                        convertsationData.Query.WhereNotBetween(statement.Property, values.Min(), values.Max());
+                    }
+                    else
+                    {
+                        convertsationData.Query.WhereBetween(statement.Property, values.Min(), values.Max());
+                    }
+                }
+            }
+            else
+            {
+                if (statement.Negated)
+                {
+                    if (statement.Bigger)
+                    {
+                        convertsationData.Query.WhereNot(statement.Property, ">", statement.Value);
+                    }
+                    else if (statement.Smaller)
+                    {
+                        convertsationData.Query.WhereNot(statement.Property, "<", statement.Value);
+                    }
+                    else
+                    {
+                        // TODO: works with numbers and dates, but with strings we need to use LIKE
+                        // this depends on the type of statement.Property in the database
+                        convertsationData.Query.WhereNot(statement.Property, "=", statement.Value);
+                    }
+                }
+                else
+                {
+                    if (statement.Bigger)
+                    {
+                        convertsationData.Query.Where(statement.Property, ">", statement.Value);
+                    }
+                    else if (statement.Smaller)
+                    {
+                        convertsationData.Query.Where(statement.Property, "<", statement.Value);
+                    }
+                    else
+                    {
+                        // TODO: works with numbers and dates, but with strings we need to use LIKE
+                        // this depends on the type of statement.Property in the database
+                        convertsationData.Query.Where(statement.Property, "=", statement.Value);
+                    }
+                }
+            }
+            convertsationData.Query.Where
             return "";
         }
 

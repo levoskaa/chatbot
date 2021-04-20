@@ -66,6 +66,11 @@ namespace Chatbot.CognitiveModels
                 public string[] text;
                 [JsonProperty("$instance")]
                 public _InstanceValue _instance;
+
+                public bool isEmpty()
+                {
+                    return date == null && personName == null && geography == null && number == null && text == null;
+                }
             }
             public ValueClass[] value;
 

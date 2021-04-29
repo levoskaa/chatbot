@@ -156,7 +156,8 @@ namespace Chatbot.Utility
                 Smaller = smaller,
                 Negated = negated,
                 MultipleValues = multipleValues,
-                DateValues = dateValues
+                DateValues = dateValues,
+                Subject = objectType
             };
 
             return stmnt;

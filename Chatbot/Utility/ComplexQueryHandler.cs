@@ -111,11 +111,16 @@ namespace Chatbot.Utility
                     else
                     {
                         var type = await GetColumnType(context, statement.Property);
-                        conversationData.Query.Where(statement.Property, "=", statement.Value);
+                        conversationData.Query.Where(statement.Property, "LIKE", $"%{statement.Value[0]}%");
                     }
                 }
             }
-            //convertsationData.Query.Where
+
+            var xQuery = queryFactory.FromQuery(conversationData.Query);
+            
+            var result = xQuery.Get().FirstOrDefault();
+            
+
             return statement.ResponseText;
         }
 

@@ -12,7 +12,7 @@ namespace Chatbot.Utility
     public abstract class QueryHandlerBase : IQueryHandler
     {
         protected readonly IStatePropertyAccessor<ConversationData> conversationStateAccessors;
-        private readonly QueryFactory queryFactory;
+        protected readonly QueryFactory queryFactory;
 
         public QueryHandlerBase(ConversationState conversationState, QueryFactory queryFactory)
         {

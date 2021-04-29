@@ -51,6 +51,7 @@ namespace Chatbot.Dialogs
         {
             var options = stepContext.Options as MainDialogOptions ?? new MainDialogOptions();
             var conversationData = await conversationStateAccessors.GetAsync(stepContext.Context, () => new ConversationData());
+            //conversationData.CurrentDb = db;
             if (conversationData.ModelBeingUsed == CognitiveModel.Simple)
             {
                 return await stepContext.BeginDialogAsync(nameof(SimpleParsingDialog), options.Message, cancellationToken);

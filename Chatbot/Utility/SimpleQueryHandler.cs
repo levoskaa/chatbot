@@ -4,6 +4,7 @@ using Chatbot.Interfaces;
 using Chatbot.Models;
 using Microsoft.Bot.Builder;
 using SqlKata;
+using SqlKata.Execution;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,8 @@ namespace Chatbot.Utility
 {
     public class SimpleQueryHandler : QueryHandlerBase, ISimpleQueryHandler
     {
-        public SimpleQueryHandler(ConversationState conversationState)
-            : base(conversationState)
+        public SimpleQueryHandler(ConversationState conversationState, QueryFactory queryFactory)
+            : base(conversationState, queryFactory)
         {
         }
 

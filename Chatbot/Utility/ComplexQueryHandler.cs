@@ -9,13 +9,14 @@ using System.Threading.Tasks;
 using Microsoft.Recognizers.Text.DataTypes.TimexExpression;
 using SqlKata;
 using Chatbot.Extensions;
+using SqlKata.Execution;
 
 namespace Chatbot.Utility
 {
     public class ComplexQueryHandler : QueryHandlerBase, IComplexQueryHandler
     {
-        public ComplexQueryHandler(ConversationState conversationState)
-            : base(conversationState)
+        public ComplexQueryHandler(ConversationState conversationState, QueryFactory queryFactory)
+            : base(conversationState, queryFactory)
         {
         }
 
@@ -92,8 +93,8 @@ namespace Chatbot.Utility
                     }
                     else
                     {
-                        // TODO: works with numbers and dates, but with strings we need to use LIKE
-                        // this depends on the type of statement.Property in the database
+                        
+
                         conversationData.Query.WhereNot(statement.Property, "=", statement.Value);
                     }
                 }
@@ -109,14 +110,13 @@ namespace Chatbot.Utility
                     }
                     else
                     {
-                        // TODO: works with numbers and dates, but with strings we need to use LIKE
-                        // this depends on the type of statement.Property in the database
+                        var type = await GetColumnType(context, statement.Property);
                         conversationData.Query.Where(statement.Property, "=", statement.Value);
                     }
                 }
             }
             //convertsationData.Query.Where
-            return statement.Text;
+            return statement.ResponseText;
         }
 
         private Statement ParseLuisResult(ComplexModel luisResult, ConversationData conversationData)
@@ -248,7 +248,8 @@ namespace Chatbot.Utility
             {
                 Property = property,
                 Value = values,
-                Text = addedStatementMessageText,
+                Text = $"{ property } - { optionalNegate }{ optionalSmallerBigger }{ optionalBetween }{ values.FirstOrDefault() }{ optionalSecondValue }",
+                ResponseText = addedStatementMessageText,
                 Bigger = bigger,
                 Smaller = smaller,
                 Negated = negated,

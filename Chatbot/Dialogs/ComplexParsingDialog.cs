@@ -55,12 +55,13 @@ namespace Chatbot.Dialogs
             switch (topIntent)
             {
                 case ComplexModel.Intent.Statement:
-                    Statement s = await queryHandler.AddStatementAsync(complexResult, stepContext.Context);
-                    messageText = "Statement intent recognized" + "/n";
+                    string s = await queryHandler.AddStatementAsync(complexResult, stepContext.Context);
+                    messageText = s;
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, messageText, cancellationToken);
 
                 case ComplexModel.Intent.ObjectType:
-                    conversationData.SpecifiedObjectType = complexResult.Entities.objecttype.FirstOrDefault();
+                    string ss = await queryHandler.AddObjectTypeAsync(complexResult, stepContext.Context);
+                    conversationData.SpecifiedObjectType = ss;
                     if (conversationData.SpecifiedObjectType == null)
                         messageText = "Coulnd't understand the type you specified.";
                     else

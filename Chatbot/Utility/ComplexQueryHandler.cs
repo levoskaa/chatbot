@@ -7,6 +7,8 @@ using System.Linq;
 using Microsoft.Bot.Builder;
 using System.Threading.Tasks;
 using Microsoft.Recognizers.Text.DataTypes.TimexExpression;
+using SqlKata;
+using Chatbot.Extensions;
 
 namespace Chatbot.Utility
 {
@@ -17,16 +19,110 @@ namespace Chatbot.Utility
         {
         }
 
-        public Task<string> AddObjectTypeAsync(ComplexModel luisResult, ITurnContext context)
+        public async Task<string> AddObjectTypeAsync(ComplexModel luisResult, ITurnContext context)
         {
-            throw new System.NotImplementedException();
+            var objectType = luisResult.Entities.objecttype.FirstOrDefault();
+            // TODO: handle table name synonyms
+            // TODO: handle plural/singular forms
+            // TODO: handle letter casing
+            var conversationData = await conversationStateAccessors.GetAsync(context, () => new ConversationData());
+            if (conversationData.Query == null)
+            {
+                conversationData.Query = new Query();
+                conversationData.Statements = new List<Statement>();
+            }
+            conversationData.ObjectTypeKnown = true;
+            conversationData.CurrentTableName = "dbo." + objectType;
+            conversationData.Query.From(conversationData.CurrentTableName);
+            return objectType;
         }
 
-        public async Task<Statement> AddStatementAsync(ComplexModel luisResult, ITurnContext context)
+        public async Task<string> AddStatementAsync(ComplexModel luisResult, ITurnContext context)
         {
-            var conversationData = await conversationStateAccessors.GetAsync(context,()=>new ConversationData());
+            var conversationData = await conversationStateAccessors.GetAsync(context, () => new ConversationData());
+            Statement statement = ParseLuisResult(luisResult, conversationData);
+            conversationData.Statements.Add(statement);
+
+            if (statement.MultipleValues)
+            {
+                if (statement.DateValues)
+                {
+                    List<DateTime> vals = new List<DateTime>();
+                    if (!DateTime.TryParse(statement.Value[0], out DateTime date1))
+                        throw new Exception("Can't convert the given string to DateTime!");
+                    if (!DateTime.TryParse(statement.Value[1], out DateTime date2))
+                        throw new Exception("Can't convert the given string to DateTime!");
+                    vals.Add(date1);
+                    vals.Add(date2);
+
+                    var values = vals.ToArray();
+                    if (statement.Negated)
+                    {
+                        conversationData.Query.WhereNotBetween(statement.Property, values.Min(), values.Max());
+                    }
+                    else
+                    {
+                        conversationData.Query.WhereBetween(statement.Property, values.Min(), values.Max());
+                    }
+                }
+                else
+                {
+                    var values = Array.ConvertAll(statement.Value, item => double.Parse(item));
+                    if (statement.Negated)
+                    {
+                        conversationData.Query.WhereNotBetween(statement.Property, values.Min(), values.Max());
+                    }
+                    else
+                    {
+                        conversationData.Query.WhereBetween(statement.Property, values.Min(), values.Max());
+                    }
+                }
+            }
+            else
+            {
+                if (statement.Negated)
+                {
+                    if (statement.Bigger)
+                    {
+                        conversationData.Query.WhereNot(statement.Property, ">", statement.Value);
+                    }
+                    else if (statement.Smaller)
+                    {
+                        conversationData.Query.WhereNot(statement.Property, "<", statement.Value);
+                    }
+                    else
+                    {
+                        // TODO: works with numbers and dates, but with strings we need to use LIKE
+                        // this depends on the type of statement.Property in the database
+                        conversationData.Query.WhereNot(statement.Property, "=", statement.Value);
+                    }
+                }
+                else
+                {
+                    if (statement.Bigger)
+                    {
+                        conversationData.Query.Where(statement.Property, ">", statement.Value);
+                    }
+                    else if (statement.Smaller)
+                    {
+                        conversationData.Query.Where(statement.Property, "<", statement.Value);
+                    }
+                    else
+                    {
+                        // TODO: works with numbers and dates, but with strings we need to use LIKE
+                        // this depends on the type of statement.Property in the database
+                        conversationData.Query.Where(statement.Property, "=", statement.Value);
+                    }
+                }
+            }
+            //convertsationData.Query.Where
+            return statement.Text;
+        }
+
+        private Statement ParseLuisResult(ComplexModel luisResult, ConversationData conversationData)
+        {
             string addedStatementMessageText = "";
-            string text = luisResult.Text;
+            string text = "";
             _Entities Entities = luisResult.Entities;
             _Entities.ClauseClass firstClause = Entities?.clause?.FirstOrDefault();
             _Entities.ValueClass firstValue = firstClause?.value?.FirstOrDefault();
@@ -41,7 +137,7 @@ namespace Chatbot.Utility
             bool dateValues = false;
 
 
-            if (firstValue != null && (firstValue?.date != null || firstValue?.daterange != null )|| Entities?.datetime != null && firstValue.isEmpty())
+            if (firstValue != null && (firstValue?.date != null || firstValue?.daterange != null) || Entities?.datetime != null && firstValue.isEmpty())
                 dateValues = true;
 
             if (dateValues)
@@ -70,6 +166,7 @@ namespace Chatbot.Utility
                     vals.Add(date2.ToShortDateString());
 
                     values = vals.ToArray();
+                    multipleValues = true;
                 }
 
             }
@@ -122,7 +219,7 @@ namespace Chatbot.Utility
                 else if (objectType.Equals("he") || objectType.Equals("she") || objectType.Equals("his") || objectType.Equals("her") || objectType.Equals("its") || objectType.Equals("it"))
                 {
                     var unknownTypeMessageText = $"I don't know what you are referring to by \"{objectType}\", please enter another contstraint containing the type of the object you are looking for!";
-                    return  null;
+                    return null;
                 }
                 else
                 {
@@ -151,7 +248,7 @@ namespace Chatbot.Utility
             {
                 Property = property,
                 Value = values,
-                Text = text,
+                Text = addedStatementMessageText,
                 Bigger = bigger,
                 Smaller = smaller,
                 Negated = negated,

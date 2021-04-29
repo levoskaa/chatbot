@@ -42,7 +42,7 @@ namespace Chatbot.Models
 
             public bool isEmpty()
             {
-                return date == null && personName == null && geography == null && number == null && text == null;
+                return date == null && personName == null && geography == null && number == null && text == null && daterange == null;
             }
         }
         public ValueClass[] value;

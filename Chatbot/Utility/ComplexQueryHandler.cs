@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Bot.Builder;
 using System.Threading.Tasks;
+using Microsoft.Recognizers.Text.DataTypes.TimexExpression;
 
 namespace Chatbot.Utility
 {
@@ -40,53 +41,53 @@ namespace Chatbot.Utility
             bool dateValues = false;
 
 
-            if (firstValue != null && (firstValue?.date != null || firstValue?.daterange != null || Entities?.datetime != null && firstValue.isEmpty()))
+            if (firstValue != null && (firstValue?.date != null || firstValue?.daterange != null )|| Entities?.datetime != null && firstValue.isEmpty())
                 dateValues = true;
+
+            if (dateValues)
+            {
+                List<string> vals = new List<string>();
+                if (firstValue?.date != null)
+                {
+                    var dateString = firstValue.date?.FirstOrDefault()?.Expressions?.FirstOrDefault();
+                    if (!DateTime.TryParse(dateString, out DateTime date))
+                        throw new Exception("Can't convert the given string to DateTime!");
+                    vals.Add(date.ToShortDateString());
+
+                    values = vals.ToArray();
+                }
+                else if (firstValue?.daterange != null)
+                {
+                    var dateRangeString = firstValue.daterange?.FirstOrDefault()?.Expressions?.FirstOrDefault();
+                    var resolution = TimexResolver.Resolve(new[] { dateRangeString });
+                    string dateStart = resolution.Values[0].Start;
+                    string dateEnd = resolution.Values[0].End;
+                    if (!DateTime.TryParse(dateStart, out DateTime date1))
+                        throw new Exception("Can't convert the given string to DateTime!");
+                    if (!DateTime.TryParse(dateEnd, out DateTime date2))
+                        throw new Exception("Can't convert the given string to DateTime!");
+                    vals.Add(date1.ToShortDateString());
+                    vals.Add(date2.ToShortDateString());
+
+                    values = vals.ToArray();
+                }
+
+            }
 
             if (firstClause?.around?.FirstOrDefault() != null && firstValue?.daterange == null)
             {
                 List<string> vals = new List<string>();
-
-                if (dateValues)
-                {
-                    var dateString = firstValue.date?.FirstOrDefault()?.Expressions?.FirstOrDefault() ?? Entities?.datetime?.FirstOrDefault()?.Expressions?.FirstOrDefault();
-
-                    if (!DateTime.TryParse(dateString, out DateTime date))
-                        throw new Exception("Can't convert the given string to DateTime!");
-
-                    vals.Add(date.AddYears(-1).ToShortDateString());
-                    vals.Add(date.AddYears(1).ToShortDateString());
-                }
-                else
-                {
-                    vals.Add((firstValue?.number?.First() * 0.8).ToString());
-                    vals.Add((firstValue?.number?.First() * 1.2).ToString());
-                }
+                vals.Add((firstValue?.number?.First() * 0.8).ToString());
+                vals.Add((firstValue?.number?.First() * 1.2).ToString());
 
                 values = vals.ToArray();
                 multipleValues = true;
             }
-            else if (firstClause?.between?.FirstOrDefault() != null || dateValues)
+            else if (firstClause?.between?.FirstOrDefault() != null)
             {
                 List<string> vals = new List<string>();
-
-                if (dateValues)
-                {
-                    var dateStrings = firstValue?.date?.FirstOrDefault()?.Expressions ?? Entities?.datetime?.FirstOrDefault()?.Expressions.FirstOrDefault().Split(",");
-
-                    if (dateStrings.Count > 1)
-                    {
-                        vals.Add(dateStrings.First().Remove(0, 1));
-                        vals.Add(dateStrings[1]);
-                    }
-                    else
-                        vals.Add(dateStrings.First());
-                }
-                else
-                {
-                    vals.Add((firstValue?.number?.First()).ToString());
-                    vals.Add((firstValue?.number?.Last()).ToString());
-                }
+                vals.Add((firstValue?.number?.First()).ToString());
+                vals.Add((firstValue?.number?.Last()).ToString());
 
                 if (vals.Count > 1)
                     multipleValues = true;
@@ -111,7 +112,7 @@ namespace Chatbot.Utility
             string optionalBetween = multipleValues ? "between " : "";
             string optionalSecondValue = multipleValues ? " and " + values.LastOrDefault() : "";
 
-            if (string.IsNullOrEmpty(conversationData.SpecifiedObjectType))
+            if (string.IsNullOrEmpty(conversationData.SpecifiedObjectType) && objectType == null)
             {
                 if (string.IsNullOrEmpty(objectType))
                 {
@@ -133,7 +134,7 @@ namespace Chatbot.Utility
             }
             else
             {
-                if (!string.IsNullOrEmpty(objectType) && !objectType.Equals(conversationData.SpecifiedObjectType) && !(objectType.Equals("he") || objectType.Equals("she") || objectType.Equals("his") || objectType.Equals("her") || objectType.Equals("its") || objectType.Equals("it")))
+                if (!string.IsNullOrEmpty(objectType) && !objectType.Equals(conversationData.SpecifiedObjectType))
                 {
                     //var promptMessage = $"You already specified the object type: \"{query.ObjectType}\", please enter another constraint and refer to the object by the given type!";
                     var promptMessage = $"You alredy specified the object type";

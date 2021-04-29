@@ -230,7 +230,7 @@ namespace Chatbot.Utility
                 {
                     //query.ObjectType = objectType;
                     addedStatementMessageText = $"A {objectType}, got it!" + Environment.NewLine +
-                                                $"Recognised constraint: {property} - {optionalNegate}{optionalSmallerBigger}{optionalBetween}{values.FirstOrDefault()}{optionalSecondValue}." + Environment.NewLine +
+                                                $"Recognised {property}: {optionalNegate}{optionalSmallerBigger}{optionalBetween}{values.FirstOrDefault()}{optionalSecondValue}." + Environment.NewLine +
                                                 $"You can give me more sentences, with additional constraints.";
                 }
             }
@@ -244,7 +244,7 @@ namespace Chatbot.Utility
                 }
                 else
                 {
-                    addedStatementMessageText = $"Recognised constraint: {property} - {optionalNegate}{optionalSmallerBigger}{optionalBetween}{values.FirstOrDefault()}{optionalSecondValue}." + Environment.NewLine +
+                    addedStatementMessageText = $"Recognised {property}: {optionalNegate}{optionalSmallerBigger}{optionalBetween}{values.FirstOrDefault()}{optionalSecondValue}." + Environment.NewLine +
                                                 $"You can continue adding constraints, or try executing the query!";
                 }
             }
@@ -253,7 +253,7 @@ namespace Chatbot.Utility
             {
                 Property = property,
                 Value = values,
-                Text = $"{ property } - { optionalNegate }{ optionalSmallerBigger }{ optionalBetween }{ values.FirstOrDefault() }{ optionalSecondValue }",
+                Text = $"{ property }:  { optionalNegate }{ optionalSmallerBigger }{ optionalBetween }{ values.FirstOrDefault() }{ optionalSecondValue }",
                 ResponseText = addedStatementMessageText,
                 Bigger = bigger,
                 Smaller = smaller,

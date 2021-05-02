@@ -10,6 +10,7 @@ using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -54,12 +55,17 @@ namespace Chatbot.Dialogs
             switch (topIntent)
             {
                 case ComplexModel.Intent.Statement:
-                    var statement = await queryHandler.AddStatementAsync(complexResult, stepContext.Context);
-                    messageText = "Statement intent recognized" + "/n";
+                    string s = await queryHandler.AddStatementAsync(complexResult, stepContext.Context);
+                    messageText = s;
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, messageText, cancellationToken);
 
                 case ComplexModel.Intent.ObjectType:
-                    messageText = "Object type intent recognized";
+                    string ss = await queryHandler.AddObjectTypeAsync(complexResult, stepContext.Context);
+                    conversationData.SpecifiedObjectType = ss;
+                    if (conversationData.SpecifiedObjectType == null)
+                        messageText = "Coulnd't understand the type you specified.";
+                    else
+                        messageText = "Got it, you are looking for a " + conversationData.SpecifiedObjectType + ".";
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, messageText, cancellationToken);
 
                 case ComplexModel.Intent.Done:

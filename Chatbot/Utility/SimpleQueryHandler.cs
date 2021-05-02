@@ -4,6 +4,7 @@ using Chatbot.Interfaces;
 using Chatbot.Models;
 using Microsoft.Bot.Builder;
 using SqlKata;
+using SqlKata.Execution;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -15,8 +16,8 @@ namespace Chatbot.Utility
 {
     public class SimpleQueryHandler : QueryHandlerBase, ISimpleQueryHandler
     {
-        public SimpleQueryHandler(ConversationState conversationState)
-            : base(conversationState)
+        public SimpleQueryHandler(ConversationState conversationState, QueryFactory queryFactory)
+            : base(conversationState, queryFactory)
         {
         }
 
@@ -47,7 +48,15 @@ namespace Chatbot.Utility
             {
                 if (statement.DateValues)
                 {
-                    var values = Array.ConvertAll(statement.Value, item => DateTime.ParseExact(item, "yyyy-MM-dd", CultureInfo.InvariantCulture));
+                    List<DateTime> vals = new List<DateTime>();
+                    if (!DateTime.TryParse(statement.Value[0], out DateTime date1))
+                        throw new Exception("Can't convert the given string to DateTime!");
+                    if (!DateTime.TryParse(statement.Value[1], out DateTime date2))
+                        throw new Exception("Can't convert the given string to DateTime!");
+                    vals.Add(date1);
+                    vals.Add(date2);
+
+                    var values = vals.ToArray();
                     if (statement.Negated)
                     {
                         conversationData.Query.WhereNotBetween(statement.Property, values.Min(), values.Max());

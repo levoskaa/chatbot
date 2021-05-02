@@ -40,9 +40,14 @@ namespace Chatbot.Models
             [JsonProperty("$instance")]
             public _InstanceValue _instance;
 
+            internal string FirstCharToUpper()
+            {
+                throw new NotImplementedException();
+            }
+
             public bool isEmpty()
             {
-                return date == null && personName == null && geography == null && number == null && text == null;
+                return date == null && personName == null && geography == null && number == null && text == null && daterange == null;
             }
         }
         public ValueClass[] value;

@@ -9,6 +9,8 @@ namespace Chatbot.Models
     {
         public string Text { get; set; }
 
+        public string ResponseText { get; set; }
+
         public string Subject { get; set; }
 
         public string Property { get; set; }

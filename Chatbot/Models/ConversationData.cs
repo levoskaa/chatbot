@@ -8,7 +8,6 @@ namespace Chatbot.Models
     {
         public string SpecifiedObjectType { get; set; }
         public Query Query { get; set; }
-        public QueryFactory CurrentDb { get; set; }
         public List<Statement> Statements { get; set; }
         public bool ObjectTypeKnown { get; set; } = false;
         public CognitiveModel ModelBeingUsed { get; set; } = CognitiveModel.Complex;

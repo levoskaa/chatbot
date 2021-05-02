@@ -3,6 +3,8 @@ using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -33,6 +35,24 @@ namespace Chatbot.Dialogs
         {
             var message = MessageFactory.Text(messageText, messageText, InputHints.IgnoringInput);
             await context.SendActivityAsync(message, cancellationToken);
+        }
+
+        protected async Task DisplayQuery(ConversationData conversationData, ITurnContext context, CancellationToken cancellationToken)
+        {
+            int i = 1;
+            var sb = new StringBuilder();
+
+            sb.Append($"You are looking for a {conversationData.SpecifiedObjectType} with the following constraints:");
+            sb.Append(Environment.NewLine);
+
+            foreach (var statement in conversationData.Statements)
+            {
+                sb.Append($"{i}. {statement.Text}");
+                sb.Append(Environment.NewLine);
+                ++i;
+            }
+
+            await SendTextMessage(sb.ToString(), context, cancellationToken);
         }
     }
 }

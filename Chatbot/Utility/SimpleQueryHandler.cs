@@ -32,6 +32,7 @@ namespace Chatbot.Utility
             {
                 conversationData.Query = new Query();
             }
+            conversationData.SpecifiedObjectType = objectType;
             objectType = objectType.FirstCharToUpper() + "s";
             conversationData.Query.From(objectType);
             return objectType;
@@ -43,6 +44,7 @@ namespace Chatbot.Utility
             var conversationData = await conversationStateAccessors.GetAsync(context, () => new ConversationData());
             var statement = ParseLuisResult(luisResult);
             var value = statement.Value[0];
+            conversationData.Statements.Add(statement);
 
             if (statement.MultipleValues)
             {
@@ -189,6 +191,11 @@ namespace Chatbot.Utility
                 values = vals.ToArray();
             }
 
+            string optionalNegate = negated ? "not " : "";
+            string optionalSmallerBigger = smaller ? "smaller than " : (bigger ? "bigger than " : "");
+            string optionalBetween = multipleValues ? "between " : "";
+            string optionalSecondValue = multipleValues ? " and " + values.LastOrDefault() : "";
+
             return new Statement
             {
                 Subject = subject,
@@ -198,7 +205,8 @@ namespace Chatbot.Utility
                 Smaller = smaller,
                 Value = values,
                 MultipleValues = multipleValues,
-                DateValues = dateValues
+                DateValues = dateValues,
+                Text = $"{ property }:  { optionalNegate }{ optionalSmallerBigger }{ optionalBetween }{ values.FirstOrDefault() }{ optionalSecondValue }"
             };
         }
     }

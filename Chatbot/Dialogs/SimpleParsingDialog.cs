@@ -61,7 +61,7 @@ namespace Chatbot.Dialogs
                 case SimpleModel.Intent.searchsubject:
                     var recognizedObjectType = await queryHandler.AddObjectTypeAsync(simpleResult, stepContext.Context);
                     messageText = $"You are looking for a(n) {recognizedObjectType}";
-                    await SendTextMessage(messageText, stepContext, cancellationToken);
+                    await SendTextMessage(messageText, stepContext.Context, cancellationToken);
                     conversationData.ObjectTypeKnown = true;
                     messageText = "Now tell me the the details using sentences in \"something is something\" form (e.g. the author is William Shakespeare)."
                         + " You can give me multiple sentences and when you are finished, just tell me (e.g. I am finished).";
@@ -70,7 +70,7 @@ namespace Chatbot.Dialogs
 
                 default:
                     messageText = "Sorry, I could not understand that.";
-                    await SendTextMessage(messageText, stepContext, cancellationToken);
+                    await SendTextMessage(messageText, stepContext.Context, cancellationToken);
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
             }
         }
@@ -88,7 +88,7 @@ namespace Chatbot.Dialogs
                 case SimpleModel.Intent.simplestatement:
                     var recognizedStatement = await queryHandler.AddStatementAsync(simpleResult, stepContext.Context);
                     messageText = $"New statement: {recognizedStatement}";
-                    await SendTextMessage(messageText, stepContext, cancellationToken);
+                    await SendTextMessage(messageText, stepContext.Context, cancellationToken);
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
 
                 case SimpleModel.Intent.finishedstatement:
@@ -139,7 +139,7 @@ namespace Chatbot.Dialogs
 
                 case "Show result":
                     conversationData.ObjectTypeKnown = false;
-                    return await stepContext.EndDialogAsync(new { query = "Dummy query" });
+                    return await stepContext.EndDialogAsync();
 
                 default:
                     messageText = "Something went wrong, clearing query and starting over. You have to specify the object type again!";

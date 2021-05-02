@@ -29,10 +29,10 @@ namespace Chatbot.Dialogs
             return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
         }
 
-        protected async Task SendTextMessage(string messageText, WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        protected async Task SendTextMessage(string messageText, ITurnContext context, CancellationToken cancellationToken)
         {
             var message = MessageFactory.Text(messageText, messageText, InputHints.IgnoringInput);
-            await stepContext.Context.SendActivityAsync(message, cancellationToken);
+            await context.SendActivityAsync(message, cancellationToken);
         }
     }
 }

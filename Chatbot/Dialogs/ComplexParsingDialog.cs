@@ -54,8 +54,8 @@ namespace Chatbot.Dialogs
             switch (topIntent)
             {
                 case ComplexModel.Intent.Statement:
-                    (string msg, Statement s) = queryHandler.HandleStatement(complexResult);
-                    messageText = "Statement intent recognized" + "/n" + msg;
+                    var statement = await queryHandler.AddStatementAsync(complexResult, stepContext.Context);
+                    messageText = "Statement intent recognized" + "/n";
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, messageText, cancellationToken);
 
                 case ComplexModel.Intent.ObjectType:

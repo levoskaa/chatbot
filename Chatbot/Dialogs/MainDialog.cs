@@ -11,8 +11,13 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Logging;
+using SqlKata;
 using SqlKata.Execution;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,14 +26,14 @@ namespace Chatbot.Dialogs
     public class MainDialog : ComponentDialog
     {
         protected readonly ILogger logger;
-        private readonly QueryFactory db;
+        private readonly QueryFactory queryFactory;
         private readonly IStatePropertyAccessor<ConversationData> conversationStateAccessors;
 
         // Dependency injection uses this constructor to instantiate MainDialog
-        public MainDialog(ComplexParsingDialog complexDialog, SimpleParsingDialog simpleDialog, ConversationState conversationState, QueryFactory db, ILogger<MainDialog> logger)
+        public MainDialog(ComplexParsingDialog complexDialog, SimpleParsingDialog simpleDialog, ConversationState conversationState, QueryFactory queryFactory, ILogger<MainDialog> logger)
             : base(nameof(MainDialog))
         {
-            this.db = db;
+            this.queryFactory = queryFactory;
             this.logger = logger;
             conversationStateAccessors = conversationState.CreateProperty<ConversationData>(nameof(ConversationData));
 
@@ -64,19 +69,16 @@ namespace Chatbot.Dialogs
 
         private async Task<DialogTurnResult> ShowResultStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            string messageText;
-            Activity message;
             var conversationData = await conversationStateAccessors.GetAsync(stepContext.Context, () => new ConversationData());
 
             // If the child dialog ("ComplexParsingDialog" or "SimpleParsingDialog") was cancelled or something went wrong,
             // the Result here will be null.
-            if (stepContext.Result != null /*is BookingDetails result*/)
+            // TODO: delete true after ComplexParsingDialog returns a value
+            if (true || stepContext.Result != null /*is BookingDetails result*/)
             {
                 // Now we have all the constraints, we can execute the query.
-                // var result = db.FromQuery(query);
-                messageText = "Here are the results of your query...";
-                message = MessageFactory.Text(messageText, messageText, InputHints.IgnoringInput);
-                await stepContext.Context.SendActivityAsync(message, cancellationToken);
+                var result = ExecuteQuery(conversationData);
+                await DisplayQueryResults(result, stepContext.Context, cancellationToken);
 
                 var choices = new List<Choice>
                 {
@@ -105,7 +107,7 @@ namespace Chatbot.Dialogs
             }
             else
             {
-                messageText = "Something went wrong, clearing query and starting over.";
+                var messageText = "Something went wrong, clearing query and starting over.";
                 return await stepContext.ReplaceDialogAsync(InitialDialogId, messageText, cancellationToken);
             }
         }
@@ -137,6 +139,50 @@ namespace Chatbot.Dialogs
                     options.Message = "Something went wrong, clearing query and starting over. You have to specify the object type again!";
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, options, cancellationToken);
             }
+        }
+
+        private IEnumerable<dynamic> ExecuteQuery(ConversationData conversationData)
+        {
+            IEnumerable<dynamic> result = new List<dynamic>();
+            if (conversationData.Query != null)
+            {
+                var xQuery = queryFactory.FromQuery(conversationData.Query);
+                result = xQuery.Get();
+            }
+            return result;
+        }
+
+        private async Task DisplayQueryResults(IEnumerable<dynamic> result, ITurnContext context, CancellationToken cancellationToken)
+        {
+            string messageText;
+            int i = 1;
+            var sb = new StringBuilder();
+
+            messageText = "Here are the results of your query...";
+            await SendTextMessage(messageText, context, cancellationToken);
+
+            foreach (var row in result)
+            {
+                sb.Append($"{i}. ");
+
+                var properties = (IDictionary<string, object>)row;
+
+                foreach (var property in properties)
+                {
+                    sb.Append($"{property.Key}: {property.Value}; ");
+                }
+
+                ++i;
+                sb.Append(Environment.NewLine);
+            }
+
+            await SendTextMessage(sb.ToString(), context, cancellationToken);
+        }
+
+        private async Task SendTextMessage(string messageText, ITurnContext context, CancellationToken cancellationToken)
+        {
+            var message = MessageFactory.Text(messageText, messageText, InputHints.IgnoringInput);
+            await context.SendActivityAsync(message, cancellationToken);
         }
     }
 }

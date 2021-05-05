@@ -22,6 +22,10 @@
       "features": []
     },
     {
+      "name": "List",
+      "features": []
+    },
+    {
       "name": "None",
       "features": []
     },
@@ -357,6 +361,16 @@
     {
       "text": "give me some tips",
       "intent": "Help",
+      "entities": []
+    },
+    {
+      "text": "give me the query",
+      "intent": "List",
+      "entities": []
+    },
+    {
+      "text": "give me the sentences",
+      "intent": "List",
       "entities": []
     },
     {
@@ -875,6 +889,11 @@
     {
       "text": "i want to quit",
       "intent": "Exit",
+      "entities": []
+    },
+    {
+      "text": "i want to see the query details",
+      "intent": "List",
       "entities": []
     },
     {
@@ -1932,6 +1951,21 @@
       ]
     },
     {
+      "text": "list",
+      "intent": "List",
+      "entities": []
+    },
+    {
+      "text": "list the query",
+      "intent": "List",
+      "entities": []
+    },
+    {
+      "text": "list the sentences",
+      "intent": "List",
+      "entities": []
+    },
+    {
       "text": "modify the query",
       "intent": "Edit",
       "entities": []
@@ -2020,6 +2054,21 @@
     {
       "text": "show help",
       "intent": "Help",
+      "entities": []
+    },
+    {
+      "text": "show me the constraints",
+      "intent": "List",
+      "entities": []
+    },
+    {
+      "text": "show me the query",
+      "intent": "List",
+      "entities": []
+    },
+    {
+      "text": "show me the sentences",
+      "intent": "List",
       "entities": []
     },
     {
@@ -4827,6 +4876,21 @@
           ]
         }
       ]
+    },
+    {
+      "text": "what are the constraints so far?",
+      "intent": "List",
+      "entities": []
+    },
+    {
+      "text": "what are the sentences so far?",
+      "intent": "List",
+      "entities": []
+    },
+    {
+      "text": "what did i specify?",
+      "intent": "List",
+      "entities": []
     }
   ],
   "versionId": "Complex_Stable",

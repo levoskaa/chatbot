@@ -28,6 +28,7 @@ namespace Chatbot.CognitiveModels
             Edit,
             Exit,
             Help,
+            List,
             None,
             ObjectType,
             Statement
@@ -35,7 +36,6 @@ namespace Chatbot.CognitiveModels
         [JsonProperty("intents")]
         public Dictionary<Intent, IntentScore> Intents;
 
-        
         [JsonProperty("entities")]
         public _Entities Entities;
 

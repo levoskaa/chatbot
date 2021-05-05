@@ -9,6 +9,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace Chatbot.Dialogs
         public ComplexParsingDialog(
             ComplexStatementRecognizer complexRecognizer,
             IComplexQueryHandler queryHandler,
+            EditDialog editDialog,
             ConversationState conversationState,
             ILogger<ComplexParsingDialog> logger
             ) : base(nameof(ComplexParsingDialog), conversationState, logger)
@@ -38,6 +40,7 @@ namespace Chatbot.Dialogs
             };
             AddDialog(new WaterfallDialog(nameof(WaterfallDialog), waterfallSteps));
             AddDialog(new ChoicePrompt(nameof(ChoicePrompt)));
+            AddDialog(editDialog);
 
             // The initial child Dialog to run.
             InitialDialogId = nameof(WaterfallDialog);
@@ -94,8 +97,7 @@ namespace Chatbot.Dialogs
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, messageText, cancellationToken);
 
                 case ComplexModel.Intent.Edit:
-                    messageText = "Edit intent recognized";
-                    return await stepContext.ReplaceDialogAsync(InitialDialogId, messageText, cancellationToken);
+                    return await stepContext.BeginDialogAsync(nameof(EditDialog), null, cancellationToken);
 
                 case ComplexModel.Intent.Exit:
                     return await stepContext.EndDialogAsync(null, cancellationToken);

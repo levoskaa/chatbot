@@ -12,5 +12,6 @@ namespace Chatbot.Models
         public CognitiveModel ModelBeingUsed { get; set; } = CognitiveModel.Complex;
         public string CurrentIntent { get; set; }
         public string CurrentTableName { get; internal set; }
+        public string StatementToEdit { get; set; }
     }
 }

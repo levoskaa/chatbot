@@ -8,7 +8,6 @@ using Microsoft.Bot.Builder;
 using System.Threading.Tasks;
 using Microsoft.Recognizers.Text.DataTypes.TimexExpression;
 using SqlKata;
-using Chatbot.Extensions;
 using SqlKata.Execution;
 
 namespace Chatbot.Utility
@@ -33,7 +32,7 @@ namespace Chatbot.Utility
                 conversationData.Statements = new List<Statement>();
             }
             conversationData.ObjectTypeKnown = true;
-            conversationData.CurrentTableName = "dbo." + objectType;
+            conversationData.CurrentTableName = $"dbo.{objectType}s";
             conversationData.Query.From(conversationData.CurrentTableName);
             return objectType;
         }
@@ -42,6 +41,11 @@ namespace Chatbot.Utility
         {
             var conversationData = await conversationStateAccessors.GetAsync(context, () => new ConversationData());
             Statement statement = ParseLuisResult(luisResult, conversationData);
+            if (statement == null)
+                return "Error parsing luis result";
+            if (statement.ParseError)
+                return statement.ResponseText;
+            
             conversationData.Statements.Add(statement);
 
             if (statement.MultipleValues)
@@ -93,8 +97,6 @@ namespace Chatbot.Utility
                     }
                     else
                     {
-                        
-
                         conversationData.Query.WhereNot(statement.Property, "=", statement.Value);
                     }
                 }
@@ -116,12 +118,80 @@ namespace Chatbot.Utility
                 }
             }
 
-            var xQuery = queryFactory.FromQuery(conversationData.Query);
-            
-            var result = xQuery.Get().FirstOrDefault();
-            
-
             return statement.ResponseText;
+        }
+
+        public async Task AddStatementAsync(Statement statement, Query query, ITurnContext context)
+        {
+            if (statement.MultipleValues)
+            {
+                if (statement.DateValues)
+                {
+                    List<DateTime> vals = new List<DateTime>();
+                    if (!DateTime.TryParse(statement.Value[0], out DateTime date1))
+                        throw new Exception("Can't convert the given string to DateTime!");
+                    if (!DateTime.TryParse(statement.Value[1], out DateTime date2))
+                        throw new Exception("Can't convert the given string to DateTime!");
+                    vals.Add(date1);
+                    vals.Add(date2);
+
+                    var values = vals.ToArray();
+                    if (statement.Negated)
+                    {
+                        query.WhereNotBetween(statement.Property, values.Min(), values.Max());
+                    }
+                    else
+                    {
+                        query.WhereBetween(statement.Property, values.Min(), values.Max());
+                    }
+                }
+                else
+                {
+                    var values = Array.ConvertAll(statement.Value, item => double.Parse(item));
+                    if (statement.Negated)
+                    {
+                        query.WhereNotBetween(statement.Property, values.Min(), values.Max());
+                    }
+                    else
+                    {
+                        query.WhereBetween(statement.Property, values.Min(), values.Max());
+                    }
+                }
+            }
+            else
+            {
+                if (statement.Negated)
+                {
+                    if (statement.Bigger)
+                    {
+                        query.WhereNot(statement.Property, ">", statement.Value);
+                    }
+                    else if (statement.Smaller)
+                    {
+                        query.WhereNot(statement.Property, "<", statement.Value);
+                    }
+                    else
+                    {
+                        query.WhereNot(statement.Property, "=", statement.Value);
+                    }
+                }
+                else
+                {
+                    if (statement.Bigger)
+                    {
+                        query.Where(statement.Property, ">", statement.Value);
+                    }
+                    else if (statement.Smaller)
+                    {
+                        query.Where(statement.Property, "<", statement.Value);
+                    }
+                    else
+                    {
+                        var type = await GetColumnType(context, statement.Property);
+                        query.Where(statement.Property, "LIKE", $"%{statement.Value[0]}%");
+                    }
+                }
+            }
         }
 
         private Statement ParseLuisResult(ComplexModel luisResult, ConversationData conversationData)
@@ -141,7 +211,6 @@ namespace Chatbot.Utility
             bool multipleValues = false;
             bool dateValues = false;
 
-
             if (firstValue != null && (firstValue?.date != null || firstValue?.daterange != null) || Entities?.datetime != null && firstValue.isEmpty())
                 dateValues = true;
 
@@ -152,8 +221,20 @@ namespace Chatbot.Utility
                 {
                     var dateString = firstValue.date?.FirstOrDefault()?.Expressions?.FirstOrDefault();
                     if (!DateTime.TryParse(dateString, out DateTime date))
-                        throw new Exception("Can't convert the given string to DateTime!");
-                    vals.Add(date.ToShortDateString());
+                    {
+                        var resolution = TimexResolver.Resolve(new[] { dateString });
+                        string dateStart = resolution.Values[0].Start;
+                        string dateEnd = resolution.Values[0].End;
+                        if (!DateTime.TryParse(dateStart, out DateTime date1))
+                            throw new Exception("Can't convert the given string to DateTime!");
+                        if (!DateTime.TryParse(dateEnd, out DateTime date2))
+                            throw new Exception("Can't convert the given string to DateTime!");
+                        vals.Add(date1.ToShortDateString());
+                        vals.Add(date2.ToShortDateString());
+                        multipleValues = true;
+                    }
+                    else
+                        vals.Add(date.ToShortDateString());
 
                     values = vals.ToArray();
                 }
@@ -173,10 +254,9 @@ namespace Chatbot.Utility
                     values = vals.ToArray();
                     multipleValues = true;
                 }
-
             }
 
-            if (firstClause?.around?.FirstOrDefault() != null && firstValue?.daterange == null)
+            if (firstClause?.around?.FirstOrDefault() != null && !dateValues)
             {
                 List<string> vals = new List<string>();
                 vals.Add((firstValue?.number?.First() * 0.8).ToString());
@@ -185,7 +265,7 @@ namespace Chatbot.Utility
                 values = vals.ToArray();
                 multipleValues = true;
             }
-            else if (firstClause?.between?.FirstOrDefault() != null)
+            else if (firstClause?.between?.FirstOrDefault() != null && !dateValues)
             {
                 List<string> vals = new List<string>();
                 vals.Add((firstValue?.number?.First()).ToString());
@@ -199,14 +279,18 @@ namespace Chatbot.Utility
 
             if (!string.IsNullOrEmpty(property) && string.IsNullOrEmpty(values.FirstOrDefault()))
             {
-                string nullValueErrorMessage = "I didn't understand the value, please give me the whole sentence again, but try putting the value between quotation marks!";
-                return null;
+                Statement s = new Statement();
+                s.ResponseText = "I didn't understand the value, please give me the whole sentence again, but try putting the value between quotation marks!";
+                s.ParseError = true;
+                return s;
             }
 
             if (string.IsNullOrEmpty(property))
             {
-                string propertyError = "I didn't understand the property, please enter another constraint!";
-                return null;
+                Statement s = new Statement();
+                s.ResponseText = "I didn't understand the property, please enter another constraint!";
+                s.ParseError = true;
+                return s;
             }
 
             string optionalNegate = negated ? "not " : "";
@@ -216,15 +300,18 @@ namespace Chatbot.Utility
 
             if (string.IsNullOrEmpty(conversationData.SpecifiedObjectType) && objectType == null)
             {
+                Statement s = new Statement();
                 if (string.IsNullOrEmpty(objectType))
                 {
-                    var promptMessage = "The type of the object was not specified, please enter another constraint containing it!";
-                    return null;
+                    s.ResponseText = "The type of the object was not specified, please enter another constraint containing it!";
+                    s.ParseError = true;
+                    return s;
                 }
                 else if (objectType.Equals("he") || objectType.Equals("she") || objectType.Equals("his") || objectType.Equals("her") || objectType.Equals("its") || objectType.Equals("it"))
                 {
-                    var unknownTypeMessageText = $"I don't know what you are referring to by \"{objectType}\", please enter another contstraint containing the type of the object you are looking for!";
-                    return null;
+                    s.ResponseText = $"I don't know what you are referring to by \"{objectType}\", please enter another contstraint containing the type of the object you are looking for!";
+                    s.ParseError = true;
+                    return s;
                 }
                 else
                 {
@@ -238,9 +325,10 @@ namespace Chatbot.Utility
             {
                 if (!string.IsNullOrEmpty(objectType) && !objectType.Equals(conversationData.SpecifiedObjectType))
                 {
-                    //var promptMessage = $"You already specified the object type: \"{query.ObjectType}\", please enter another constraint and refer to the object by the given type!";
-                    var promptMessage = $"You alredy specified the object type";
-                    return null;
+                    Statement s = new Statement();
+                    s.ResponseText = $"You already specified the object type: \"{conversationData.SpecifiedObjectType}\", please enter another constraint and refer to the object by the given type!";
+                    s.ParseError = true;
+                    return s;
                 }
                 else
                 {
@@ -260,7 +348,8 @@ namespace Chatbot.Utility
                 Negated = negated,
                 MultipleValues = multipleValues,
                 DateValues = dateValues,
-                Subject = objectType
+                Subject = objectType,
+                ParseError = false
             };
 
             return stmnt;

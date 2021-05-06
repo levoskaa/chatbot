@@ -26,7 +26,12 @@ namespace Chatbot.Dialogs
 
         protected virtual async Task<DialogTurnResult> PromptStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var messageText = stepContext.Options?.ToString() ?? "What are you looking for?";
+            var conversationData = await conversationStateAccessors.GetAsync(stepContext.Context, () => new ConversationData());
+            string messageText = "";
+            if (conversationData.Edited)
+                messageText = "You can continue to add constraints, edit them or execute the query.";
+            else
+                messageText = stepContext.Options?.ToString() ?? "What are you looking for?";
             var promptMessage = MessageFactory.Text(messageText, messageText, InputHints.ExpectingInput);
             return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
         }
@@ -39,6 +44,11 @@ namespace Chatbot.Dialogs
 
         protected async Task DisplayQuery(ConversationData conversationData, ITurnContext context, CancellationToken cancellationToken)
         {
+            if (conversationData.Statements.Count == 0)
+            {
+                await SendTextMessage("No statements were given yet.", context, cancellationToken);
+                return;
+            }
             int i = 1;
             var sb = new StringBuilder();
 

@@ -27,6 +27,8 @@ namespace Chatbot.Models
 
         public bool DateValues { get; set; }
 
+        public bool ParseError { get; set; }
+
         public override string ToString()
         {
             return Text;

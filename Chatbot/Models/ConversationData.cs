@@ -13,5 +13,6 @@ namespace Chatbot.Models
         public string CurrentIntent { get; set; }
         public string CurrentTableName { get; internal set; }
         public string StatementToEdit { get; set; }
+        public bool Edited { get; set; }
     }
 }

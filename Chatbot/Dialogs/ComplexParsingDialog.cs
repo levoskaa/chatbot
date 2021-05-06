@@ -90,7 +90,7 @@ namespace Chatbot.Dialogs
 
                 case ComplexModel.Intent.List:
                     await DisplayQuery(conversationData, stepContext.Context, cancellationToken);
-                    return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, "You can continue to add constraints, edit them or execute the query.", cancellationToken);
 
                 case ComplexModel.Intent.Delete:
                     messageText = "Delete intent recognized";

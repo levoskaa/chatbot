@@ -42,6 +42,8 @@ namespace Chatbot.Utility
         {
             var conversationData = await conversationStateAccessors.GetAsync(context, () => new ConversationData());
             Statement statement = ParseLuisResult(luisResult, conversationData);
+            if (statement == null)
+                return "Coudn't understand the statement. Please specify the object, property and value.";
             conversationData.Statements.Add(statement);
 
             if (statement.MultipleValues)
@@ -118,7 +120,7 @@ namespace Chatbot.Utility
 
             var xQuery = queryFactory.FromQuery(conversationData.Query);
             
-            var result = xQuery.Get().FirstOrDefault();
+            //var result = xQuery.Get().FirstOrDefault();
             
 
             return statement.ResponseText;
@@ -152,8 +154,20 @@ namespace Chatbot.Utility
                 {
                     var dateString = firstValue.date?.FirstOrDefault()?.Expressions?.FirstOrDefault();
                     if (!DateTime.TryParse(dateString, out DateTime date))
-                        throw new Exception("Can't convert the given string to DateTime!");
-                    vals.Add(date.ToShortDateString());
+                    {
+                        var resolution = TimexResolver.Resolve(new[] { dateString });
+                        string dateStart = resolution.Values[0].Start;
+                        string dateEnd = resolution.Values[0].End;
+                        if (!DateTime.TryParse(dateStart, out DateTime date1))
+                            throw new Exception("Can't convert the given string to DateTime!");
+                        if (!DateTime.TryParse(dateEnd, out DateTime date2))
+                            throw new Exception("Can't convert the given string to DateTime!");
+                        vals.Add(date1.ToShortDateString());
+                        vals.Add(date2.ToShortDateString());
+                        multipleValues = true;
+                    }
+                    else
+                        vals.Add(date.ToShortDateString());
 
                     values = vals.ToArray();
                 }
@@ -176,7 +190,7 @@ namespace Chatbot.Utility
 
             }
 
-            if (firstClause?.around?.FirstOrDefault() != null && firstValue?.daterange == null)
+            if (firstClause?.around?.FirstOrDefault() != null && !dateValues)
             {
                 List<string> vals = new List<string>();
                 vals.Add((firstValue?.number?.First() * 0.8).ToString());
@@ -185,7 +199,7 @@ namespace Chatbot.Utility
                 values = vals.ToArray();
                 multipleValues = true;
             }
-            else if (firstClause?.between?.FirstOrDefault() != null)
+            else if (firstClause?.between?.FirstOrDefault() != null && !dateValues)
             {
                 List<string> vals = new List<string>();
                 vals.Add((firstValue?.number?.First()).ToString());

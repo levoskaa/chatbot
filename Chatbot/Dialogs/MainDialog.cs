@@ -25,6 +25,7 @@ namespace Chatbot.Dialogs
     public class MainDialog : ComponentDialog
     {
         protected readonly ILogger logger;
+        private readonly ConversationState conversationState;
         private readonly QueryFactory queryFactory;
         private readonly IComplexQueryHandler complexQueryHandler;
         private readonly ISimpleQueryHandler simpleQueryHandler;
@@ -41,6 +42,7 @@ namespace Chatbot.Dialogs
             ILogger<MainDialog> logger
             ) : base(nameof(MainDialog))
         {
+            this.conversationState = conversationState;
             this.queryFactory = queryFactory;
             this.complexQueryHandler = complexQueryHandler;
             this.simpleQueryHandler = simpleQueryHandler;
@@ -84,42 +86,34 @@ namespace Chatbot.Dialogs
             // If the child dialog ("ComplexParsingDialog" or "SimpleParsingDialog") was cancelled or something went wrong,
             // the Result here will be null.
             // TODO: delete true after ComplexParsingDialog returns a value
-            if (true || stepContext.Result != null /*is BookingDetails result*/)
-            {
-                // Now we have all the constraints, we can execute the query.
-                var result = await ExecuteQueryAsync(conversationData, stepContext.Context);
-                await DisplayQueryResults(result, stepContext.Context, cancellationToken);
+            // Now we have all the constraints, we can execute the query.
+            var result = await ExecuteQueryAsync(conversationData, stepContext.Context);
+            await DisplayQueryResults(result, stepContext.Context, cancellationToken);
 
-                var choices = new List<Choice>
+            var choices = new List<Choice>
                 {
                     new Choice("Yes, create new query"),
                     new Choice("No, modify query")
                 };
-                if (conversationData.ModelBeingUsed == CognitiveModel.Simple)
-                {
-                    choices.Add(new Choice("Switch to complex chatbot"));
-                }
-                else
-                {
-                    choices.Add(new Choice("Switch to stricter chatbot"));
-                }
-
-                var card = DialogHelper.CreateChoiceCard(choices, "Are you satisfied with the result?");
-                var cardActivity = (Activity)card.CreateActivity();
-
-                return await stepContext.PromptAsync(nameof(ChoicePrompt), new PromptOptions
-                {
-                    Prompt = cardActivity,
-                    RetryPrompt = cardActivity,
-                    Choices = choices,
-                    Style = ListStyle.None
-                }, cancellationToken);
+            if (conversationData.ModelBeingUsed == CognitiveModel.Simple)
+            {
+                choices.Add(new Choice("Switch to complex chatbot"));
             }
             else
             {
-                var messageText = "Something went wrong, clearing query and starting over.";
-                return await stepContext.ReplaceDialogAsync(InitialDialogId, messageText, cancellationToken);
+                choices.Add(new Choice("Switch to stricter chatbot"));
             }
+
+            var card = DialogHelper.CreateChoiceCard(choices, "Are you satisfied with the result?");
+            var cardActivity = (Activity)card.CreateActivity();
+
+            return await stepContext.PromptAsync(nameof(ChoicePrompt), new PromptOptions
+            {
+                Prompt = cardActivity,
+                RetryPrompt = cardActivity,
+                Choices = choices,
+                Style = ListStyle.None
+            }, cancellationToken);
         }
 
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
@@ -130,6 +124,7 @@ namespace Chatbot.Dialogs
             switch (choiceResult)
             {
                 case "Yes, create new query":
+                    await ClearConversationStateAsync(conversationData, stepContext.Context, cancellationToken);
                     options.Message = "What else are you looking for?";
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, options, cancellationToken);
 
@@ -138,10 +133,12 @@ namespace Chatbot.Dialogs
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, options, cancellationToken);
 
                 case "Switch to stricter chatbot":
+                    await ClearConversationStateAsync(conversationData, stepContext.Context, cancellationToken);
                     conversationData.ModelBeingUsed = CognitiveModel.Simple;
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
 
                 case "Switch to complex chatbot":
+                    await ClearConversationStateAsync(conversationData, stepContext.Context, cancellationToken);
                     conversationData.ModelBeingUsed = CognitiveModel.Complex;
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
 
@@ -154,6 +151,7 @@ namespace Chatbot.Dialogs
         private async Task<IEnumerable<dynamic>> ExecuteQueryAsync(ConversationData conversationData, ITurnContext context)
         {
             var query = new Query();
+            query.From($"dbo.{conversationData.SpecifiedObjectType.FirstCharToUpper()}s");
             foreach (var statement in conversationData.Statements)
             {
                 if (conversationData.ModelBeingUsed == CognitiveModel.Complex)
@@ -166,7 +164,7 @@ namespace Chatbot.Dialogs
                 }
             }
 
-            var xQuery = queryFactory.FromQuery(conversationData.Query);
+            var xQuery = queryFactory.FromQuery(query);
             return xQuery.Get();
         }
 
@@ -201,6 +199,14 @@ namespace Chatbot.Dialogs
         {
             var message = MessageFactory.Text(messageText, messageText, InputHints.IgnoringInput);
             await context.SendActivityAsync(message, cancellationToken);
+        }
+
+        private async Task ClearConversationStateAsync(ConversationData conversationData, ITurnContext context, CancellationToken cancellationToken)
+        {
+            await conversationState.ClearStateAsync(context, cancellationToken).ConfigureAwait(false);
+            // await conversationState.SaveChangesAsync(context, false, cancellationToken);
+            conversationData = new ConversationData();
+            conversationData.Statements = new List<Statement>();
         }
     }
 }

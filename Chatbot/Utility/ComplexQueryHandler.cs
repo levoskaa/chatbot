@@ -8,7 +8,6 @@ using Microsoft.Bot.Builder;
 using System.Threading.Tasks;
 using Microsoft.Recognizers.Text.DataTypes.TimexExpression;
 using SqlKata;
-using Chatbot.Extensions;
 using SqlKata.Execution;
 
 namespace Chatbot.Utility
@@ -33,7 +32,7 @@ namespace Chatbot.Utility
                 conversationData.Statements = new List<Statement>();
             }
             conversationData.ObjectTypeKnown = true;
-            conversationData.CurrentTableName = "dbo." + objectType;
+            conversationData.CurrentTableName = $"dbo.{objectType}s";
             conversationData.Query.From(conversationData.CurrentTableName);
             return objectType;
         }
@@ -93,8 +92,6 @@ namespace Chatbot.Utility
                     }
                     else
                     {
-                        
-
                         conversationData.Query.WhereNot(statement.Property, "=", statement.Value);
                     }
                 }
@@ -116,12 +113,80 @@ namespace Chatbot.Utility
                 }
             }
 
-            var xQuery = queryFactory.FromQuery(conversationData.Query);
-            
-            var result = xQuery.Get().FirstOrDefault();
-            
-
             return statement.ResponseText;
+        }
+
+        public async Task AddStatementAsync(Statement statement, Query query, ITurnContext context)
+        {
+            if (statement.MultipleValues)
+            {
+                if (statement.DateValues)
+                {
+                    List<DateTime> vals = new List<DateTime>();
+                    if (!DateTime.TryParse(statement.Value[0], out DateTime date1))
+                        throw new Exception("Can't convert the given string to DateTime!");
+                    if (!DateTime.TryParse(statement.Value[1], out DateTime date2))
+                        throw new Exception("Can't convert the given string to DateTime!");
+                    vals.Add(date1);
+                    vals.Add(date2);
+
+                    var values = vals.ToArray();
+                    if (statement.Negated)
+                    {
+                        query.WhereNotBetween(statement.Property, values.Min(), values.Max());
+                    }
+                    else
+                    {
+                        query.WhereBetween(statement.Property, values.Min(), values.Max());
+                    }
+                }
+                else
+                {
+                    var values = Array.ConvertAll(statement.Value, item => double.Parse(item));
+                    if (statement.Negated)
+                    {
+                        query.WhereNotBetween(statement.Property, values.Min(), values.Max());
+                    }
+                    else
+                    {
+                        query.WhereBetween(statement.Property, values.Min(), values.Max());
+                    }
+                }
+            }
+            else
+            {
+                if (statement.Negated)
+                {
+                    if (statement.Bigger)
+                    {
+                        query.WhereNot(statement.Property, ">", statement.Value);
+                    }
+                    else if (statement.Smaller)
+                    {
+                        query.WhereNot(statement.Property, "<", statement.Value);
+                    }
+                    else
+                    {
+                        query.WhereNot(statement.Property, "=", statement.Value);
+                    }
+                }
+                else
+                {
+                    if (statement.Bigger)
+                    {
+                        query.Where(statement.Property, ">", statement.Value);
+                    }
+                    else if (statement.Smaller)
+                    {
+                        query.Where(statement.Property, "<", statement.Value);
+                    }
+                    else
+                    {
+                        var type = await GetColumnType(context, statement.Property);
+                        query.Where(statement.Property, "LIKE", $"%{statement.Value[0]}%");
+                    }
+                }
+            }
         }
 
         private Statement ParseLuisResult(ComplexModel luisResult, ConversationData conversationData)
@@ -140,7 +205,6 @@ namespace Chatbot.Utility
             bool smaller = firstClause?.smaller?.FirstOrDefault() != null;
             bool multipleValues = false;
             bool dateValues = false;
-
 
             if (firstValue != null && (firstValue?.date != null || firstValue?.daterange != null) || Entities?.datetime != null && firstValue.isEmpty())
                 dateValues = true;
@@ -173,7 +237,6 @@ namespace Chatbot.Utility
                     values = vals.ToArray();
                     multipleValues = true;
                 }
-
             }
 
             if (firstClause?.around?.FirstOrDefault() != null && firstValue?.daterange == null)

@@ -1,6 +1,7 @@
 ﻿using Chatbot.CognitiveModels;
 using Chatbot.Models;
 using Microsoft.Bot.Builder;
+using SqlKata;
 using System.Threading.Tasks;
 
 namespace Chatbot.Interfaces
@@ -10,5 +11,7 @@ namespace Chatbot.Interfaces
         Task<string> AddObjectTypeAsync(ComplexModel luisResult, ITurnContext context);
 
         Task<string> AddStatementAsync(ComplexModel luisResult, ITurnContext context);
+
+        Task AddStatementAsync(Statement statement, Query query, ITurnContext context);
     }
 }

@@ -4,6 +4,7 @@
 // Generated with Bot Builder V4 SDK Template for Visual Studio CoreBot v4.11.1
 
 using Chatbot.Extensions;
+using Chatbot.Interfaces;
 using Chatbot.Models;
 using Chatbot.Utility;
 using Microsoft.Bot.Builder;
@@ -14,9 +15,7 @@ using Microsoft.Extensions.Logging;
 using SqlKata;
 using SqlKata.Execution;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,13 +26,24 @@ namespace Chatbot.Dialogs
     {
         protected readonly ILogger logger;
         private readonly QueryFactory queryFactory;
+        private readonly IComplexQueryHandler complexQueryHandler;
+        private readonly ISimpleQueryHandler simpleQueryHandler;
         private readonly IStatePropertyAccessor<ConversationData> conversationStateAccessors;
 
         // Dependency injection uses this constructor to instantiate MainDialog
-        public MainDialog(ComplexParsingDialog complexDialog, SimpleParsingDialog simpleDialog, ConversationState conversationState, QueryFactory queryFactory, ILogger<MainDialog> logger)
-            : base(nameof(MainDialog))
+        public MainDialog(
+            ComplexParsingDialog complexDialog,
+            SimpleParsingDialog simpleDialog,
+            ConversationState conversationState,
+            QueryFactory queryFactory,
+            IComplexQueryHandler complexQueryHandler,
+            ISimpleQueryHandler simpleQueryHandler,
+            ILogger<MainDialog> logger
+            ) : base(nameof(MainDialog))
         {
             this.queryFactory = queryFactory;
+            this.complexQueryHandler = complexQueryHandler;
+            this.simpleQueryHandler = simpleQueryHandler;
             this.logger = logger;
             conversationStateAccessors = conversationState.CreateProperty<ConversationData>(nameof(ConversationData));
 
@@ -77,7 +87,7 @@ namespace Chatbot.Dialogs
             if (true || stepContext.Result != null /*is BookingDetails result*/)
             {
                 // Now we have all the constraints, we can execute the query.
-                var result = ExecuteQuery(conversationData);
+                var result = await ExecuteQueryAsync(conversationData, stepContext.Context);
                 await DisplayQueryResults(result, stepContext.Context, cancellationToken);
 
                 var choices = new List<Choice>
@@ -141,15 +151,23 @@ namespace Chatbot.Dialogs
             }
         }
 
-        private IEnumerable<dynamic> ExecuteQuery(ConversationData conversationData)
+        private async Task<IEnumerable<dynamic>> ExecuteQueryAsync(ConversationData conversationData, ITurnContext context)
         {
-            IEnumerable<dynamic> result = new List<dynamic>();
-            if (conversationData.Query != null)
+            var query = new Query();
+            foreach (var statement in conversationData.Statements)
             {
-                var xQuery = queryFactory.FromQuery(conversationData.Query);
-                result = xQuery.Get();
+                if (conversationData.ModelBeingUsed == CognitiveModel.Complex)
+                {
+                    await complexQueryHandler.AddStatementAsync(statement, query, context);
+                }
+                else
+                {
+                    await simpleQueryHandler.AddStatementAsync(statement, query, context);
+                }
             }
-            return result;
+
+            var xQuery = queryFactory.FromQuery(conversationData.Query);
+            return xQuery.Get();
         }
 
         private async Task DisplayQueryResults(IEnumerable<dynamic> result, ITurnContext context, CancellationToken cancellationToken)

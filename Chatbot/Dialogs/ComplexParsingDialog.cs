@@ -23,6 +23,7 @@ namespace Chatbot.Dialogs
         public ComplexParsingDialog(
             ComplexStatementRecognizer complexRecognizer,
             IComplexQueryHandler queryHandler,
+            EditDialog editDialog,
             ConversationState conversationState,
             ILogger<ComplexParsingDialog> logger
             ) : base(nameof(ComplexParsingDialog), conversationState, logger)
@@ -38,6 +39,7 @@ namespace Chatbot.Dialogs
             };
             AddDialog(new WaterfallDialog(nameof(WaterfallDialog), waterfallSteps));
             AddDialog(new ChoicePrompt(nameof(ChoicePrompt)));
+            AddDialog(editDialog);
 
             // The initial child Dialog to run.
             InitialDialogId = nameof(WaterfallDialog);
@@ -87,15 +89,14 @@ namespace Chatbot.Dialogs
 
                 case ComplexModel.Intent.List:
                     await DisplayQuery(conversationData, stepContext.Context, cancellationToken);
-                    return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, "You can continue to add constraints, edit them or execute the query.", cancellationToken);
 
                 case ComplexModel.Intent.Delete:
                     messageText = "Delete intent recognized";
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, messageText, cancellationToken);
 
                 case ComplexModel.Intent.Edit:
-                    messageText = "Edit intent recognized";
-                    return await stepContext.ReplaceDialogAsync(InitialDialogId, messageText, cancellationToken);
+                    return await stepContext.BeginDialogAsync(nameof(EditDialog), null, cancellationToken);
 
                 case ComplexModel.Intent.Exit:
                     return await stepContext.EndDialogAsync(null, cancellationToken);

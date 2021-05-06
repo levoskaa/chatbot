@@ -123,6 +123,87 @@ namespace Chatbot.Utility
             return "dummy statement";
         }
 
+        public async Task AddStatementAsync(Statement statement, Query query, ITurnContext context)
+        {
+            // var statement
+            var value = statement.Value[0];
+
+            if (statement.MultipleValues)
+            {
+                if (statement.DateValues)
+                {
+                    List<DateTime> vals = new List<DateTime>();
+                    if (!DateTime.TryParse(statement.Value[0], out DateTime date1))
+                        throw new Exception("Can't convert the given string to DateTime!");
+                    if (!DateTime.TryParse(statement.Value[1], out DateTime date2))
+                        throw new Exception("Can't convert the given string to DateTime!");
+                    vals.Add(date1);
+                    vals.Add(date2);
+
+                    var values = vals.ToArray();
+                    if (statement.Negated)
+                    {
+                        query.WhereNotBetween(statement.Property, values.Min(), values.Max());
+                    }
+                    else
+                    {
+                        query.WhereBetween(statement.Property, values.Min(), values.Max());
+                    }
+                }
+                else
+                {
+                    var values = Array.ConvertAll(statement.Value, item => double.Parse(item));
+                    if (statement.Negated)
+                    {
+                        query.WhereNotBetween(statement.Property, values.Min(), values.Max());
+                    }
+                    else
+                    {
+                        query.WhereBetween(statement.Property, values.Min(), values.Max());
+                    }
+                }
+            }
+            else
+            {
+                if (statement.Negated)
+                {
+                    if (statement.Bigger)
+                    {
+                        query.WhereNot(statement.Property, ">", value);
+                    }
+                    else if (statement.Smaller)
+                    {
+                        query.WhereNot(statement.Property, "<", value);
+                    }
+                    else
+                    {
+                        // TODO: works with numbers and dates, but with strings we need to use LIKE
+                        // this depends on the type of statement.Property in the database
+                        // conversationData.Query.WhereNot(statement.Property, "=", statement.Value);
+                        query.WhereNotLike(statement.Property, $"%{value}%");
+                    }
+                }
+                else
+                {
+                    if (statement.Bigger)
+                    {
+                        query.Where(statement.Property, ">", value);
+                    }
+                    else if (statement.Smaller)
+                    {
+                        query.Where(statement.Property, "<", value);
+                    }
+                    else
+                    {
+                        // TODO: works with numbers and dates, but with strings we need to use LIKE
+                        // this depends on the type of statement.Property in the database
+                        // conversationData.Query.Where(statement.Property, "=", statement.Value);
+                        query.WhereLike(statement.Property, $"%{value}%");
+                    }
+                }
+            }
+        }
+
         private Statement ParseLuisResult(SimpleModel luisResult)
         {
             SimpleModel._Entities Entities = luisResult.Entities;
@@ -206,7 +287,9 @@ namespace Chatbot.Utility
                 Value = values,
                 MultipleValues = multipleValues,
                 DateValues = dateValues,
-                Text = $"{ property }:  { optionalNegate }{ optionalSmallerBigger }{ optionalBetween }{ values.FirstOrDefault() }{ optionalSecondValue }"
+                Text = $"{ property }:  { optionalNegate }{ optionalSmallerBigger }{ optionalBetween }{ values.FirstOrDefault() }{ optionalSecondValue }",
+                ResponseText = $"Recognised {property}: {optionalNegate}{optionalSmallerBigger}{optionalBetween}{values.FirstOrDefault()}{optionalSecondValue}." + Environment.NewLine +
+                                                $"You can continue adding constraints, or try executing the query!"
             };
         }
     }

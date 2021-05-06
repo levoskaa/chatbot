@@ -31,8 +31,16 @@ namespace Chatbot.Models
 
         public void AddColumn(string tableName, string columnName, string columnType) {
             Dictionary<string, string> temp = new Dictionary<string, string>();
-            temp.Add(columnName, columnType);
-            columnNamesByTableName.Add(tableName, temp);
+            if (columnNamesByTableName.ContainsKey(tableName))
+            {
+                var table = columnNamesByTableName.GetValueOrDefault(tableName);
+                table.Add(columnName, columnType);
+            }
+            else {
+
+                temp.Add(columnName, columnType);
+                columnNamesByTableName.Add(tableName, temp);
+            }
         }
 
         public bool IsString(Statement statement)

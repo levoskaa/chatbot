@@ -19,6 +19,7 @@ using Microsoft.Extensions.Hosting;
 using SqlKata;
 using SqlKata.Compilers;
 using SqlKata.Execution;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -39,6 +40,25 @@ namespace Chatbot
 
             var xQuery = queryFactory.FromQuery(query);
             var result = xQuery.Get();
+
+            foreach (var row in result)
+            {
+
+                string tableName = "";
+                string columnName = "";
+                string columnType = "";
+
+                var properties = (IDictionary<string, object>)row;
+
+                foreach (var property in properties)
+                {
+                    if (property.Key == "TABLE_NAME") tableName = property.Value.ToString();
+                    else if (property.Key == "COLUMN_NAME") columnName = property.Value.ToString();
+                    else if (property.Key == "DATA_TYPE") columnType = property.Value.ToString();
+                }
+
+                ColumnTypeContainer.Instance.AddColumn(tableName,columnName,columnType);
+            }
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.

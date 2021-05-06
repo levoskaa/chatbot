@@ -6,6 +6,7 @@
 using Chatbot.Bots;
 using Chatbot.Dialogs;
 using Chatbot.Interfaces;
+using Chatbot.Models;
 using Chatbot.Recognizers;
 using Chatbot.Utility;
 using Microsoft.AspNetCore.Builder;
@@ -15,9 +16,11 @@ using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SqlKata;
 using SqlKata.Compilers;
 using SqlKata.Execution;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace Chatbot
 {
@@ -28,6 +31,14 @@ namespace Chatbot
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            QueryFactory queryFactory = new QueryFactory(new SqlConnection(Configuration.GetConnectionString("ApplicationDatabase")), new SqlServerCompiler());
+            Query query = new Query()
+                .Select("TABLE_NAME", "COLUMN_NAME", "DATA_TYPE")
+                .From("INFORMATION_SCHEMA.COLUMNS")
+                .Where("COLUMN_NAME", "!=", "id");
+
+            var xQuery = queryFactory.FromQuery(query);
+            var result = xQuery.Get();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -70,6 +81,8 @@ namespace Chatbot
                 var compiler = new SqlServerCompiler();
                 return new QueryFactory(connection, compiler);
             });
+
+            //services.AddSingleton<ColumnTypeContainer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

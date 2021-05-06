@@ -110,7 +110,6 @@ namespace Chatbot.Utility
                     }
                     else
                     {
-                        var type = await GetColumnType(context, statement.Property);
                         conversationData.Query.Where(statement.Property, "LIKE", $"%{statement.Value[0]}%");
                     }
                 }

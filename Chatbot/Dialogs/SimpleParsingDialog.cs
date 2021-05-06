@@ -110,7 +110,8 @@ namespace Chatbot.Dialogs
                     }, cancellationToken);
 
                 case SimpleModel.Intent.list:
-                    messageText = "Simple: List intent recognized";
+                    await DisplayQuery(conversationData, stepContext.Context, cancellationToken);
+                    messageText = "What would you like to do?";
                     return await stepContext.ReplaceDialogAsync(InitialDialogId, messageText, cancellationToken);
 
                 default:

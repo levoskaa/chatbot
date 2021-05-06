@@ -10,7 +10,6 @@ using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -85,6 +84,10 @@ namespace Chatbot.Dialogs
                         Choices = choices,
                         Style = ListStyle.None
                     }, cancellationToken);
+
+                case ComplexModel.Intent.List:
+                    await DisplayQuery(conversationData, stepContext.Context, cancellationToken);
+                    return await stepContext.ReplaceDialogAsync(InitialDialogId, null, cancellationToken);
 
                 case ComplexModel.Intent.Delete:
                     messageText = "Delete intent recognized";

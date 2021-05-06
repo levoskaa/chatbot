@@ -42,7 +42,10 @@ namespace Chatbot.Utility
             var conversationData = await conversationStateAccessors.GetAsync(context, () => new ConversationData());
             Statement statement = ParseLuisResult(luisResult, conversationData);
             if (statement == null)
-                return "Coudn't understand the statement. Please specify the object, property and value.";
+                return "Error parsing luis result";
+            if (statement.ParseError)
+                return statement.ResponseText;
+            
             conversationData.Statements.Add(statement);
 
             if (statement.MultipleValues)
@@ -276,14 +279,18 @@ namespace Chatbot.Utility
 
             if (!string.IsNullOrEmpty(property) && string.IsNullOrEmpty(values.FirstOrDefault()))
             {
-                string nullValueErrorMessage = "I didn't understand the value, please give me the whole sentence again, but try putting the value between quotation marks!";
-                return null;
+                Statement s = new Statement();
+                s.ResponseText = "I didn't understand the value, please give me the whole sentence again, but try putting the value between quotation marks!";
+                s.ParseError = true;
+                return s;
             }
 
             if (string.IsNullOrEmpty(property))
             {
-                string propertyError = "I didn't understand the property, please enter another constraint!";
-                return null;
+                Statement s = new Statement();
+                s.ResponseText = "I didn't understand the property, please enter another constraint!";
+                s.ParseError = true;
+                return s;
             }
 
             string optionalNegate = negated ? "not " : "";
@@ -293,15 +300,18 @@ namespace Chatbot.Utility
 
             if (string.IsNullOrEmpty(conversationData.SpecifiedObjectType) && objectType == null)
             {
+                Statement s = new Statement();
                 if (string.IsNullOrEmpty(objectType))
                 {
-                    var promptMessage = "The type of the object was not specified, please enter another constraint containing it!";
-                    return null;
+                    s.ResponseText = "The type of the object was not specified, please enter another constraint containing it!";
+                    s.ParseError = true;
+                    return s;
                 }
                 else if (objectType.Equals("he") || objectType.Equals("she") || objectType.Equals("his") || objectType.Equals("her") || objectType.Equals("its") || objectType.Equals("it"))
                 {
-                    var unknownTypeMessageText = $"I don't know what you are referring to by \"{objectType}\", please enter another contstraint containing the type of the object you are looking for!";
-                    return null;
+                    s.ResponseText = $"I don't know what you are referring to by \"{objectType}\", please enter another contstraint containing the type of the object you are looking for!";
+                    s.ParseError = true;
+                    return s;
                 }
                 else
                 {
@@ -315,9 +325,10 @@ namespace Chatbot.Utility
             {
                 if (!string.IsNullOrEmpty(objectType) && !objectType.Equals(conversationData.SpecifiedObjectType))
                 {
-                    //var promptMessage = $"You already specified the object type: \"{query.ObjectType}\", please enter another constraint and refer to the object by the given type!";
-                    var promptMessage = $"You alredy specified the object type";
-                    return null;
+                    Statement s = new Statement();
+                    s.ResponseText = $"You already specified the object type: \"{conversationData.SpecifiedObjectType}\", please enter another constraint and refer to the object by the given type!";
+                    s.ParseError = true;
+                    return s;
                 }
                 else
                 {
@@ -337,7 +348,8 @@ namespace Chatbot.Utility
                 Negated = negated,
                 MultipleValues = multipleValues,
                 DateValues = dateValues,
-                Subject = objectType
+                Subject = objectType,
+                ParseError = false
             };
 
             return stmnt;

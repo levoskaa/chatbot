@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.Recognizers.Text.DataTypes.TimexExpression;
 using SqlKata;
 using SqlKata.Execution;
+using Chatbot.Extensions;
 
 namespace Chatbot.Utility
 {
@@ -32,7 +33,7 @@ namespace Chatbot.Utility
                 conversationData.Statements = new List<Statement>();
             }
             conversationData.ObjectTypeKnown = true;
-            conversationData.CurrentTableName = $"dbo.{objectType}s";
+            conversationData.CurrentTableName = $"{objectType.FirstCharToUpper()}s";
             conversationData.Query.From(conversationData.CurrentTableName);
             return objectType;
         }
@@ -47,75 +48,6 @@ namespace Chatbot.Utility
                 return statement.ResponseText;
             
             conversationData.Statements.Add(statement);
-
-            if (statement.MultipleValues)
-            {
-                if (statement.DateValues)
-                {
-                    List<DateTime> vals = new List<DateTime>();
-                    if (!DateTime.TryParse(statement.Value[0], out DateTime date1))
-                        throw new Exception("Can't convert the given string to DateTime!");
-                    if (!DateTime.TryParse(statement.Value[1], out DateTime date2))
-                        throw new Exception("Can't convert the given string to DateTime!");
-                    vals.Add(date1);
-                    vals.Add(date2);
-
-                    var values = vals.ToArray();
-                    if (statement.Negated)
-                    {
-                        conversationData.Query.WhereNotBetween(statement.Property, values.Min(), values.Max());
-                    }
-                    else
-                    {
-                        conversationData.Query.WhereBetween(statement.Property, values.Min(), values.Max());
-                    }
-                }
-                else
-                {
-                    var values = Array.ConvertAll(statement.Value, item => double.Parse(item));
-                    if (statement.Negated)
-                    {
-                        conversationData.Query.WhereNotBetween(statement.Property, values.Min(), values.Max());
-                    }
-                    else
-                    {
-                        conversationData.Query.WhereBetween(statement.Property, values.Min(), values.Max());
-                    }
-                }
-            }
-            else
-            {
-                if (statement.Negated)
-                {
-                    if (statement.Bigger)
-                    {
-                        conversationData.Query.WhereNot(statement.Property, ">", statement.Value);
-                    }
-                    else if (statement.Smaller)
-                    {
-                        conversationData.Query.WhereNot(statement.Property, "<", statement.Value);
-                    }
-                    else
-                    {
-                        conversationData.Query.WhereNot(statement.Property, "=", statement.Value);
-                    }
-                }
-                else
-                {
-                    if (statement.Bigger)
-                    {
-                        conversationData.Query.Where(statement.Property, ">", statement.Value);
-                    }
-                    else if (statement.Smaller)
-                    {
-                        conversationData.Query.Where(statement.Property, "<", statement.Value);
-                    }
-                    else
-                    {
-                        conversationData.Query.Where(statement.Property, "LIKE", $"%{statement.Value[0]}%");
-                    }
-                }
-            }
 
             return statement.ResponseText;
         }
@@ -171,7 +103,12 @@ namespace Chatbot.Utility
                     }
                     else
                     {
-                        query.WhereNot(statement.Property, "=", statement.Value);
+                        if (ColumnTypeContainer.Instance.IsString(statement))
+                        {
+                            query.WhereRaw($"NOT CONTAINS({statement.Property},'formsof(INFLECTIONAL,{statement.Value})')");
+                        }
+                        else
+                            query.WhereNot(statement.Property, "=", statement.Value);
                     }
                 }
                 else
@@ -186,9 +123,13 @@ namespace Chatbot.Utility
                     }
                     else
                     {
-                        var type = await GetColumnType(context, statement.Property);
-                        query.Where(statement.Property, "LIKE", $"%{statement.Value[0]}%");
-                    }
+                        if (ColumnTypeContainer.Instance.IsString(statement))
+                        {
+                            query.WhereRaw($"CONTAINS({statement.Property},'formsof(INFLECTIONAL,{statement.Value})')");
+                        }
+                        else
+                            query.Where(statement.Property, "=", statement.Value);
+                    } 
                 }
             }
         }

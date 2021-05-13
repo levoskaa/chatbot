@@ -26,19 +26,5 @@ namespace Chatbot.Utility
             //return conversationData.Statements;
             return null;
         }
-
-        public async Task<string> GetColumnType(ITurnContext context, string type)
-        {
-
-            var conversationData = await conversationStateAccessors.GetAsync(context, () => new ConversationData());
-            var query = new Query();
-            query.Select("DATA_TYPE")
-                .From("INFORMATION_SCHEMA.COLUMNS")
-                .Where("TABLE_NAME", "=", conversationData.CurrentTableName)
-                .Where("COLUMN_NAME", "=", type);
-            var xQuery = queryFactory.FromQuery(query);
-            return xQuery.Get().FirstOrDefault();
-
-        }
     }
 }

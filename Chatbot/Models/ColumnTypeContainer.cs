@@ -1,3 +1,4 @@
+using Chatbot.Extensions;
 using System;
 using System.Collections.Generic;
 
@@ -47,7 +48,7 @@ namespace Chatbot.Models
         {
             try
             {
-                var tableName = columnNamesByTableName.GetValueOrDefault(statement.Subject);
+                var tableName = columnNamesByTableName.GetValueOrDefault(statement.Subject.FirstCharToUpper()+"s");
                 if (tableName != null)
                 {
                     var column = tableName.GetValueOrDefault(statement.Property);
